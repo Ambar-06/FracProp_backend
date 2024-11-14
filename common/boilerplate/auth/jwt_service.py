@@ -1,6 +1,6 @@
 from jose import jwt
 from datetime import datetime, timedelta
-from bulk_message_api import settings
+from frac_prop import settings
 
 """
 This class is used for JWT
