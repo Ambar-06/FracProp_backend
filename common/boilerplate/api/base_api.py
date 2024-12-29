@@ -1,5 +1,6 @@
 import typing as _
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 
 from common.helpers.constants import StatusCodes
@@ -21,7 +22,10 @@ Methods:
 """
 
 
-class BaseAPIView(APIView):
+class ResponseOrError:
+    def __init__(self):
+        pass
+
     def success(
         self, data: T, code=StatusCodes().SUCCESS, msg: _.Optional[str] = None
     ) -> Response:
@@ -63,7 +67,7 @@ class BaseAPIView(APIView):
 
     def no_content(self) -> Response:
         return Response(status=StatusCodes().NO_CONTENT)
-    
+
     def get_response_or_error(self, response : dict) -> tuple:
         response_keys = ["response_data", "errors"]
         resp = None
@@ -74,3 +78,10 @@ class BaseAPIView(APIView):
             else:
                 code = value
         return resp, code
+
+class BaseAPIView(APIView, ResponseOrError):
+    ...
+    
+
+class BaseModelViewSet(ModelViewSet, ResponseOrError):
+    ...
