@@ -49,3 +49,13 @@ class Platform:
 
 obj_platform = Platform()
 PlatformDictionary = obj_platform.__dict__
+
+@dataclass
+class EmailTypes:
+    def __init__(self):
+        self.OTP = "OTP"
+        self.RESET_PASSWORD = "RESET_PASSWORD" #nosec
+        self.VERIFY_EMAIL = "VERIFY_EMAIL"
+
+obj_email_type = EmailTypes()
+EmailTypeDictionary = obj_email_type.__dict__

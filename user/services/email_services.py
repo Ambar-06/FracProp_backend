@@ -1,12 +1,12 @@
 from common.boilerplate.auth.password_handler import PasswordHandler
-from payment.helpers.random_id_generator import generate_random_id_number
+from common.boilerplate.secrets.random_id_generator import generate_random_id_number
 from user.models.otp import OTP
-from user.models.password_management_user import PasswordManagementUser
-from user.services.email_helper import EmailHelper
-from common.boilerplate.auth.generate_otp import GenerateOTP
+from user.models.user_password_management import PasswordManagementUser
+from user.helpers.verification_helper import EmailHelper
+from common.boilerplate.secrets.otp import GenerateOTP
 from common.boilerplate.services.base_service import BaseService
 from user.models.user import User
-
+from common.helpers.constants import EmailTypes
 
 class EmailService(BaseService):
     def __init__(self):
@@ -25,7 +25,7 @@ class EmailService(BaseService):
         user.email = data.get("email")
         user.save()
         otp = self.otp_helper.generate_otp(user.uuid)
-        resp = self.email_helper.create_otp_template(otp, user)
+        resp = self.email_helper.send_template_email(template_type=EmailTypes().OTP, otp=otp, user=user)
         if resp:
             return self.ok("OTP sent successfully")
         return self.bad_request("Failed to send OTP")
@@ -62,7 +62,7 @@ class ResetPasswordService(BaseService):
             unique_token=random_str,
             link_generated=f"{reset_url}"
         )
-        resp = self.email_helper.create_reset_password_template(reset_url, user)
+        resp = self.email_helper.send_template_email(template_type=EmailTypes().RESET_PASSWORD, link=reset_url, user=user)
         if resp:
             return self.ok("Reset password link sent successfully")
         return self.bad_request("Failed to send reset password link")
