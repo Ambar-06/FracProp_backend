@@ -5,7 +5,7 @@ from property.models.property import Property
 from rest_framework import filters
 
 
-class Property(BaseModelViewSet):
+class PropertyView(BaseModelViewSet):
     serializer_class = PropertySerializer
     queryset = Property.objects.all().order_by('-created_at')
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
@@ -13,16 +13,23 @@ class Property(BaseModelViewSet):
     ordering_fields = ['name', 'address', 'description', 'created_at', 'updated_at']
     ordering = ['-created_at']
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return self.success(serializer.data)
+    
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return self.success(serializer.data)
+    
     def create(self, request, *args, **kwargs):
         user = request.user
         data = request.data
-        data['created_by'] = user.id
-        data['updated_by'] = user.id
         serializer = PropertySerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return self.success(serializer.data, StatusCodes().CREATED)
-        return self.bad_request(serializer.errors)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return self.success(serializer.data, StatusCodes().CREATED)
 
     def update(self, request, *args, **kwargs):
         user = request.user
