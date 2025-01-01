@@ -8,7 +8,9 @@ class EmailHelper:
         self.email_template_model = EmailTemplate
 
     def send_template_email(self, template_type, **kwargs):
-        template = self.email_template_model.objects.filter(template_type=template_type).first()
+        template = self.email_template_model.objects.filter(
+            template_type=template_type
+        ).first()
         if not template:
             return None
         user = kwargs.get("user")

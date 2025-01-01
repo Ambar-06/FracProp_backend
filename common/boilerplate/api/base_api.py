@@ -44,10 +44,10 @@ class ResponseOrError:
             {"success": False, "code": status_code, "errors": errors},
             status=status_code,
         )
-    
+
     def not_found(self, msg: str) -> Response:
         return self.error_message(msg, StatusCodes().NOT_FOUND)
-    
+
     def bad_request(self, msg: str) -> Response:
         return self.error_message(msg, StatusCodes().BAD_REQUEST)
 
@@ -74,7 +74,7 @@ class ResponseOrError:
     def no_content(self) -> Response:
         return Response(status=StatusCodes().NO_CONTENT)
 
-    def get_response_or_error(self, response : dict) -> tuple:
+    def get_response_or_error(self, response: dict) -> tuple:
         response_keys = ["response_data", "errors"]
         resp = None
         code = None
@@ -85,9 +85,8 @@ class ResponseOrError:
                 code = value
         return resp, code
 
-class BaseAPIView(APIView, ResponseOrError):
-    ...
-    
 
-class BaseModelViewSet(ModelViewSet, ResponseOrError):
-    ...
+class BaseAPIView(APIView, ResponseOrError): ...
+
+
+class BaseModelViewSet(ModelViewSet, ResponseOrError): ...

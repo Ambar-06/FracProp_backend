@@ -11,6 +11,6 @@ class BaseService:
 
     def exception(self, errors: T, status_code: int):
         return {"errors": errors, "code": status_code}
-    
+
     def bad_request(self, message: str):
         return self.exception(message, StatusCodes().BAD_REQUEST)

@@ -14,7 +14,9 @@ class Property(BaseModel):
     name = models.CharField(max_length=255, null=True, blank=True)
     address = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    type = models.CharField(max_length=255, null=True, choices=PROPERTY_TYPE_CHOICES, default='RESIDENTIAL')
+    type = models.CharField(
+        max_length=255, null=True, choices=PROPERTY_TYPE_CHOICES, default="RESIDENTIAL"
+    )
     number_of_floors = models.IntegerField(null=True, blank=True)
     built_area_in_sqft = models.FloatField(null=True, blank=True)
     area_in_sqft = models.FloatField(null=True, blank=True)
@@ -25,4 +27,3 @@ class Property(BaseModel):
     is_approved = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     other_details = models.JSONField(null=True, blank=True)
-

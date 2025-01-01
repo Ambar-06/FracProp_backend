@@ -8,6 +8,7 @@ from common.boilerplate.services.base_service import BaseService
 from user.models.user import User
 from common.helpers.constants import EmailTypes
 
+
 class EmailService(BaseService):
     def __init__(self):
         self.user_model = User
@@ -20,26 +21,35 @@ class EmailService(BaseService):
         user = self.user_model.objects.filter(uuid=user_id).first()
         if not user:
             return self.not_found("User not found")
-        if self.user_model.objects.filter(email=data.get("email"), is_active=True).exclude(uuid=user_id).exists():
+        if (
+            self.user_model.objects.filter(email=data.get("email"), is_active=True)
+            .exclude(uuid=user_id)
+            .exists()
+        ):
             return self.bad_request("Email already exists and belongs to another user")
         user.email = data.get("email")
         user.save()
         otp = self.otp_helper.generate_otp(user.uuid)
-        resp = self.email_helper.send_template_email(template_type=EmailTypes().OTP, otp=otp, user=user)
+        resp = self.email_helper.send_template_email(
+            template_type=EmailTypes().OTP, otp=otp, user=user
+        )
         if resp:
             return self.ok("OTP sent successfully")
         return self.bad_request("Failed to send OTP")
-    
+
     def verify_otp_email(self, request, data):
         user_id = request.user.get("uuid")
         user = self.user_model.objects.filter(uuid=user_id).first()
-        otp_obj = self.otp_model.objects.filter(otp=data.get("otp"), user=user, is_used=False).first()
+        otp_obj = self.otp_model.objects.filter(
+            otp=data.get("otp"), user=user, is_used=False
+        ).first()
         if otp_obj is None:
             return self.bad_request("OTP is invalid")
         if not self.otp_helper.verify_otp(otp_obj):
             return self.bad_request("OTP is invalid")
         return self.ok("OTP verified successfully")
-    
+
+
 class ResetPasswordService(BaseService):
     def __init__(self):
         self.user_model = User
@@ -58,15 +68,15 @@ class ResetPasswordService(BaseService):
         url = data.get("reset_password_url")
         reset_url = url + "?s=" + random_str + "&m=" + email
         self.pass_manager_model.objects.create(
-            user=user,
-            unique_token=random_str,
-            link_generated=f"{reset_url}"
+            user=user, unique_token=random_str, link_generated=f"{reset_url}"
         )
-        resp = self.email_helper.send_template_email(template_type=EmailTypes().RESET_PASSWORD, link=reset_url, user=user)
+        resp = self.email_helper.send_template_email(
+            template_type=EmailTypes().RESET_PASSWORD, link=reset_url, user=user
+        )
         if resp:
             return self.ok("Reset password link sent successfully")
         return self.bad_request("Failed to send reset password link")
-    
+
     def reset_password(self, request, data):
         code = data.get("code")
         password = data.get("password")
@@ -89,7 +99,3 @@ class ResetPasswordService(BaseService):
         pass_manager.is_used = True
         pass_manager.save()
         return self.ok("Password reset successfully")
-
-
-        
-

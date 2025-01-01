@@ -1,6 +1,7 @@
 from django.db import models
 from common.models.base_model import BaseModel
 
+
 class User(BaseModel):
     first_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True)
@@ -19,6 +20,6 @@ class User(BaseModel):
 
     def __str__(self):
         return str(self.uuid)
-    
+
     class Meta:
-        unique_together = ('country_code', 'phone_number')
+        unique_together = ("country_code", "phone_number")

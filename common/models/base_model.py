@@ -4,7 +4,11 @@ import uuid
 
 class BaseModelManager(models.Manager):
     def get_queryset(self):
-        return super(BaseModelManager, self).get_queryset().filter(is_deleted__in=[False, None])
+        return (
+            super(BaseModelManager, self)
+            .get_queryset()
+            .filter(is_deleted__in=[False, None])
+        )
 
 
 class BaseModel(models.Model):

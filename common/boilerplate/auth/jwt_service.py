@@ -36,7 +36,9 @@ class JWTService:
             jwt_token, JWTService.JWT_SECRET, settings.JWT_ALGORITHM
         )
         return jwt_payload
-    
+
+
 def generate_secret():
     import secrets
+
     return secrets.token_urlsafe(32)

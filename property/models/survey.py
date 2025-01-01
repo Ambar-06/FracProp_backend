@@ -1,13 +1,28 @@
 from django.db import models
 
 from common.models.base_model import BaseModel
+from property.models.property import Property
+from property.models.property_valuation_history import PropertyValuationHistory
+
 
 class Survey(BaseModel):
 
-    survey_number = models.BigIntegerField(null=True)
-    name = models.CharField(max_length=255, null=True, blank=True)
+    survey_number = models.BigAutoField()
+    surveyer_id = (
+        models.UUIDField()
+    )  # This id will be unique for each surveyer (a surveryer would be the company employee saved in - internal_frac_prop project)
+    surveyer_name = models.CharField(max_length=100, null=True, blank=True)
+    surveyer_number = models.CharField(max_length=10, null=True, blank=True)
+    surveyer_alt_number = models.CharField(max_length=10, null=True, blank=True)
+    surveyer_govt_id_proof = models.ForeignKey()
+    surveyer_email = models.EmailField(max_length=100, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    is_active = models.BooleanField(default=True)
-    
+    property = models.ForeignKey(
+        Property, on_delete=models.DO_NOTHING, null=True, related_name="surveys"
+    )
+    surveyed_valuation = models.ForeignKey(
+        PropertyValuationHistory, on_delete=models.DO_NOTHING, null=True
+    )
+
     def __str__(self):
         return self.name

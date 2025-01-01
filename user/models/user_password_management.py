@@ -3,6 +3,7 @@ from django.db import models
 from common.models.base_model import BaseModel
 from user.models.user import User
 
+
 class PasswordManagementUser(BaseModel):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
     unique_token = models.CharField(max_length=255, null=True, unique=True)
@@ -13,4 +14,3 @@ class PasswordManagementUser(BaseModel):
     @property
     def is_valid(self):
         return self.expiry > timezone.now() and not self.is_used
-

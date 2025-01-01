@@ -3,6 +3,7 @@ import secrets
 from user.models.otp import OTP
 from user.models.user import User
 
+
 class GenerateOTP:
     def __init__(self):
         self.user_model = User
@@ -13,7 +14,7 @@ class GenerateOTP:
         user = User.objects.filter(uuid=user_id).first()
         self.model.objects.create(user=user, otp=otp)
         return otp
-    
+
     def verify_otp(self, otp_obj):
         if not otp_obj:
             return False

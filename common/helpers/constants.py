@@ -25,8 +25,10 @@ class Target:
         self.WHATSAPP = "whatsapp"
         self.SMS = "sms"
 
+
 obj_target = Target()
 TargetDictionary = obj_target.__dict__
+
 
 @dataclass
 class MediaType:
@@ -37,8 +39,10 @@ class MediaType:
         self.VIDEO = "video"
         self.CONTACT = "contact"
 
+
 obj_media_type = MediaType()
 MediaTypeDictionary = obj_media_type.__dict__
+
 
 @dataclass
 class Platform:
@@ -47,15 +51,18 @@ class Platform:
         self.FACEBOOK = "FACEBOOK"
         self.TWILIO = "TWILIO"
 
+
 obj_platform = Platform()
 PlatformDictionary = obj_platform.__dict__
+
 
 @dataclass
 class EmailTypes:
     def __init__(self):
         self.OTP = "OTP"
-        self.RESET_PASSWORD = "RESET_PASSWORD" #nosec
+        self.RESET_PASSWORD = "RESET_PASSWORD"  # nosec
         self.VERIFY_EMAIL = "VERIFY_EMAIL"
+
 
 obj_email_type = EmailTypes()
 EmailTypeDictionary = obj_email_type.__dict__
@@ -69,6 +76,7 @@ class DocumentType:
         self.PROPERTY_VIDEO = "PROPERTY_VIDEO"
         self.LOAN_DOCUMENT = "LOAN_DOCUMENT"
         self.OTHER_DOCUMENT = "OTHER_DOCUMENT"
+
 
 obj_document_type = DocumentType()
 DocumentTypeDictionary = obj_document_type.__dict__

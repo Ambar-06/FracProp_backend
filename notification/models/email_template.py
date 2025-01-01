@@ -1,6 +1,7 @@
 from common.models.base_model import BaseModel
 from django.db import models
 
+
 class EmailTemplate(BaseModel):
     TEMPLATE_TYPE_CHOICES = (
         ("OTP", "otp"),

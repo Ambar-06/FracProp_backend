@@ -16,7 +16,8 @@ class GenerateAuthTokenViews(BaseAPIView):
         service_data = self.service.get_service(request, data)
         response, status_code = self.get_response_or_error(service_data)
         return self.success(response, status_code)
-    
+
+
 class VerifyEmail(BaseAPIView):
     def __init__(self):
         self.service = EmailService()
@@ -28,6 +29,7 @@ class VerifyEmail(BaseAPIView):
         response, code = self.get_response_or_error(service_data)
         return self.success(response, code)
 
+
 class SendEmailOTP(BaseAPIView):
     def __init__(self):
         self.service = EmailService()
@@ -38,7 +40,7 @@ class SendEmailOTP(BaseAPIView):
         service_date = self.service.send_otp_email(request, data)
         response, code = self.get_response_or_error(service_date)
         return self.success(response, code)
-    
+
 
 class ResetPassword(BaseAPIView):
     def __init__(self):
@@ -49,7 +51,8 @@ class ResetPassword(BaseAPIView):
         service_data = self.service.post_service(request, data)
         response, code = self.get_response_or_error(service_data)
         return self.success(response, code)
-    
+
+
 class ChangePassword(BaseAPIView):
     def __init__(self):
         self.service = ResetPasswordService()
