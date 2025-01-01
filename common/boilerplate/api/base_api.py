@@ -44,6 +44,12 @@ class ResponseOrError:
             {"success": False, "code": status_code, "errors": errors},
             status=status_code,
         )
+    
+    def not_found(self, msg: str) -> Response:
+        return self.error_message(msg, StatusCodes().NOT_FOUND)
+    
+    def bad_request(self, msg: str) -> Response:
+        return self.error_message(msg, StatusCodes().BAD_REQUEST)
 
     def validation_failed(self, **kwargs) -> Response:
         return self.error(kwargs, StatusCodes().UNPROCESSABLE_ENTITY)

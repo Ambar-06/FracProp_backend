@@ -1,0 +1,42 @@
+from common.boilerplate.api.base_api import BaseModelViewSet
+from common.helpers.constants import StatusCodes
+from property.serializers.property_serializers import PropertySerializer
+from property.models.property import Property
+from rest_framework import filters
+
+
+class Property(BaseModelViewSet):
+    serializer_class = PropertySerializer
+    queryset = Property.objects.all().order_by('-created_at')
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['name', 'address', 'description']
+    ordering_fields = ['name', 'address', 'description', 'created_at', 'updated_at']
+    ordering = ['-created_at']
+
+    def create(self, request, *args, **kwargs):
+        user = request.user
+        data = request.data
+        data['created_by'] = user.id
+        data['updated_by'] = user.id
+        serializer = PropertySerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return self.success(serializer.data, StatusCodes().CREATED)
+        return self.bad_request(serializer.errors)
+
+    def update(self, request, *args, **kwargs):
+        user = request.user
+        data = request.data
+        data['updated_by'] = user.id
+        instance = self.get_object()
+        serializer = PropertySerializer(instance, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return self.success(serializer.data, StatusCodes().SUCCESS)
+        return self.bad_request(serializer.errors)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.is_deleted = True
+        instance.save()
+        return self.no_content()

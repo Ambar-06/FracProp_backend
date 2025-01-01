@@ -59,3 +59,16 @@ class EmailTypes:
 
 obj_email_type = EmailTypes()
 EmailTypeDictionary = obj_email_type.__dict__
+
+
+@dataclass
+class DocumentType:
+    def __init__(self):
+        self.PROPERTY_PAPER = "PROPERTY_PAPER"
+        self.PROPERTY_IMAGE = "PROPERTY_IMAGE"
+        self.PROPERTY_VIDEO = "PROPERTY_VIDEO"
+        self.LOAN_DOCUMENT = "LOAN_DOCUMENT"
+        self.OTHER_DOCUMENT = "OTHER_DOCUMENT"
+
+obj_document_type = DocumentType()
+DocumentTypeDictionary = obj_document_type.__dict__
