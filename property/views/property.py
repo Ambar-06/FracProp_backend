@@ -1,23 +1,22 @@
-from common.boilerplate.api.base_api import BaseModelViewSet
+from common.boilerplate.api.base_api import BaseModelViewSet, BaseAPIView
 from common.boilerplate.decorators.auth_guard import auth_guard
+from common.boilerplate.decorators.validate_request import validate_request
 from common.helpers.constants import StatusCodes
 from property.serializers.property_serializers import PropertySerializer
-from property.models.property import Property
-from rest_framework import filters
+
+from property.services.property_services import PropertyServices
 
 
-class PropertyView(BaseModelViewSet):
-    serializer_class = PropertySerializer
-    queryset = Property.objects.all().order_by("-created_at")
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
-    search_fields = ["name", "address", "description"]
-    ordering_fields = ["name", "address", "description", "created_at", "updated_at"]
-    ordering = ["-created_at"]
+class PropertyView(BaseAPIView):
+    def __init__(self):
+        self.service = PropertyServices()
 
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        serializer = self.get_serializer(queryset, many=True)
-        return self.success(serializer.data)
+    @auth_guard()
+    @validate_request()
+    def get(self, request, data, *args):
+        service_data = self.service.get_service(request, data)
+        response, status_code = self.get_response_or_error(service_data)
+        return self.success(response, status_code)
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()

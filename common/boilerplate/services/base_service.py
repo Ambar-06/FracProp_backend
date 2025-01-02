@@ -14,3 +14,9 @@ class BaseService:
 
     def bad_request(self, message: str):
         return self.exception(message, StatusCodes().BAD_REQUEST)
+    
+    def not_found(self, message: str):
+        return self.exception(message, StatusCodes().NOT_FOUND)
+
+    def validation_failed(self, **kwargs):
+        return self.exception(kwargs, StatusCodes().UNPROCESSABLE_ENTITY)
