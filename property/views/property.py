@@ -1,4 +1,5 @@
 from common.boilerplate.api.base_api import BaseModelViewSet
+from common.boilerplate.decorators.auth_guard import auth_guard
 from common.helpers.constants import StatusCodes
 from property.serializers.property_serializers import PropertySerializer
 from property.models.property import Property
@@ -23,6 +24,7 @@ class PropertyView(BaseModelViewSet):
         serializer = self.get_serializer(instance)
         return self.success(serializer.data)
 
+    @auth_guard(admin=True)
     def create(self, request, *args, **kwargs):
         user = request.user
         data = request.data
@@ -37,10 +39,9 @@ class PropertyView(BaseModelViewSet):
         data["updated_by"] = user.id
         instance = self.get_object()
         serializer = PropertySerializer(instance, data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return self.success(serializer.data, StatusCodes().SUCCESS)
-        return self.bad_request(serializer.errors)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return self.success(serializer.data, StatusCodes().SUCCESS)
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
