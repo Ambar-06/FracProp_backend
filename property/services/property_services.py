@@ -14,9 +14,11 @@ class PropertyServices(BaseService):
     def get_service(self, request, data):
         user_id = request.user.get("uuid")
         user = self.user_model.objects.filter(uuid=user_id).first()
-        if not user:
-            return self.not_found("User not found")
         properties = self.model.objects.all()
         if not user.is_admin:
             properties = properties.filter(is_active=True)
         return self.ok(PropertySerializer(properties, many=True).data)
+
+    def post_service(self, request, data):
+        property = self.model.objects.create(**data)
+        return self.ok(PropertySerializer(property).data)
