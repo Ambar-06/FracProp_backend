@@ -60,7 +60,7 @@ WRONG_SIGNATURE = Response(
 )
 
 
-def auth_guard(admin=False):
+def auth_guard(admin=False, staff=False):
     def validate_auth_user(fun: _.Callable):
         jwt_service = JWTService()
         user_model = User
@@ -90,6 +90,8 @@ def auth_guard(admin=False):
             if not user:
                 return NOT_VALID_TOKEN
             if admin and not user.is_admin:
+                return NOT_VALID_ROLE
+            if staff and not any(user.is_staff, user.is_admin):
                 return NOT_VALID_ROLE
             if user.is_deleted:
                 return NOT_VALID_TOKEN

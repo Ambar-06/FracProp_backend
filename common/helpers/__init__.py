@@ -1,1 +1,1 @@
-from .view_helper import get_response_or_error
+from .request_validators import PatchRequestValidator

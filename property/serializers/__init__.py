@@ -1,1 +1,2 @@
 from .property_serializers import PropertySerializer, PropertyFilterSerializer
+from .single_property_serializers import SinglePropertyFilterSerializer
