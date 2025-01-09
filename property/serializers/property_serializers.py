@@ -10,7 +10,6 @@ class PropertySerializer(serializers.ModelSerializer):
         exclude = ("is_deleted",)
 
 
-
 class PropertyFilterSerializer(serializers.Serializer):
 
     name = serializers.CharField(required=True)

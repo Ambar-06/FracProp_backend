@@ -1,7 +1,9 @@
 from common.boilerplate.api.base_api import BaseAPIView
 from common.boilerplate.decorators.auth_guard import auth_guard
 from common.boilerplate.decorators.validate_request import validate_request
-from property.serializers.single_property_serializers import SinglePropertyFilterSerializer
+from property.serializers.single_property_serializers import (
+    SinglePropertyFilterSerializer,
+)
 from property.services.single_property_services import SinglePropertyServices
 
 
@@ -23,5 +25,9 @@ class SinglePropertyView(BaseAPIView):
         response, status_code = self.get_response_or_error(service_data)
         return self.success(response, status_code)
 
+    @auth_guard(admin=True)
+    @validate_request(SinglePropertyFilterSerializer)
     def delete(self, request, data, *args):
-        ...
+        service_data = self.service.delete_service(request, data)
+        response, status_code = self.get_response_or_error(service_data)
+        return self.success(response, status_code)

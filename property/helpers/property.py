@@ -7,8 +7,12 @@ def update_property(uuid, data):
     property.address = data.get("address") or property.address
     property.description = data.get("description") or property.description
     property.type = data.get("type") or property.type
-    property.number_of_floors = data.get("number_of_floors") or property.number_of_floors
-    property.built_area_in_sqft = data.get("built_area_in_sqft") or property.built_area_in_sqft
+    property.number_of_floors = (
+        data.get("number_of_floors") or property.number_of_floors
+    )
+    property.built_area_in_sqft = (
+        data.get("built_area_in_sqft") or property.built_area_in_sqft
+    )
     property.area_in_sqft = data.get("area_in_sqft") or property.area_in_sqft
     property.latitude = data.get("latitude") or property.latitude
     property.longitude = data.get("longitude") or property.longitude

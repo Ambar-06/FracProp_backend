@@ -18,7 +18,6 @@ class SinglePropertyServices(BaseService):
         if not property:
             return self.not_found("Property not found")
         return self.ok(PropertySerializer(property).data)
-        
 
     def patch_service(self, request, data):
         data = self.validator.validate(data)
@@ -30,7 +29,11 @@ class SinglePropertyServices(BaseService):
             return self.not_found("Property not found")
         property = update_property(property.uuid, data)
         return self.ok(PropertySerializer(property).data)
-        
 
     def delete_service(self, request, data):
-        pass
+        property = self.model.objects.filter(uuid=data.get("property_id")).first()
+        if not property:
+            return self.not_found("Property not found")
+        property.is_deleted = True
+        property.save()
+        return self.ok("Property deleted successfully")

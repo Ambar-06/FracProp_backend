@@ -45,7 +45,6 @@ class ResponseOrError:
             status=status_code,
         )
 
-
     def error_message(
         self, msg: str, code: int, data: _.Optional[dict] = None
     ) -> Response:

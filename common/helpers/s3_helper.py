@@ -35,7 +35,7 @@ class S3BucketHelper:
         :param expiration: Time in seconds for the pre-signed URL to remain valid (default: 1 hour).
         :return: Pre-signed URL as a string, or None if an error occurred.
         """
-        s3_client = self.get_s3_connection() 
+        s3_client = self.get_s3_connection()
         try:
             presigned_url = s3_client.generate_presigned_url(
                 "get_object",

@@ -27,7 +27,13 @@ class Property(BaseModel):
     area_in_sqft = models.FloatField(null=True, blank=True)
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
-    return_type = models.CharField(max_length=255, null=True, blank=True, choices=RETURN_TYPE_CHOICES, default="RENT")
+    return_type = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        choices=RETURN_TYPE_CHOICES,
+        default="RENT",
+    )
     number_of_rooms = models.IntegerField(null=True, blank=True)
     has_loan = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
