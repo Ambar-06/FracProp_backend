@@ -10,6 +10,7 @@ class PropertyDataAndDocument(BaseModel):
         ("PROPERTY_IMAGE", "property_image"),
         ("PROPERTY_VIDEO", "property_video"),
         ("LOAN_DOCUMENT", "loan_document"),
+        ("RENTAL_DOCUMENT", "rental_document"),
         ("OTHER_DOCUMENT", "other_document"),
     )
 
@@ -22,6 +23,8 @@ class PropertyDataAndDocument(BaseModel):
     document_type = models.CharField(
         max_length=255, null=True, choices=DOCUMENT_TYPE_CHOICES
     )
+    document_date = models.DateField(null=True)
+    document_expiry_date = models.DateField(null=True)
     document = models.URLField(null=True)
 
     def __str__(self):
