@@ -13,6 +13,7 @@ class SinglePropertyFilterSerializer(serializers.Serializer):
     )
     number_of_floors = serializers.IntegerField(required=False, min_value=0)
     built_area_in_sqft = serializers.FloatField(required=False)
+    valuation = serializers.FloatField(required=False)
     area_in_sqft = serializers.FloatField(required=False)
     latitude = serializers.FloatField(required=False)
     longitude = serializers.FloatField(required=False)

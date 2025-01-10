@@ -1,4 +1,5 @@
 from property.models.property import Property
+from property.models.property_valuation_history import PropertyValuationHistory
 
 
 def update_property(uuid, data):
@@ -22,4 +23,13 @@ def update_property(uuid, data):
     property.is_active = data.get("is_active") or property.is_active
     property.other_details = data.get("other_details") or property.other_details
     property.save()
+    update_property_valuation(property, data.get("valuation"))
     return property
+
+def update_property_valuation(property, valuation):
+    if property.valuation != valuation:
+        property.valuation = valuation
+        property.save()
+        PropertyValuationHistory.objects.create(valuation=valuation, property=property)
+        return True
+    return False

@@ -35,6 +35,7 @@ class Property(BaseModel):
         default="RENT",
     )
     number_of_rooms = models.IntegerField(null=True, blank=True)
+    valuation = models.FloatField(null=True, blank=True)
     has_loan = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)

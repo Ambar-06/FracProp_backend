@@ -21,6 +21,7 @@ class PropertyFilterSerializer(serializers.Serializer):
     area_in_sqft = serializers.FloatField(required=True)
     latitude = serializers.FloatField(required=True)
     longitude = serializers.FloatField(required=True)
+    valuation = serializers.FloatField(required=True)
     has_loan = serializers.BooleanField(default=False)
     is_verified = serializers.BooleanField(default=False)
     is_approved = serializers.BooleanField(default=False)

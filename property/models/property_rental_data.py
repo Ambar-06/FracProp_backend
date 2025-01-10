@@ -28,6 +28,7 @@ class PropertyRentalData(BaseModel):
     floor_number = models.IntegerField(null=True, blank=True)
     room_number = models.IntegerField(null=True, blank=True)
     rent_per_month = models.FloatField(null=True, blank=True)
+    due_date = models.IntegerField(null=True, blank=True)
     security_deposit = models.FloatField(null=True, blank=True)
     agreement = models.ForeignKey(
         PropertyDataAndDocument, on_delete=models.DO_NOTHING, null=True, blank=True
