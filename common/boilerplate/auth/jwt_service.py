@@ -1,5 +1,7 @@
-from jose import jwt
 from datetime import datetime, timedelta
+
+from jose import jwt
+
 from frac_prop import settings
 
 """

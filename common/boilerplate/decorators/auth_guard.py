@@ -1,6 +1,8 @@
 import typing as _
-from rest_framework.response import Response
+
 from jose import jwt
+from rest_framework.response import Response
+
 from common.boilerplate.auth.jwt_service import JWTService
 from user.models.user import User
 

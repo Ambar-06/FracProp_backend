@@ -1,12 +1,12 @@
 from common.boilerplate.auth.password_handler import PasswordHandler
-from common.boilerplate.secrets.random_id_generator import generate_random_id_number
-from user.models.otp import OTP
-from user.models.user_password_management import PasswordManagementUser
-from user.helpers.verification_helper import EmailHelper
 from common.boilerplate.secrets.otp import GenerateOTP
+from common.boilerplate.secrets.random_id_generator import generate_random_id_number
 from common.boilerplate.services.base_service import BaseService
-from user.models.user import User
 from common.helpers.constants import EmailTypes
+from user.helpers.verification_helper import EmailHelper
+from user.models.otp import OTP
+from user.models.user import User
+from user.models.user_password_management import PasswordManagementUser
 
 
 class EmailService(BaseService):

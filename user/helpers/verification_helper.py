@@ -1,6 +1,6 @@
-from notification.models.email_template import EmailTemplate
-from common.helpers.smtp import send_email
 from common.helpers.constants import EmailTypes
+from common.helpers.smtp import send_email
+from notification.models.email_template import EmailTemplate
 
 
 class EmailHelper:

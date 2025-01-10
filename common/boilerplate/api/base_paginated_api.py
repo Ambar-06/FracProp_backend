@@ -1,6 +1,7 @@
 import typing as _
-from rest_framework.response import Response
+
 from rest_framework import generics
+from rest_framework.response import Response
 
 from common.helpers.constants import StatusCodes
 

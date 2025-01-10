@@ -1,7 +1,8 @@
 from django.db import models
-from user.models.user import User
-from common.models.base_model import BaseModel
 from django.utils import timezone
+
+from common.models.base_model import BaseModel
+from user.models.user import User
 
 
 class UserToken(BaseModel):

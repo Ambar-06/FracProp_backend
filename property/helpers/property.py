@@ -26,6 +26,7 @@ def update_property(uuid, data):
     update_property_valuation(property, data.get("valuation"))
     return property
 
+
 def update_property_valuation(property, valuation):
     if property.valuation != valuation:
         property.valuation = valuation

@@ -1,7 +1,7 @@
 import boto3
-from botocore.exceptions import ClientError
+from botocore.exceptions import ClientError, NoCredentialsError
+
 from frac_prop import settings
-from botocore.exceptions import NoCredentialsError
 
 
 class S3BucketHelper:

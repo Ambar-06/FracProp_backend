@@ -1,4 +1,4 @@
-from common.boilerplate.api.base_api import BaseModelViewSet, BaseAPIView
+from common.boilerplate.api.base_api import BaseAPIView, BaseModelViewSet
 from common.boilerplate.decorators.auth_guard import auth_guard
 from common.boilerplate.decorators.validate_request import validate_request
 from common.helpers.constants import StatusCodes
@@ -6,7 +6,6 @@ from property.serializers.property_serializers import (
     PropertyFilterSerializer,
     PropertySerializer,
 )
-
 from property.services.property_services import PropertyServices
 
 
