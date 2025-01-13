@@ -5,7 +5,7 @@ from common.boilerplate.decorators.auth_guard import auth_guard
 from common.boilerplate.decorators.validate_request import validate_request
 from user.serializers.login_serializers import LoginSerializer
 from user.serializers.signup_serializers import SignUpSerializer
-from user.serializers.single_user_serializers import GetUserDetailSerializer, SingleUserSerializer
+from user.serializers.single_user_serializers import SingleUserSerializer
 from user.serializers.user_serializers import UserViewSerializer
 from user.services.login_services import LoginServices
 from user.services.signup_services import SignUpServices

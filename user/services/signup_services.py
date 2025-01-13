@@ -17,21 +17,39 @@ class SignUpServices(BaseService):
         if not validate_user_password(password=data.get("password")):
             return self.bad_request("Password does not meet the requirements")
         pwd = self.pw_handler.hash_pw(data.get("password"))
-        country_code, phone_number = data.get("phone_number").split("-")
-        if self.user_model.objects.filter(phone_number=phone_number, country_code=country_code, is_deleted=False).exists():
-            return self.bad_request("User already exists or Phone number already registered")
-        if self.user_model.objects.filter(username=data.get("username"), is_deleted=False).exists():
-            return self.bad_request("Username already exists")
-        if self.user_model.objects.filter(email=data.get("email"), is_deleted=False).exists():
-            return self.bad_request("Email already exists")
+        if data.get("country_code") is not None:
+            data["country_code"] = data.get("country_code").replace("+", "")
+        if data.get("phone_number") and data.get("country_code"):
+            if self.user_model.objects.filter(
+                    phone_number=data.get("phone_number"),
+                    country_code=data.get("country_code"),
+                    is_deleted=False,
+                ).exists():
+                return self.bad_request(
+                    "User already exists or Phone number already registered"
+                )
+        if data.get("username"):
+            if self.user_model.objects.filter(
+                username=data.get("username"), is_deleted=False
+            ).first():
+                return self.bad_request("Username already exists")
+        if data.get("email"):
+            if (
+                self.user_model.objects.filter(
+                    email=data.get("email"), is_deleted=False
+                ).count()
+                > 0
+            ):
+                return self.bad_request("Email already exists")
         user_ins = self.user_model.objects.create(
             username=data.get("username"),
             password=pwd,
-            email=data.get("email"),
-            phone_number=phone_number,
-            country_code=country_code,
+            phone_number=data.get("phone_number", None),
+            country_code=data.get("country_code", None),
+            email=data.get("email", None),
+            first_name=data.get("first_name"),
+            last_name=data.get("last_name"),
         )
-
         token, exp = self.token_service.create_token(user=user_ins)
         token_ins = self.user_token_model.objects.create(
             user=user_ins, token=token, expiry=exp
