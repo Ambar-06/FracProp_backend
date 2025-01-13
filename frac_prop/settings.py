@@ -27,6 +27,11 @@ SMTP_PORT = os.getenv("SMTP_PORT")
 SMTP_USERNAME = os.getenv("SMTP_USERNAME")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 
+ENCRYPT_KEY1 = os.getenv("ENCRYPT_KEY1")
+ENCRYPT_KEY2 = os.getenv("ENCRYPT_KEY2")
+ENCRYPT_KEY3 = os.getenv("ENCRYPT_KEY3")
+ENCRYPT_KEY4 = os.getenv("ENCRYPT_KEY4")
+ENCRYPT_KEY5 = os.getenv("ENCRYPT_KEY5")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
