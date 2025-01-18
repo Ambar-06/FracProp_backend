@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 from common.models.base_model import BaseModel
 
@@ -22,5 +23,12 @@ class User(BaseModel):
     def __str__(self):
         return str(self.uuid)
 
-    class Meta:
-        unique_together = ("country_code", "phone_number")
+    # class Meta:
+    #     constraints = [
+    #         models.UniqueConstraint(
+    #             fields=["country_code", "phone_number"],
+    #             condition=Q(is_deleted=False),
+    #             name="unique_active_user_phone_constraint",
+    #         )
+    #     ]
+    #     unique_together = ("country_code", "phone_number")
