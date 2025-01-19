@@ -5,7 +5,7 @@ from property.models.property import Property
 
 
 class PropertyValuationHistory(BaseModel):
-    property = models.ForeignKey(Property, on_delete=models.DO_NOTHING, null=True)
+    property = models.ForeignKey(Property, on_delete=models.DO_NOTHING, null=True, related_name="valuation_history")
     valuation = models.FloatField(null=True)
     is_active = models.BooleanField(default=True)
 
