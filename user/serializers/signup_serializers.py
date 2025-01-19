@@ -44,11 +44,13 @@ class SignUpSerializer(serializers.Serializer):
     )
 
     def validate(self, data):
-        if data["password"] != data["confirm_password"]:
+        if data.get("password") != data.get("confirm_password"):
             raise serializers.ValidationError("Password and confirm password does not match")
-        if data["phone_number"]:
-            if "+" in data["phone_number"]:
-                if "-" in data["phone_number"]:
+        if not data("email") and not data.get("phone_number"):
+            raise serializers.ValidationError("Either email or Phone number is required to signup")
+        if data.get("phone_number"):
+            if "+" in data.get("phone_number"):
+                if "-" in data.get("phone_number"):
                     country_code, number = data.get("phone_number")[1:].split("-")
                 else:
                     raise serializers.ValidationError("Phone number should be in format +91-1234567890")
@@ -62,6 +64,6 @@ class SignUpSerializer(serializers.Serializer):
                     raise serializers.ValidationError("Phone number already exists")
             else:
                 raise serializers.ValidationError("Phone number should start with +")
-        if User.objects.filter(username=data["username"]).exists():
+        if User.objects.filter(username=data.get("username")).exists():
             raise serializers.ValidationError("Username already exists")
         return data

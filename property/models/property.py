@@ -37,6 +37,7 @@ class Property(BaseModel):
     )
     number_of_rooms = models.IntegerField(null=True, blank=True)
     valuation = models.FloatField(null=True, blank=True)
+    investment_lock_in_period_in_months = models.IntegerField(null=True)
     has_loan = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
