@@ -116,7 +116,9 @@ class InvestmentHelper:
         self.create_or_update_user_investments(
             user, property, amount, percentage_transacted, is_deposit=True
         )
-        UserProperty.objects.get_or_create(user=user, property=property, defaults={"user" : user, "property" : property})
+        UserProperty.objects.get_or_create(
+            user=user, property=property, defaults={"user": user, "property": property}
+        )
 
     def create_or_update_user_investments(
         self, user, property, amount, percentage_transacted, is_deposit=False

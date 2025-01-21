@@ -25,5 +25,7 @@ class PropertyInvestmentServices(BaseService):
                 amount, property.valuation
             )
         )
-        self.investment_helper.perform_post_investment_operation(user, property, amount, stake_percentage)
+        self.investment_helper.perform_post_investment_operation(
+            user, property, amount, stake_percentage
+        )
         return self.ok("Investment successful")
