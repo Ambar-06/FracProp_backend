@@ -45,9 +45,9 @@ class LoginServices(BaseService):
                 "country_code": obj_or_msg.country_code,
                 "phone_number": obj_or_msg.phone_number,
                 "email": obj_or_msg.email,
-                "is_email_verified" : obj_or_msg.is_email_verified,
+                "is_email_verified": obj_or_msg.is_email_verified,
                 "is_admin": obj_or_msg.is_admin,
                 "is_phone_verified": obj_or_msg.is_phone_verified,
-                "is_email_verified" : obj_or_msg.is_email_verified
+                "is_email_verified": obj_or_msg.is_email_verified,
             }
         )

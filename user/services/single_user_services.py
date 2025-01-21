@@ -8,7 +8,9 @@ class SingleUserServices(BaseService):
         self.model = User
 
     def get_service(self, request, data):
-        user = self.model.objects.filter(uuid=data.get("user_id"), is_active=True, is_deleted=False).first()
+        user = self.model.objects.filter(
+            uuid=data.get("user_id"), is_active=True, is_deleted=False
+        ).first()
         if not user:
             return self.not_found("User not found")
         return self.ok(
@@ -23,24 +25,38 @@ class SingleUserServices(BaseService):
                 "is_email_verified": user.is_email_verified,
             }
         )
-    
+
     def patch_service(self, request, data):
-        user_admin = self.model.objects.filter(uuid=request.user.get("uuid"), is_admin=True, is_active=True, is_deleted=False).first()
+        user_admin = self.model.objects.filter(
+            uuid=request.user.get("uuid"),
+            is_admin=True,
+            is_active=True,
+            is_deleted=False,
+        ).first()
         if user_admin is None:
             return self.bad_request("You are not authorized to access this resource")
-        user = self.model.objects.filter(uuid=data.get("user_id"), is_deleted=False).first()
+        user = self.model.objects.filter(
+            uuid=data.get("user_id"), is_deleted=False
+        ).first()
         if user is None:
             return self.bad_request("User not found")
         user.email = data.get("email") or user.email
         user.is_active = data.get("is_active") or user.is_active
         user.save()
         return self.ok("User updated successfully", StatusCodes().SUCCESS)
-    
+
     def delete_service(self, request, data):
-        user_admin = self.model.objects.filter(uuid=request.user.get("uuid"), is_admin=True, is_active=True, is_deleted=False).first()
+        user_admin = self.model.objects.filter(
+            uuid=request.user.get("uuid"),
+            is_admin=True,
+            is_active=True,
+            is_deleted=False,
+        ).first()
         if user_admin is None:
             return self.bad_request("You are not authorized to access this resource")
-        user = self.model.objects.filter(uuid=data.get("user_id"), is_deleted=False).first()
+        user = self.model.objects.filter(
+            uuid=data.get("user_id"), is_deleted=False
+        ).first()
         if user is None:
             return self.bad_request("User not found")
         user.is_deleted = True

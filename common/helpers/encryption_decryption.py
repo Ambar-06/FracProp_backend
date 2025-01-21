@@ -9,10 +9,10 @@ from frac_prop import settings
 
 KEYS = {
     (1,): settings.ENCRYPT_KEY1,
-    (2,) : settings.ENCRYPT_KEY2,
-    (3,) : settings.ENCRYPT_KEY3,
-    (4,) : settings.ENCRYPT_KEY4,
-    (5,) : settings.ENCRYPT_KEY5
+    (2,): settings.ENCRYPT_KEY2,
+    (3,): settings.ENCRYPT_KEY3,
+    (4,): settings.ENCRYPT_KEY4,
+    (5,): settings.ENCRYPT_KEY5,
 }
 
 
@@ -66,7 +66,7 @@ def generate_hash(string, hash_type="sha256"):
     """
     hash_functions = {
         "sha256": lambda: hashlib.sha256(string.encode()).hexdigest(),
-        "md5": lambda: hashlib.md5(string.encode()).hexdigest(), #nosec
+        "md5": lambda: hashlib.md5(string.encode()).hexdigest(),  # nosec
     }
 
     return hash_functions.get(hash_type)() if hash_functions.get(hash_type) else None

@@ -3,6 +3,7 @@ from django.db import models
 from common.models.base_model import BaseModel
 from user.models.user import User
 
+
 class Transaction(BaseModel):
     TRANSACTION_TYPE_CHOICES = (
         ("DEPOSIT", "deposit"),

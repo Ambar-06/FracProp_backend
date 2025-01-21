@@ -60,7 +60,7 @@ class UserView(BaseAPIView, PaginatedBaseApiView):
     #     response = self.service.post_service(request, data)
     #     response, code = self.get_response_or_error(response)
     #     return self.success(response, code=code)
-    
+
 
 class SingleUserView(BaseAPIView):
     def __init__(self):

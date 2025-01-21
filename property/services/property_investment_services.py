@@ -1,11 +1,16 @@
 from common.boilerplate.services.base_service import BaseService
+from investment.models.investment import Investment
+from investment.models.transaction import Transaction
+from property.helpers.property_valuation_breakout_helper import (
+    PropertyValuationBreakoutHelper,
+)
 from property.models.property import Property
 from user.models.user import User
 
 
 class PropertyInvestmentServices(BaseService):
     def __init__(self):
-        pass
+        self.valuation_helper = PropertyValuationBreakoutHelper()
 
     def post_service(self, request, data):
         user = User.objects.filter(uuid=request.user.get("uuid")).first()
@@ -13,7 +18,8 @@ class PropertyInvestmentServices(BaseService):
         if not property:
             return self.not_found("Property not found")
         amount = data.get("amount")
-        
-        
-        
-        
+        stake_amount, stake_percentage = (
+            self.valuation_helper.calculate_amount_proportion_with_valuation(
+                amount, property.valuation
+            )
+        )

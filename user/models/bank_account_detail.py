@@ -3,8 +3,15 @@ from django.db import models
 from common.models.base_model import BaseModel
 from user.models.user import User
 
+
 class BankAccountDetail(BaseModel):
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True, related_name="bank_account_details")
+    user = models.ForeignKey(
+        User,
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+        related_name="bank_account_details",
+    )
     account_holder_name = models.CharField(max_length=255, null=True, blank=True)
     enctrypted_account_number = models.CharField(max_length=255, null=True, blank=True)
     encrypted_ifsc = models.CharField(max_length=255, null=True, blank=True)

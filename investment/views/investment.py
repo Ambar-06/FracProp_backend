@@ -15,7 +15,7 @@ class InvestmentView(BaseAPIView):
         response = self.service.post_service(request, data)
         response, code = self.get_response_or_error(response)
         return self.success(response, code=code)
-    
+
     @auth_guard()
     def get(self, request, data, *args):
         response = self.service.get_service(request, data)

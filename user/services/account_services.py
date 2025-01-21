@@ -20,7 +20,7 @@ class AccountServices(BaseService):
         user = self.user_model.objects.filter(uuid=user_id).first()
         if not user:
             return self.bad_request("User not found")
-        key_serial = _r.randint(1, 5) #nosec
+        key_serial = _r.randint(1, 5)  # nosec
         data["encryption_key_serial"] = key_serial
         account_number = data.pop("account_number", None)
         ifsc = data.pop("ifsc", None)

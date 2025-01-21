@@ -8,7 +8,9 @@ class UserServices(BaseService):
         self.model = User
 
     def get_service(self, request, data):
-        user = self.model.objects.filter(uuid=request.user.get("uuid"), is_deleted=False).first()
+        user = self.model.objects.filter(
+            uuid=request.user.get("uuid"), is_deleted=False
+        ).first()
         if not user.is_admin:
             return self.bad_request("You are not authorized to access this resource")
         users = self.model.objects.all().exclude(is_admin=True)

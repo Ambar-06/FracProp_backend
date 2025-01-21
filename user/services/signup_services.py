@@ -6,6 +6,7 @@ from user.models.user import User
 from user.models.user_token import UserToken
 from django.utils import timezone
 
+
 class SignUpServices(BaseService):
     def __init__(self):
         self.user_model = User
@@ -21,10 +22,10 @@ class SignUpServices(BaseService):
             data["country_code"] = data.get("country_code").replace("+", "")
         if data.get("phone_number") and data.get("country_code"):
             if self.user_model.objects.filter(
-                    phone_number=data.get("phone_number"),
-                    country_code=data.get("country_code"),
-                    is_deleted=False,
-                ).exists():
+                phone_number=data.get("phone_number"),
+                country_code=data.get("country_code"),
+                is_deleted=False,
+            ).exists():
                 return self.bad_request(
                     "User already exists or Phone number already registered"
                 )
@@ -35,8 +36,8 @@ class SignUpServices(BaseService):
                 return self.bad_request("Username already exists")
         if data.get("email"):
             if self.user_model.objects.filter(
-                    email=data.get("email"), is_deleted=False
-                ).exists():
+                email=data.get("email"), is_deleted=False
+            ).exists():
                 return self.bad_request("Email already exists")
         user_ins = self.user_model.objects.create(
             username=data.get("username"),
@@ -60,9 +61,9 @@ class SignUpServices(BaseService):
                 "country_code": user_ins.country_code,
                 "phone_number": user_ins.phone_number,
                 "email": user_ins.email,
-                "is_email_verified" : user_ins.is_email_verified,
-                "is_admin" : user_ins.is_admin,
-                "is_phone_verified" : user_ins.is_phone_verified,
-                "is_email_verified" : user_ins.is_email_verified
+                "is_email_verified": user_ins.is_email_verified,
+                "is_admin": user_ins.is_admin,
+                "is_phone_verified": user_ins.is_phone_verified,
+                "is_email_verified": user_ins.is_email_verified,
             }
         )
