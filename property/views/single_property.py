@@ -4,12 +4,14 @@ from common.boilerplate.decorators.validate_request import validate_request
 from property.serializers.single_property_serializers import (
     SinglePropertyFilterSerializer,
 )
+from property.services.property_investment_services import PropertyInvestmentServices
 from property.services.single_property_services import SinglePropertyServices
 
 
 class SinglePropertyView(BaseAPIView):
     def __init__(self):
         self.service = SinglePropertyServices()
+        self.investment_service = PropertyInvestmentServices()
 
     @auth_guard()
     @validate_request(SinglePropertyFilterSerializer)
@@ -29,5 +31,12 @@ class SinglePropertyView(BaseAPIView):
     @validate_request(SinglePropertyFilterSerializer)
     def delete(self, request, data, *args):
         service_data = self.service.delete_service(request, data)
+        response, status_code = self.get_response_or_error(service_data)
+        return self.success(response, status_code)
+    
+    @auth_guard()
+    @validate_request(SinglePropertyFilterSerializer)
+    def invest(self, request, data, *args):
+        service_data = self.service.post_service(request, data)
         response, status_code = self.get_response_or_error(service_data)
         return self.success(response, status_code)

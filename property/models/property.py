@@ -36,6 +36,7 @@ class Property(BaseModel):
         default="RENT",
     )
     number_of_rooms = models.IntegerField(null=True, blank=True)
+    sold_percentage = models.FloatField(null=True, blank=True, default=0.0)
     valuation = models.FloatField(null=True, blank=True)
     investment_lock_in_period_in_months = models.IntegerField(null=True)
     has_loan = models.BooleanField(default=False)

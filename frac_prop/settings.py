@@ -52,7 +52,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 DJANGO_APPS = [
-     "django.contrib.admin",
+    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -64,7 +64,8 @@ FRAC_PROP_APPS = [
     "common",
     "user",
     "property",
-    "investment"
+    "investment",
+    "payment",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + FRAC_PROP_APPS
