@@ -8,14 +8,14 @@ from property.models.property_valuation_history import PropertyValuationHistory
 class Survey(BaseModel):
 
     survey_number = models.BigAutoField()
-    surveyer_id = (
+    surveyor_id = (
         models.UUIDField()
     )  # This id will be unique for each surveyer (a surveryer would be the company employee saved in - internal_frac_prop project)
-    surveyer_name = models.CharField(max_length=100, null=True, blank=True)
-    surveyer_number = models.CharField(max_length=10, null=True, blank=True)
-    surveyer_alt_number = models.CharField(max_length=10, null=True, blank=True)
-    surveyer_govt_id_proof = models.ForeignKey()
-    surveyer_email = models.EmailField(max_length=100, null=True, blank=True)
+    surveyor_name = models.CharField(max_length=100, null=True, blank=True)
+    surveyor_number = models.CharField(max_length=10, null=True, blank=True)
+    surveyor_alt_number = models.CharField(max_length=10, null=True, blank=True)
+    surveyor_govt_id_proof = models.ForeignKey()
+    surveyor_email = models.EmailField(max_length=100, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     property = models.ForeignKey(
         Property, on_delete=models.DO_NOTHING, null=True, related_name="surveys"
