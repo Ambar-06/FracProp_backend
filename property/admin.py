@@ -25,12 +25,12 @@ class PropertyDataAndDocumentAdmin(admin.ModelAdmin):
 @admin.register(PropertyValuationHistory)
 class PropertyValuationHistoryAdmin(admin.ModelAdmin):
     ordering = ['-created_at']
-    list_display = ['property', 'valuation']
+    list_filter = ['property', 'valuation']
 
 @admin.register(Survey)
 class SurveyAdmin(admin.ModelAdmin):
     ordering = ['-created_at']
-    list_display = ['property', 'surveyor_id', 'surveyor_name', 'surveyor_email']
+    list_filter = ['property', 'surveyor_id', 'surveyor_name', 'surveyor_email']
 
 @admin.register(UserProperty)
 class UserPropertyAdmin(admin.ModelAdmin):
@@ -43,7 +43,7 @@ class UserPropertyAmountAdmin(admin.ModelAdmin):
 @admin.register(UserPropertyStake)
 class UserPropertyStakeAdmin(admin.ModelAdmin):
     ordering = ['-created_at']
-    list_display = ['user', 'property', 'stake_percentage']
+    list_filter = ['user', 'property', 'stake_percentage']
 
 @admin.register(PropertyRentalData)
 class PropertyRentalDataAdmin(admin.ModelAdmin):
