@@ -7,8 +7,8 @@ class SignUpSerializer(serializers.Serializer):
         required=True,
         allow_null=False,
         error_messages={
-            "required": "First name is required",
-            "null": "First name cannot be null",
+            "required": "Username is required",
+            "null": "Username cannot be null",
         },
     )
     password = serializers.CharField(
@@ -28,20 +28,16 @@ class SignUpSerializer(serializers.Serializer):
         },
     )
     email = serializers.EmailField(
-        required=True,
-        allow_null=False,
-        error_messages={
-            "required": "Email is required",
-            "null": "Email cannot be null",
-        },
+        required=False,
+        allow_null=True,
     )
     phone_number = serializers.CharField(
-        required=True,
-        allow_null=False,
-        error_messages={
-            "required": "Phone number is required",
-            "null": "Phone number cannot be null",
-        },
+        required=False,
+        allow_null=True,
+    )
+    country_code = serializers.CharField(
+        required=False,
+        allow_null=True,
     )
 
     def validate(self, data):
@@ -49,35 +45,24 @@ class SignUpSerializer(serializers.Serializer):
             raise serializers.ValidationError(
                 "Password and confirm password does not match"
             )
-        if not data("email") and not data.get("phone_number"):
+        if not data.get("email") and not data.get("phone_number"):
             raise serializers.ValidationError(
                 "Either email or Phone number is required to signup"
             )
         if data.get("phone_number"):
-            if "+" in data.get("phone_number"):
-                if "-" in data.get("phone_number"):
-                    country_code, number = data.get("phone_number")[1:].split("-")
-                else:
-                    raise serializers.ValidationError(
-                        "Phone number should be in format +91-1234567890"
-                    )
-                if len(number) < 9:
-                    raise serializers.ValidationError(
-                        "Phone number should be of 9 digits minimum"
-                    )
-                if not number.isdigit():
-                    raise serializers.ValidationError("Phone number should be numeric")
-                # if number[0] != "7" and number[0] != "8" and number[0] != "9" and number[0] != "9":
-                #     raise serializers.ValidationError("Phone number should start with 7, 8 or 9")
-                if (
-                    User.objects.filter(phone_number=number).exists()
-                    or User.objects.filter(
-                        phone_number=data.get("phone_number")
-                    ).exists()
-                ):
-                    raise serializers.ValidationError("Phone number already exists")
-            else:
+            if not data.get("country_code"):
+                raise serializers.ValidationError("Country code is required")
+            if not data.get("phone_number").startswith("+"):
                 raise serializers.ValidationError("Phone number should start with +")
+            
+            if len(data.get("phone_number")) < 9:
+                raise serializers.ValidationError(
+                    "Phone number should be of 9 digits minimum"
+                )
+            if not data.get("phone_number").isdigit():
+                raise serializers.ValidationError("Phone number should be numeric")
+            if User.objects.filter(phone_number=data.get("phone_number"), country_code=data.get("country_code")).exists():
+                raise serializers.ValidationError("Phone number already exists")
         if User.objects.filter(username=data.get("username")).exists():
             raise serializers.ValidationError("Username already exists")
         return data

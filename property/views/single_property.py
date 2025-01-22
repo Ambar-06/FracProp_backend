@@ -1,6 +1,7 @@
 from common.boilerplate.api.base_api import BaseAPIView
 from common.boilerplate.decorators.auth_guard import auth_guard
 from common.boilerplate.decorators.validate_request import validate_request
+from property.serializers.property_investment_serializers import PropertyInvestmentSerializer
 from property.serializers.single_property_serializers import (
     SinglePropertyFilterSerializer,
 )
@@ -35,7 +36,7 @@ class SinglePropertyView(BaseAPIView):
         return self.success(response, status_code)
 
     @auth_guard()
-    # @validate_request()
+    @validate_request(PropertyInvestmentSerializer)
     def invest(self, request, data, *args):
         service_data = self.investment_service.post_service(request, data)
         response, status_code = self.get_response_or_error(service_data)

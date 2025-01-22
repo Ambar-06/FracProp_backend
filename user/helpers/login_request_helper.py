@@ -19,10 +19,9 @@ class LoginRequestValidator:
             if not user:
                 return False, "Incorrect email or User does not exist"
         if data.get("phone_number"):
-            country_code = data.get("country_code").replace("+", "")
             user = self.user_model.objects.get(
                 phone_number=data.get("phone_number"),
-                country_code=country_code,
+                country_code=data.get("country_code"),
                 is_active=True,
                 is_deleted=False,
             )

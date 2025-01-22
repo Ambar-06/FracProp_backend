@@ -24,7 +24,7 @@ class LoginServices(BaseService):
         ):
             return self.bad_request("Invalid credentials")
         token, expiry = self.jwt_service.create_token(user=obj_or_msg)
-        token_obj = self.user_token.objects.filter(user_id=str(obj_or_msg._id)).first()
+        token_obj = self.user_token.objects.filter(user=obj_or_msg).first()
         if token_obj is None:
             token_obj = self.user_token.objects.create(
                 user_id=str(obj_or_msg._id), token=token, expiry=expiry

@@ -18,9 +18,7 @@ class SignUpServices(BaseService):
         if not validate_user_password(password=data.get("password")):
             return self.bad_request("Password does not meet the requirements")
         pwd = self.pw_handler.hash_pw(data.get("password"))
-        if data.get("country_code") is not None:
-            data["country_code"] = data.get("country_code").replace("+", "")
-        if data.get("phone_number") and data.get("country_code"):
+        if data.get("phone_number"):
             if self.user_model.objects.filter(
                 phone_number=data.get("phone_number"),
                 country_code=data.get("country_code"),
