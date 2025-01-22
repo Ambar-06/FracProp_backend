@@ -2,7 +2,7 @@ from django.db import models
 
 from common.models.base_model import BaseModel
 from property.models.property import Property
-from property.models.property_data_and_document import PropertyDataAndDocument
+from property.models.property_data_and_document import PropertyRelatedDataAndDocument
 
 
 class PropertyRentalData(BaseModel):
@@ -31,5 +31,5 @@ class PropertyRentalData(BaseModel):
     due_date = models.IntegerField(null=True, blank=True)
     security_deposit = models.FloatField(null=True, blank=True)
     agreement = models.ForeignKey(
-        PropertyDataAndDocument, on_delete=models.DO_NOTHING, null=True, blank=True
+        PropertyRelatedDataAndDocument, on_delete=models.DO_NOTHING, null=True, blank=True
     )

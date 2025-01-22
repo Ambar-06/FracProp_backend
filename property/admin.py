@@ -7,7 +7,7 @@ from .models import *
 class PropertyAdmin(admin.ModelAdmin):
     ordering = ['-created_at']
     list_filter = ['is_active', 'is_deleted',
-                   'property_name',
+                   'name',
                    'type',
                    'valuation',
                    'return_type',
@@ -18,8 +18,8 @@ class PropertyAdmin(admin.ModelAdmin):
                    'is_active',
                    ]
     
-@admin.register(PropertyDataAndDocument)
-class PropertyDataAndDocumentAdmin(admin.ModelAdmin):
+@admin.register(PropertyRelatedDataAndDocument)
+class PropertyRelatedDataAndDocumentAdmin(admin.ModelAdmin):
     ordering = ['-created_at']
 
 @admin.register(PropertyValuationHistory)
@@ -43,7 +43,7 @@ class UserPropertyAmountAdmin(admin.ModelAdmin):
 @admin.register(UserPropertyStake)
 class UserPropertyStakeAdmin(admin.ModelAdmin):
     ordering = ['-created_at']
-    list_filter = ['user', 'property', 'stake_percentage']
+    list_filter = ['user', 'property', 'stake_in_percent']
 
 @admin.register(PropertyRentalData)
 class PropertyRentalDataAdmin(admin.ModelAdmin):

@@ -1,5 +1,5 @@
 from .property import Property
-from .property_data_and_document import PropertyDataAndDocument
+from .property_data_and_document import PropertyRelatedDataAndDocument
 from .property_valuation_history import PropertyValuationHistory
 from .user_property import UserProperty
 from .user_property_amount import UserPropertyAmount

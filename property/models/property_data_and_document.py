@@ -4,7 +4,7 @@ from common.models.base_model import BaseModel
 from property.models.property import Property
 
 
-class PropertyDataAndDocument(BaseModel):
+class PropertyRelatedDataAndDocument(BaseModel):
     DOCUMENT_TYPE_CHOICES = (
         ("PROPERTY_PAPER", "property_paper"),
         ("PROPERTY_IMAGE", "property_image"),
