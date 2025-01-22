@@ -10,3 +10,6 @@ __pycache__/
 
 # rough
 rough.*
+
+# sqlite
+*.sqlite3

@@ -42,6 +42,10 @@ class Migration(migrations.Migration):
                 to="property.property",
             ),
         ),
+        migrations.RenameModel(
+            old_name="PropertyDataAndDocument",
+            new_name="PropertyRelatedDataAndDocument",
+        ),
         migrations.CreateModel(
             name="PropertyRentalData",
             fields=[
@@ -106,10 +110,6 @@ class Migration(migrations.Migration):
                 "get_latest_by": "updated_at",
                 "abstract": False,
             },
-        ),
-        migrations.RenameModel(
-            old_name="PropertyDataAndDocument",
-            new_name="PropertyRelatedDataAndDocument",
         ),
         migrations.CreateModel(
             name="Survey",
