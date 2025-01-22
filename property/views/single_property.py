@@ -35,7 +35,7 @@ class SinglePropertyView(BaseAPIView):
         return self.success(response, status_code)
 
     @auth_guard()
-    @validate_request()
+    # @validate_request()
     def invest(self, request, data, *args):
         service_data = self.investment_service.post_service(request, data)
         response, status_code = self.get_response_or_error(service_data)

@@ -33,6 +33,11 @@ ENCRYPT_KEY3 = os.getenv("ENCRYPT_KEY3")
 ENCRYPT_KEY4 = os.getenv("ENCRYPT_KEY4")
 ENCRYPT_KEY5 = os.getenv("ENCRYPT_KEY5")
 
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME")
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -66,6 +71,7 @@ FRAC_PROP_APPS = [
     "property",
     "investment",
     "payment",
+    "notification",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + FRAC_PROP_APPS

@@ -12,7 +12,7 @@ class PropertyView(BaseAPIView):
         self.service = PropertyServices()
 
     @auth_guard()
-    @validate_request()
+    # @validate_request()
     def get(self, request, data, *args):
         service_data = self.service.get_service(request, data)
         response, status_code = self.get_response_or_error(service_data)
