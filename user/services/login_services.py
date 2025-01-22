@@ -27,7 +27,7 @@ class LoginServices(BaseService):
         token_obj = self.user_token.objects.filter(user=obj_or_msg).first()
         if token_obj is None:
             token_obj = self.user_token.objects.create(
-                user_id=str(obj_or_msg._id), token=token, expiry=expiry
+                user=obj_or_msg, token=token, expiry=expiry
             )
         else:
             token_obj.token = token
