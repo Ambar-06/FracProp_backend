@@ -13,3 +13,4 @@ rough.*
 
 # sqlite
 *.sqlite3
+db.sqlite3
