@@ -7,9 +7,9 @@ class LoginRequestValidator:
 
     def validate_login_request(self, data):
         if data.get("username"):
-            user = self.user_model.objects.get(
+            user = self.user_model.objects.filter(
                 username=data.get("username"), is_active=True, is_deleted=False
-            )
+            ).first()
             if not user:
                 return False, "Incorrect username or User does not exist"
         if data.get("email"):
@@ -19,12 +19,12 @@ class LoginRequestValidator:
             if not user:
                 return False, "Incorrect email or User does not exist"
         if data.get("phone_number"):
-            user = self.user_model.objects.get(
+            user = self.user_model.objects.filter(
                 phone_number=data.get("phone_number"),
                 country_code=data.get("country_code"),
                 is_active=True,
                 is_deleted=False,
-            )
+            ).first()
             if not user:
                 return False, "Incorrect phone number or User does not exist"
         return True, user
