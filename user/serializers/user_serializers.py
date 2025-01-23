@@ -35,6 +35,8 @@ class UserViewSerializer(serializers.ModelSerializer):
         model = User
         fields = [
             "uuid",
+            "first_name",
+            "last_name",
             "username",
             "phone_number",
             "country_code",
@@ -44,3 +46,5 @@ class UserViewSerializer(serializers.ModelSerializer):
             "email",
             "is_email_verified",
         ]
+
+

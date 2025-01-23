@@ -1,1 +1,2 @@
 from .auth_services import GenerateAuthTokenService
+from .user_profile_services import UserProfileService

@@ -43,6 +43,6 @@ class LoginSerializer(serializers.Serializer):
                 raise serializers.ValidationError(
                     "Phone number should be of 9 digits minimum"
                 )
-            if not data.get("phone_number").startswith("+"):
-                raise serializers.ValidationError("Phone number should start with +")
+            if not data.get("country_code").startswith("+"):
+                raise serializers.ValidationError("Country Code should start with +")
         return data
