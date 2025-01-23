@@ -40,6 +40,7 @@ class LoginServices(BaseService):
         # ).first()
         return self.ok(
             {
+                "uuid": obj_or_msg.uuid,
                 "token": token,
                 "username": obj_or_msg.username,
                 "country_code": obj_or_msg.country_code,

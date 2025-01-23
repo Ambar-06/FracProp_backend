@@ -54,6 +54,7 @@ class SignUpServices(BaseService):
         user_ins.save()
         return self.ok(
             {
+                "uuid": user_ins.uuid,
                 "token": token_ins.token,
                 "username": user_ins.username,
                 "country_code": user_ins.country_code,
