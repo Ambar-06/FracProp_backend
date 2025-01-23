@@ -49,5 +49,6 @@ class LoginServices(BaseService):
                 "is_admin": obj_or_msg.is_admin,
                 "is_phone_verified": obj_or_msg.is_phone_verified,
                 "is_email_verified": obj_or_msg.is_email_verified,
+                "last_login": obj_or_msg.last_login,
             }
         )
