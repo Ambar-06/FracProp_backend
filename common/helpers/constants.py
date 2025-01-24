@@ -80,3 +80,36 @@ class DocumentType:
 
 obj_document_type = DocumentType()
 DocumentTypeDictionary = obj_document_type.__dict__
+
+
+@dataclass
+class PropertyType:
+    def __init__(self):
+        self.RESIDENTIAL = "RESIDENTIAL"
+        self.COMMERCIAL = "COMMERCIAL"
+        self.INDUSTRIAL = "INDUSTRIAL"
+        self.AGRICULTURAL = "AGRICULTURAL"
+        self.OTHER = "OTHER"
+
+obj_property_type = PropertyType()
+PropertyTypeDictionary = obj_property_type.__dict__
+
+@dataclass
+class ReturnType:
+    def __init__(self):
+        self.RENT = "RENT"
+        self.APPRECIATION = "APPRICIATION"
+
+obj_return_type = ReturnType()
+ReturnTypeDictionary = obj_return_type.__dict__
+
+@dataclass
+class BuildingHealth:
+    def __init__(self):
+        self.EXCELLENT = "EXCELLENT"
+        self.GOOD = "GOOD"
+        self.AVERAGE = "AVERAGE"
+        self.BAD = "BAD"
+
+obj_building_health = BuildingHealth()
+BuildingHealthDictionary = obj_building_health.__dict__
