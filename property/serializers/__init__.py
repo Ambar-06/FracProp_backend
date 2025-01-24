@@ -1,3 +1,4 @@
 from .property_serializers import PropertyFilterSerializer, PropertySerializer
 from .single_property_serializers import SinglePropertyFilterSerializer
 from .property_investment_serializers import PropertyInvestmentSerializer
+from .property_valuation_history_serializers import PropertyValuationHistorySerializer

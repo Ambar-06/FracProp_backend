@@ -24,6 +24,7 @@ class Property(BaseModel):
     state = models.CharField(max_length=255, null=True, blank=True)
     country = models.CharField(max_length=255, null=True, blank=True)
     pin_code = models.CharField(max_length=255, null=True, blank=True)
+    govt_allotted_property_id = models.CharField(max_length=255, null=True, unique=True)
     type = models.CharField(
         max_length=255, null=True, choices=PROPERTY_TYPE_CHOICES, default="RESIDENTIAL"
     )
@@ -50,3 +51,6 @@ class Property(BaseModel):
     is_approved = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     other_details = models.JSONField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ("name", "address", "city", "state", "country", "pin_code")

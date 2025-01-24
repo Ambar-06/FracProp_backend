@@ -99,6 +99,7 @@ class ReturnType:
     def __init__(self):
         self.RENT = "RENT"
         self.APPRECIATION = "APPRICIATION"
+        self.OTHER = "OTHER"
 
 obj_return_type = ReturnType()
 ReturnTypeDictionary = obj_return_type.__dict__
