@@ -51,7 +51,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -65,6 +65,10 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
+OTHER_APPS = [
+    "corsheaders",
+]
+
 FRAC_PROP_APPS = [
     "common",
     "user",
@@ -74,7 +78,7 @@ FRAC_PROP_APPS = [
     "notification",
 ]
 
-INSTALLED_APPS = DJANGO_APPS + FRAC_PROP_APPS
+INSTALLED_APPS = DJANGO_APPS + FRAC_PROP_APPS + OTHER_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -84,6 +88,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware"
 ]
 
 ROOT_URLCONF = "frac_prop.urls"
@@ -158,3 +163,6 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+CORS_ALLOW_ALL_ORIGINS = True
