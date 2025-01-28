@@ -9,10 +9,14 @@ def update_property(uuid, data):
     property.name = data.get("name") or property.name
     property.address = data.get("address") or property.address
     property.description = data.get("description") or property.description
+    property.city = data.get("city") or property.city
+    property.state = data.get("state") or property.state
+    property.country = data.get("country") or property.country
     property.type = data.get("type") or property.type
     property.number_of_floors = (
         data.get("number_of_floors") or property.number_of_floors
     )
+    property.number_of_rooms = data.get("number_of_rooms") or property.number_of_rooms
     property.built_area_in_sqft = (
         data.get("built_area_in_sqft") or property.built_area_in_sqft
     )
