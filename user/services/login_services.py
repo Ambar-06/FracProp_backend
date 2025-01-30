@@ -43,6 +43,8 @@ class LoginServices(BaseService):
                 "uuid": obj_or_msg.uuid,
                 "token": token,
                 "username": obj_or_msg.username,
+                "first_name" : obj_or_msg.first_name,
+                "last_name" : obj_or_msg.last_name,
                 "country_code": obj_or_msg.country_code,
                 "phone_number": obj_or_msg.phone_number,
                 "email": obj_or_msg.email,

@@ -57,6 +57,8 @@ class SignUpServices(BaseService):
                 "uuid": user_ins.uuid,
                 "token": token_ins.token,
                 "username": user_ins.username,
+                "first_name" : user_ins.first_name,
+                "last_name" : user_ins.last_name,
                 "country_code": user_ins.country_code,
                 "phone_number": user_ins.phone_number,
                 "email": user_ins.email,
