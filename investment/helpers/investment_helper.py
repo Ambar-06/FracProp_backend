@@ -13,7 +13,7 @@ class InvestmentHelper:
         pass
 
     def get_investment_data(self, user):
-        user_properties = user.user_properties.all()
+        user_properties = user.user_properties.filter(is_deleted=False)
         property_data = []
         user_property_investment_qs = Investment.objects.filter(user=user).order_by(
             "-created_at"

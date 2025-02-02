@@ -52,7 +52,7 @@ class SignUpSerializer(serializers.Serializer):
         if data.get("phone_number"):
             if not data.get("country_code"):
                 raise serializers.ValidationError("Country code is required")
-            if not data.get("phone_number").startswith("+"):
+            if not data.get("country_code").startswith("+"):
                 raise serializers.ValidationError("Phone number should start with +")
             
             if len(data.get("phone_number")) < 9:
