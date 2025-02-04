@@ -1,11 +1,13 @@
 from rest_framework import serializers
 
 from property.models.property import Property
-from common.helpers.constants import BuildingHealthDictionary, PropertyTypeDictionary, ReturnTypeDictionary
+from common.helpers.constants import BuildingHealthDictionary, DocumentType, PropertyTypeDictionary, ReturnTypeDictionary
+from property.models.property_data_and_document import PropertyRelatedDataAndDocument
 from property.serializers.property_valuation_history_serializers import PropertyValuationHistorySerializer
 
 class PropertySerializer(serializers.ModelSerializer):
     valuation_history = serializers.SerializerMethodField("get_valuation_history")
+    property_images = serializers.SerializerMethodField("get_property_images")
 
     class Meta:
         model = Property
@@ -35,7 +37,10 @@ class PropertySerializer(serializers.ModelSerializer):
             "is_active",
             "other_details",
             "valuation_history",
+            "property_images",
         )
+    def get_property_images(self, obj):
+        return PropertyRelatedDataAndDocument.objects.filter(property=obj, document_type=DocumentType().PROPERTY_IMAGE).values_list("document", flat=True)
 
     def get_valuation_history(self, obj):
         property_val_history = obj.valuation_history.all().order_by("-created_at")[:10]
