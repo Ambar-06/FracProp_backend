@@ -46,6 +46,7 @@ class PropertySerializer(serializers.ModelSerializer):
             "other_details",
             "valuation_history",
             "property_images",
+            "user_investments",
         )
 
     def get_property_images(self, obj):
@@ -60,19 +61,18 @@ class PropertySerializer(serializers.ModelSerializer):
     def get_user_investments(self, obj):
         request = self.context.get("request")
         if request:
-            user = User.objects.filter(request.user.get("uuid")).first()
+            user = User.objects.filter(uuid=request.user.get("uuid")).first()
             user_property_amount = UserPropertyAmount.objects.filter(
                 user=user, property=obj
             ).first()
             if user_property_amount:
-                data = {
+                return {
                     "total_amount": user_property_amount.total_amount,
                     "total_investment": user_property_amount.total_investment,
                     "total_withdrawal": user_property_amount.total_withdrawal,
                     "total_profit": user_property_amount.total_profit,
                     "total_loss": user_property_amount.total_loss,
                 }
-
         return {}
 
 
