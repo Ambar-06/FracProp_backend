@@ -91,8 +91,10 @@ class PropertyType:
         self.AGRICULTURAL = "AGRICULTURAL"
         self.OTHER = "OTHER"
 
+
 obj_property_type = PropertyType()
 PropertyTypeDictionary = obj_property_type.__dict__
+
 
 @dataclass
 class ReturnType:
@@ -101,8 +103,10 @@ class ReturnType:
         self.APPRECIATION = "APPRICIATION"
         self.OTHER = "OTHER"
 
+
 obj_return_type = ReturnType()
 ReturnTypeDictionary = obj_return_type.__dict__
+
 
 @dataclass
 class BuildingHealth:
@@ -111,6 +115,7 @@ class BuildingHealth:
         self.GOOD = "GOOD"
         self.AVERAGE = "AVERAGE"
         self.BAD = "BAD"
+
 
 obj_building_health = BuildingHealth()
 BuildingHealthDictionary = obj_building_health.__dict__

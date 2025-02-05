@@ -1,13 +1,21 @@
 from rest_framework import serializers
 
+from common.helpers.constants import (BuildingHealthDictionary, DocumentType,
+                                      PropertyTypeDictionary,
+                                      ReturnTypeDictionary)
 from property.models.property import Property
-from common.helpers.constants import BuildingHealthDictionary, DocumentType, PropertyTypeDictionary, ReturnTypeDictionary
-from property.models.property_data_and_document import PropertyRelatedDataAndDocument
-from property.serializers.property_valuation_history_serializers import PropertyValuationHistorySerializer
+from property.models.property_data_and_document import \
+    PropertyRelatedDataAndDocument
+from property.models.user_property_amount import UserPropertyAmount
+from property.serializers.property_valuation_history_serializers import \
+    PropertyValuationHistorySerializer
+from user.models.user import User
+
 
 class PropertySerializer(serializers.ModelSerializer):
     valuation_history = serializers.SerializerMethodField("get_valuation_history")
     property_images = serializers.SerializerMethodField("get_property_images")
+    user_investments = serializers.SerializerMethodField("get_user_investments")
 
     class Meta:
         model = Property
@@ -39,18 +47,44 @@ class PropertySerializer(serializers.ModelSerializer):
             "valuation_history",
             "property_images",
         )
+
     def get_property_images(self, obj):
-        return PropertyRelatedDataAndDocument.objects.filter(property=obj, document_type=DocumentType().PROPERTY_IMAGE).values_list("document", flat=True)
+        return PropertyRelatedDataAndDocument.objects.filter(
+            property=obj, document_type=DocumentType().PROPERTY_IMAGE
+        ).values_list("document", flat=True)
 
     def get_valuation_history(self, obj):
         property_val_history = obj.valuation_history.all().order_by("-created_at")[:10]
         return PropertyValuationHistorySerializer(property_val_history, many=True).data
 
+    def get_user_investments(self, obj):
+        request = self.context.get("request")
+        if request:
+            user = User.objects.filter(request.user.get("uuid")).first()
+            user_property_amount = UserPropertyAmount.objects.filter(
+                user=user, property=obj
+            ).first()
+            if user_property_amount:
+                data = {
+                    "total_amount": user_property_amount.total_amount,
+                    "total_investment": user_property_amount.total_investment,
+                    "total_withdrawal": user_property_amount.total_withdrawal,
+                    "total_profit": user_property_amount.total_profit,
+                    "total_loss": user_property_amount.total_loss,
+                }
+
+        return {}
+
 
 class OtherDetailsSerializer(serializers.Serializer):
-    
-        construction_age_in_years = serializers.IntegerField(required=True, min_value=0, max_value=100)
-        building_health = serializers.ChoiceField(required=True, choices=BuildingHealthDictionary)
+
+    construction_age_in_years = serializers.IntegerField(
+        required=True, min_value=0, max_value=100
+    )
+    building_health = serializers.ChoiceField(
+        required=True, choices=BuildingHealthDictionary
+    )
+
 
 class PropertyFilterSerializer(serializers.Serializer):
 
@@ -77,4 +111,3 @@ class PropertyFilterSerializer(serializers.Serializer):
     is_approved = serializers.BooleanField(required=False, default=False)
     is_active = serializers.BooleanField(required=False, default=True)
     other_details = OtherDetailsSerializer(required=True)
-

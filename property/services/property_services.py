@@ -22,7 +22,9 @@ class PropertyServices(BaseService):
         return self.ok(PropertySerializer(properties, many=True).data)
 
     def post_service(self, request, data):
-        property = self.model.objects.filter(govt_allotted_property_id=data.get("govt_allotted_property_id")).first()
+        property = self.model.objects.filter(
+            govt_allotted_property_id=data.get("govt_allotted_property_id")
+        ).first()
         if property:
             return self.bad_request("Property unique ID already exists")
         property = self.model.objects.create(**data)

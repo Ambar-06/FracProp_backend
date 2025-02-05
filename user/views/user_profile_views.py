@@ -14,7 +14,7 @@ class UserProfileView(BaseAPIView):
         response = self.service.get_service(request, data)
         response, code = self.get_response_or_error(response)
         return self.success(response, code=code)
-    
+
     @auth_guard()
     @validate_request(UserProfileSerializer)
     def patch(self, request, data, *args):

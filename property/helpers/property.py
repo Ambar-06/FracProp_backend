@@ -38,19 +38,30 @@ def update_property_valuation(property, valuation):
         property.valuation = valuation
         property.save()
         PropertyValuationHistory.objects.create(valuation=valuation, property=property)
-        user_property_amount_data_qs = UserPropertyAmount.objects.filter(property=property)
+        user_property_amount_data_qs = UserPropertyAmount.objects.filter(
+            property=property
+        )
         for user_property_amount in user_property_amount_data_qs:
-            user_property_stake = UserPropertyStake.objects.filter(user=user_property_amount.user, property=property).first()
-            investment_change = calculate_percentage_amount_for_current_valuation(valuation, user_property_stake.stake_in_percent)
+            user_property_stake = UserPropertyStake.objects.filter(
+                user=user_property_amount.user, property=property
+            ).first()
+            investment_change = calculate_percentage_amount_for_current_valuation(
+                valuation, user_property_stake.stake_in_percent
+            )
             difference = user_property_amount.total_amount - investment_change
             if difference > 0:
-                user_property_amount.total_profit = user_property_amount.total_profit + difference
+                user_property_amount.total_profit = (
+                    user_property_amount.total_profit + difference
+                )
             else:
-                user_property_amount.total_loss = user_property_amount.total_loss + difference
+                user_property_amount.total_loss = (
+                    user_property_amount.total_loss + difference
+                )
             user_property_amount.total_amount += difference
             user_property_amount.save()
         return True
     return False
+
 
 def calculate_percentage_amount_for_current_valuation(valuation, stake_in_percent):
     return (valuation * stake_in_percent) / 100

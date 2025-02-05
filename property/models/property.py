@@ -1,7 +1,8 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from common.models.base_model import BaseModel
-from django.core.validators import MaxValueValidator, MinValueValidator
+
 
 class Property(BaseModel):
     PROPERTY_TYPE_CHOICES = (
@@ -42,7 +43,10 @@ class Property(BaseModel):
     )
     number_of_rooms = models.IntegerField(null=True, blank=True)
     sold_percentage = models.FloatField(
-        null=True, blank=True, default=0.0, validators=[MinValueValidator(0.0), MaxValueValidator(100.0)],
+        null=True,
+        blank=True,
+        default=0.0,
+        validators=[MinValueValidator(0.0), MaxValueValidator(100.0)],
     )
     valuation = models.FloatField(null=True, blank=True)
     investment_lock_in_period_in_months = models.IntegerField(null=True)

@@ -1,7 +1,7 @@
-from investment.models.investment import Investment
-from investment.models.investment_return import InvestmentReturn
 from django.db.models import Sum
 
+from investment.models.investment import Investment
+from investment.models.investment_return import InvestmentReturn
 from investment.models.transaction import Transaction
 from property.models.user_property import UserProperty
 from property.models.user_property_amount import UserPropertyAmount

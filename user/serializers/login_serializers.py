@@ -32,7 +32,11 @@ class LoginSerializer(serializers.Serializer):
     )
 
     def validate(self, data):
-        if not data.get("phone_number") and not data.get("email") and not data.get("username"):
+        if (
+            not data.get("phone_number")
+            and not data.get("email")
+            and not data.get("username")
+        ):
             raise serializers.ValidationError(
                 "Either username or email or Phone number is required to login"
             )

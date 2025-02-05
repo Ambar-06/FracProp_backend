@@ -46,5 +46,3 @@ class UserViewSerializer(serializers.ModelSerializer):
             "email",
             "is_email_verified",
         ]
-
-

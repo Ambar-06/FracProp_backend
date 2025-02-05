@@ -2,7 +2,8 @@ from common.boilerplate.api.base_api import BaseAPIView
 from common.boilerplate.decorators.auth_guard import auth_guard
 from common.boilerplate.decorators.validate_request import validate_request
 from user.serializers.auth_serializers import GenerateAuthTokenSerializer
-from user.serializers.email_serializers import ChangePasswordSerializer, EmailSerializer
+from user.serializers.email_serializers import (ChangePasswordSerializer,
+                                                EmailSerializer)
 from user.services.auth_services import GenerateAuthTokenService
 from user.services.email_services import EmailService, ResetPasswordService
 

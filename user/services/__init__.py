@@ -1,3 +1,3 @@
 from .auth_services import GenerateAuthTokenService
-from .user_profile_services import UserProfileService
 from .dashboard_services import DashboardService
+from .user_profile_services import UserProfileService

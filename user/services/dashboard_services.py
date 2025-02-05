@@ -1,8 +1,9 @@
+from django.db.models import Sum
+
 from common.boilerplate.services.base_service import BaseService
 from investment.models.investment_return import InvestmentReturn
 from property.models.user_property_amount import UserPropertyAmount
 from user.models.user import User
-from django.db.models import Sum
 
 
 class DashboardService(BaseService):
@@ -22,8 +23,12 @@ class DashboardService(BaseService):
         )
         dashboard_cards_data = {
             "total_properties": user_properties.count(),
-            "total_investment": user_property_amount.total_amount if user_property_amount else 0,
-            "total_rental_income": user_total_rental_income if user_total_rental_income else 0,
+            "total_investment": (
+                user_property_amount.total_amount if user_property_amount else 0
+            ),
+            "total_rental_income": (
+                user_total_rental_income if user_total_rental_income else 0
+            ),
             "increase_in_valuation": 0,
         }
         return self.ok(dashboard_cards_data)

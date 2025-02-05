@@ -17,7 +17,8 @@ class SinglePropertyServices(BaseService):
         property = self.model.objects.filter(uuid=uuid).first()
         if not property:
             return self.not_found("Property not found")
-        return self.ok(PropertySerializer(property).data)
+        context = {"request": request}
+        return self.ok(PropertySerializer(property, context=context).data)
 
     def patch_service(self, request, data):
         data = self.validator.validate(data)

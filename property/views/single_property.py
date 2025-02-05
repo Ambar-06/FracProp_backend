@@ -1,11 +1,12 @@
 from common.boilerplate.api.base_api import BaseAPIView
 from common.boilerplate.decorators.auth_guard import auth_guard
 from common.boilerplate.decorators.validate_request import validate_request
-from property.serializers.property_investment_serializers import PropertyInvestmentSerializer
-from property.serializers.single_property_serializers import (
-    SinglePropertyFilterSerializer,
-)
-from property.services.property_investment_services import PropertyInvestmentServices
+from property.serializers.property_investment_serializers import \
+    PropertyInvestmentSerializer
+from property.serializers.single_property_serializers import \
+    SinglePropertyFilterSerializer
+from property.services.property_investment_services import \
+    PropertyInvestmentServices
 from property.services.single_property_services import SinglePropertyServices
 
 

@@ -1,10 +1,11 @@
+import random as _r
+
 from common.boilerplate.services.base_service import BaseService
 from common.helpers.encryption_decryption import encrypt
 from user.models.bank_account_detail import BankAccountDetail
-import random as _r
-
 from user.models.user import User
-from user.serializers.account_serializers import BankAccountDetailViewSerializer
+from user.serializers.account_serializers import \
+    BankAccountDetailViewSerializer
 
 
 class AccountServices(BaseService):

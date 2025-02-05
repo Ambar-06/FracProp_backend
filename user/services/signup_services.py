@@ -1,10 +1,11 @@
+from django.utils import timezone
+
 from common.boilerplate.auth.jwt_service import JWTService
 from common.boilerplate.auth.password_handler import PasswordHandler
 from common.boilerplate.services.base_service import BaseService
 from user.helpers.django_password_validator import validate_user_password
 from user.models.user import User
 from user.models.user_token import UserToken
-from django.utils import timezone
 
 
 class SignUpServices(BaseService):
@@ -57,8 +58,8 @@ class SignUpServices(BaseService):
                 "uuid": user_ins.uuid,
                 "token": token_ins.token,
                 "username": user_ins.username,
-                "first_name" : user_ins.first_name,
-                "last_name" : user_ins.last_name,
+                "first_name": user_ins.first_name,
+                "last_name": user_ins.last_name,
                 "country_code": user_ins.country_code,
                 "phone_number": user_ins.phone_number,
                 "email": user_ins.email,

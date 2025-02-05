@@ -1,2 +1,2 @@
-from .single_property_services import SinglePropertyServices
 from .property_investment_services import PropertyInvestmentServices
+from .single_property_services import SinglePropertyServices

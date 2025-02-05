@@ -1,9 +1,10 @@
+from django.utils import timezone
+
 from common.boilerplate.auth.jwt_service import JWTService
 from common.boilerplate.auth.password_handler import PasswordHandler
 from common.boilerplate.services.base_service import BaseService
 from user.helpers.login_request_helper import LoginRequestValidator
 from user.models.user import User
-from django.utils import timezone
 from user.models.user_token import UserToken
 
 
@@ -43,8 +44,8 @@ class LoginServices(BaseService):
                 "uuid": obj_or_msg.uuid,
                 "token": token,
                 "username": obj_or_msg.username,
-                "first_name" : obj_or_msg.first_name,
-                "last_name" : obj_or_msg.last_name,
+                "first_name": obj_or_msg.first_name,
+                "last_name": obj_or_msg.last_name,
                 "country_code": obj_or_msg.country_code,
                 "phone_number": obj_or_msg.phone_number,
                 "email": obj_or_msg.email,

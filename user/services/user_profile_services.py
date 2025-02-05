@@ -12,16 +12,27 @@ class UserProfileService(BaseService):
         if not user:
             return self.not_found("User not found")
         return self.ok(UserViewSerializer(user).data)
-    
+
     def patch_service(self, request, data):
         user = User.objects.filter(uuid=request.user.get("uuid")).first()
         if not user:
             return self.not_found("User not found")
         if "email" in data:
-            if User.objects.filter(email=data.get("email")).exclude(uuid=user.uuid).exists():
+            if (
+                User.objects.filter(email=data.get("email"))
+                .exclude(uuid=user.uuid)
+                .exists()
+            ):
                 return self.bad_request("Email already exists")
         if "phone_number" in data:
-            if User.objects.filter(phone_number=data.get("phone_number"), country_code=data.get("country_code")).exclude(uuid=user.uuid).exists():
+            if (
+                User.objects.filter(
+                    phone_number=data.get("phone_number"),
+                    country_code=data.get("country_code"),
+                )
+                .exclude(uuid=user.uuid)
+                .exists()
+            ):
                 return self.bad_request("Phone number already exists")
         user.first_name = data.get("first_name") or user.first_name
         user.last_name = data.get("last_name") or user.last_name
