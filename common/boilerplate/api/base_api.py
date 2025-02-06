@@ -27,19 +27,21 @@ class ResponseOrError:
         pass
 
     def success(
-        self, data: T, code=StatusCodes().SUCCESS, msg: _.Optional[str] = None
+        self, data: T, code: int = StatusCodes().SUCCESS, msg: _.Optional[str] = None
     ) -> Response:
+        """Returns a successful response."""
         return Response(
             {
                 "success": True,
                 "code": code,
                 "data": data,
-                "message": msg,
+                "message": msg or "",
             },
             status=code,
         )
 
     def error(self, errors: T, status_code: int) -> Response:
+        """Returns an error response with specified errors."""
         return Response(
             {"success": False, "code": status_code, "errors": errors},
             status=status_code,
@@ -48,11 +50,14 @@ class ResponseOrError:
     def error_message(
         self, msg: str, code: int, data: _.Optional[dict] = None
     ) -> Response:
+        """Returns an error response with a message and optional data."""
         return Response(
-            {"success": False, "code": code, "message": msg, "data": data}, status=code
+            {"success": False, "code": code, "message": msg, "data": data},
+            status=code,
         )
 
     def error_message_without_data(self, msg: str, code: int) -> Response:
+        """Returns an error response with a message and no data."""
         return Response(
             {
                 "success": False,
@@ -63,21 +68,31 @@ class ResponseOrError:
         )
 
     def no_content(self) -> Response:
+        """Returns a no content response."""
         return Response(status=StatusCodes().NO_CONTENT)
 
     def get_response_or_error(self, response: dict) -> tuple:
+        """
+        Extracts response data and status code from a response dictionary.
+        Assumes the dictionary has either 'response_data' or 'errors'.
+        """
         response_keys = ["response_data", "errors"]
         resp = None
         code = None
+
         for key, value in response.items():
             if key in response_keys:
                 resp = value
             else:
                 code = value
-        return resp, code
+
+        # If no valid response or status code found, return an empty tuple
+        return resp or {}, code or StatusCodes().ERROR
 
 
-class BaseAPIView(APIView, ResponseOrError): ...
+class BaseAPIView(APIView, ResponseOrError):
+    """Base API view that includes response helpers from ResponseOrError."""
 
 
-class BaseModelViewSet(ModelViewSet, ResponseOrError): ...
+class BaseModelViewSet(ModelViewSet, ResponseOrError):
+    """Base ModelViewSet that includes response helpers from ResponseOrError."""

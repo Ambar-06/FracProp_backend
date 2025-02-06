@@ -161,13 +161,13 @@ class InvestmentHelper:
             )
         if is_deposit:
             user_investment_percentage.stake_in_percent = (
-                user_investment_percentage.stake_in_percent + percentage_transacted
+                float(user_investment_percentage.stake_in_percent) + float(percentage_transacted)
                 if user_investment_percentage.stake_in_percent is not None
-                else percentage_transacted
+                else float(percentage_transacted)
             )
         else:
             user_investment_percentage.stake_in_percent = (
-                user_investment_percentage.stake_in_percent - percentage_transacted
+                float(user_investment_percentage.stake_in_percent) - float(percentage_transacted)
             )
         user_investment_percentage.save()
 

@@ -9,11 +9,20 @@ from property.services.property_investment_services import \
     PropertyInvestmentServices
 from property.services.single_property_services import SinglePropertyServices
 
-
 class SinglePropertyView(BaseAPIView):
+    headers = {}
+
     def __init__(self):
         self.service = SinglePropertyServices()
         self.investment_service = PropertyInvestmentServices()
+
+    def dispatch(self, request, *args, **kwargs):
+        """Redirect POST requests to the `invest` method if the URL ends with 'invest/'."""
+        if request.method == "POST" and request.path.endswith("invest/"):
+            request = self.initialize_request(request) 
+            response = self.invest(request, *args, **kwargs)
+            return self.finalize_response(request, response, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
     @auth_guard()
     @validate_request(SinglePropertyFilterSerializer)
