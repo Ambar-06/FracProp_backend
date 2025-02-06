@@ -7,6 +7,7 @@ from property.models.property import Property
 from property.models.property_data_and_document import \
     PropertyRelatedDataAndDocument
 from property.models.user_property_amount import UserPropertyAmount
+from property.models.user_property_stake import UserPropertyStake
 from property.serializers.property_valuation_history_serializers import \
     PropertyValuationHistorySerializer
 from user.models.user import User
@@ -16,6 +17,7 @@ class PropertySerializer(serializers.ModelSerializer):
     valuation_history = serializers.SerializerMethodField("get_valuation_history")
     property_images = serializers.SerializerMethodField("get_property_images")
     user_investments = serializers.SerializerMethodField("get_user_investments")
+    user_percentage_ownership = serializers.SerializerMethodField("get_user_percentage_ownership_details")
 
     class Meta:
         model = Property
@@ -47,7 +49,21 @@ class PropertySerializer(serializers.ModelSerializer):
             "valuation_history",
             "property_images",
             "user_investments",
+            "user_percentage_ownership",
         )
+
+    def get_user_percentage_ownership_details(self, obj):
+        request = self.context.get("request")
+        if request:
+            user = User.objects.filter(uuid=request.user.get("uuid")).first()
+            user_property_amount = UserPropertyStake.objects.filter(
+                user=user, property=obj
+            ).first()
+            if user_property_amount:
+                return {
+                    "stake_in_percent": user_property_amount.stake_in_percent,
+                }
+        return {}
 
     def get_property_images(self, obj):
         return PropertyRelatedDataAndDocument.objects.filter(
