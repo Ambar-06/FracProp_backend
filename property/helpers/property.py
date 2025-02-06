@@ -50,12 +50,12 @@ def update_property_valuation(property, valuation):
             )
             difference = user_property_amount.total_amount - investment_change
             if difference > 0:
-                user_property_amount.total_profit = (
-                    user_property_amount.total_profit + difference
-                )
+                total_profit = user_property_amount.total_profit or 0
+                user_property_amount.total_profit = (total_profit + difference)
             else:
-                user_property_amount.total_loss = (
-                    user_property_amount.total_loss + difference
+                total_loss = user_property_amount.total_loss
+                user_property_amount.total_loss = (total_loss
+                     + difference
                 )
             user_property_amount.total_amount += difference
             user_property_amount.save()

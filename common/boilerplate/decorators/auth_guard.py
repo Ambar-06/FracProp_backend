@@ -93,7 +93,7 @@ def auth_guard(admin=False, staff=False):
                 return NOT_VALID_TOKEN
             if admin and not user.is_admin:
                 return NOT_VALID_ROLE
-            if staff and not any(user.is_staff, user.is_admin):
+            if staff and not any([user.is_staff, user.is_admin]):
                 return NOT_VALID_ROLE
             if user.is_deleted:
                 return NOT_VALID_TOKEN
