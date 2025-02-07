@@ -37,6 +37,7 @@ class PropertySerializer(serializers.ModelSerializer):
             "return_type",
             "built_area_in_sqft",
             "area_in_sqft",
+            "sold_percentage",
             "latitude",
             "longitude",
             "investment_lock_in_period_in_months",

@@ -19,6 +19,7 @@ class SingleUserServices(BaseService):
                 "country_code": user.country_code,
                 "phone_number": user.phone_number,
                 "is_admin": user.is_admin,
+                "is_staff": user.is_staff,
                 "is_active": user.is_active,
                 "last_login": user.last_login,
                 "is_phone_verified": user.is_phone_verified,

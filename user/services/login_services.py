@@ -51,6 +51,7 @@ class LoginServices(BaseService):
                 "email": obj_or_msg.email,
                 "is_email_verified": obj_or_msg.is_email_verified,
                 "is_admin": obj_or_msg.is_admin,
+                "is_staff": obj_or_msg.is_staff,
                 "is_phone_verified": obj_or_msg.is_phone_verified,
                 "is_email_verified": obj_or_msg.is_email_verified,
                 "last_login": obj_or_msg.last_login,

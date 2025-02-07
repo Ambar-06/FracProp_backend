@@ -119,6 +119,13 @@ class InvestmentHelper:
         UserProperty.objects.get_or_create(
             user=user, property=property, defaults={"user": user, "property": property}
         )
+        total_stake = (
+            UserPropertyStake.objects.filter(property=property)
+            .aggregate(total_sold_percent=Sum("stake_in_percent"))["total_sold_percent"]
+            or 0.0 
+        )
+        property.sold_percentage = total_stake
+        property.save()
 
     def create_or_update_user_investments(
         self, user, property, amount, percentage_transacted, is_deposit=False
