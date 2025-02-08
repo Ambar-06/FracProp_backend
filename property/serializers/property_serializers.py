@@ -105,7 +105,7 @@ class OtherDetailsSerializer(serializers.Serializer):
 
 class AmenitiesFieldSerializer(serializers.Serializer):
     available = serializers.BooleanField(required=True)
-    distance = serializers.FloatField(required=True)
+    distance_in_km = serializers.FloatField(required=False, default=0.0)
 
 class AmenitiesSerializer(serializers.Serializer):
     school = AmenitiesFieldSerializer(required=True)

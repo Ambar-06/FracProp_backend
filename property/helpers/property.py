@@ -12,6 +12,7 @@ def update_property(uuid, data):
     property.city = data.get("city") or property.city
     property.state = data.get("state") or property.state
     property.country = data.get("country") or property.country
+    property.amenities = data.get("amenities") or property.amenities
     property.type = data.get("type") or property.type
     property.number_of_floors = (
         data.get("number_of_floors") or property.number_of_floors
@@ -29,7 +30,8 @@ def update_property(uuid, data):
     property.is_active = data.get("is_active") or property.is_active
     property.other_details = data.get("other_details") or property.other_details
     property.save()
-    update_property_valuation(property, data.get("valuation"))
+    if data.get("valuation") is not None:
+        update_property_valuation(property, data.get("valuation"))
     return property
 
 

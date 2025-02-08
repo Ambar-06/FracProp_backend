@@ -3,7 +3,7 @@ from rest_framework import serializers
 from common.helpers.constants import (BuildingHealthDictionary,
                                       PropertyTypeDictionary,
                                       ReturnTypeDictionary)
-from property.serializers.property_serializers import OtherDetailsSerializer
+from property.serializers.property_serializers import AmenitiesSerializer, OtherDetailsSerializer
 
 
 class SinglePropertyFilterSerializer(serializers.Serializer):
@@ -30,3 +30,4 @@ class SinglePropertyFilterSerializer(serializers.Serializer):
     is_approved = serializers.BooleanField(required=False)
     is_active = serializers.BooleanField(required=False)
     other_details = OtherDetailsSerializer(required=False)
+    amenities = AmenitiesSerializer(required=False)
