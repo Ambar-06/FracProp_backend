@@ -15,7 +15,7 @@ class PropertyView(BaseAPIView):
         response, status_code = self.get_response_or_error(service_data)
         return self.success(response, status_code)
 
-    @auth_guard(admin=True)
+    @auth_guard(staff=True)
     @validate_request(PropertyFilterSerializer)
     def post(self, request, data, *args):
         service_data = self.service.post_service(request, data)

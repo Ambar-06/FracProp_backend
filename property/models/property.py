@@ -21,6 +21,7 @@ class Property(BaseModel):
     name = models.CharField(max_length=255, null=True, blank=True)
     address = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
+    amenities = models.JSONField(null=True, blank=True)
     city = models.CharField(max_length=255, null=True, blank=True)
     state = models.CharField(max_length=255, null=True, blank=True)
     country = models.CharField(max_length=255, null=True, blank=True)

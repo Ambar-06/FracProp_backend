@@ -47,6 +47,7 @@ class PropertySerializer(serializers.ModelSerializer):
             "is_approved",
             "is_active",
             "other_details",
+            "amenities",
             "valuation_history",
             "property_images",
             "user_investments",
@@ -102,6 +103,16 @@ class OtherDetailsSerializer(serializers.Serializer):
         required=True, choices=BuildingHealthDictionary
     )
 
+class AmenitiesFieldSerializer(serializers.Serializer):
+    available = serializers.BooleanField(required=True)
+    distance = serializers.FloatField(required=True)
+
+class AmenitiesSerializer(serializers.Serializer):
+    school = AmenitiesFieldSerializer(required=True)
+    hospital = AmenitiesFieldSerializer(required=True)
+    park = AmenitiesFieldSerializer(required=True)
+    shopping_mall = AmenitiesFieldSerializer(required=True)
+
 
 class PropertyFilterSerializer(serializers.Serializer):
 
@@ -128,3 +139,4 @@ class PropertyFilterSerializer(serializers.Serializer):
     is_approved = serializers.BooleanField(required=False, default=False)
     is_active = serializers.BooleanField(required=False, default=True)
     other_details = OtherDetailsSerializer(required=True)
+    amenities = AmenitiesSerializer(required=True)

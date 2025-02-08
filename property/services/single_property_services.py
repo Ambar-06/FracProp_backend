@@ -38,3 +38,11 @@ class SinglePropertyServices(BaseService):
         property.is_deleted = True
         property.save()
         return self.ok("Property deleted successfully")
+    
+    def approve_service(self, request, data):
+        property = self.model.objects.filter(uuid=data.get("property_id")).first()
+        if not property:
+            return self.not_found("Property not found")
+        property.is_approved = True
+        property.save()
+        return self.ok("Property approved successfully")

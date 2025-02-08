@@ -51,3 +51,10 @@ class SinglePropertyView(BaseAPIView):
         service_data = self.investment_service.post_service(request, data)
         response, status_code = self.get_response_or_error(service_data)
         return self.success(response, status_code)
+    
+    @auth_guard()
+    @validate_request(PropertyInvestmentSerializer)
+    def approve(self, request, data, *args):
+        service_data = self.investment_service.post_service(request, data)
+        response, status_code = self.get_response_or_error(service_data)
+        return self.success(response, status_code)

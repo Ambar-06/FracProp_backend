@@ -6,3 +6,4 @@ from .survey import Survey
 from .user_property import UserProperty
 from .user_property_amount import UserPropertyAmount
 from .user_property_stake import UserPropertyStake
+from .property_approval_request import PropertyApprovalRequest
