@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
-from common.helpers.constants import (BuildingHealthDictionary,
-                                      PropertyTypeDictionary,
+from common.helpers.constants import (PropertyTypeDictionary,
                                       ReturnTypeDictionary)
 from property.serializers.property_serializers import AmenitiesSerializer, OtherDetailsSerializer
 

@@ -14,6 +14,9 @@ class BaseService:
 
     def bad_request(self, message: str):
         return self.exception(message, StatusCodes().BAD_REQUEST)
+    
+    def unauthorized(self, message: str):
+        return self.exception(message, StatusCodes().UNAUTHORIZED)
 
     def not_found(self, message: str):
         return self.exception(message, StatusCodes().NOT_FOUND)
