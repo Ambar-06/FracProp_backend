@@ -4,3 +4,4 @@ from .property_valuation_history_serializers import \
     PropertyValuationHistorySerializer
 from .single_property_serializers import SinglePropertyFilterSerializer
 from .approval_request_serializers import ApprovalRequestViewSerializer
+from .single_approval_request_serializers import SingleApprovalRequestFilterSerializer

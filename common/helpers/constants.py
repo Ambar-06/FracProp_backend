@@ -119,3 +119,13 @@ class BuildingHealth:
 
 obj_building_health = BuildingHealth()
 BuildingHealthDictionary = obj_building_health.__dict__
+
+
+@dataclass
+class ApprovalStatus:
+    def __init__(self):
+        self.APPROVED = "APPROVED"
+        self.REJECTED = "REJECTED"
+
+obj_approval_status = ApprovalStatus()
+ApprovalStatusDictionary = obj_approval_status.__dict__
