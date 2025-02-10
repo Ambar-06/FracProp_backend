@@ -15,4 +15,4 @@ class ApprovalRequestServices(BaseService):
         if not user.is_admin:
             return self.unauthorized("You are not authorized to view this page")
         request_data = PropertyApprovalRequest.objects.filter(is_approved=False, is_rejected=False)
-        return self.ok(ApprovalRequestViewSerializer(request_data, many=True).data, StatusCodes().SUCCESS)
+        return self.ok(request_data, StatusCodes().SUCCESS)

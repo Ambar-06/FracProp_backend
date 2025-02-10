@@ -3,6 +3,7 @@ import typing as _
 from rest_framework import generics
 from rest_framework.response import Response
 
+from common.boilerplate.api.base_api import ResponseOrError
 from common.helpers.constants import StatusCodes
 
 T = _.TypeVar("T")
@@ -19,22 +20,13 @@ Methods:
 """
 
 
-class PaginatedBaseApiView(generics.ListAPIView):
-    def __init__(self, serializer_class, pagination_class) -> None:
-        super().__init__(
-            serializer_class=serializer_class,
-            pagination_class=pagination_class,
-        )
+class PaginatedBaseApiView(generics.ListAPIView, ResponseOrError):
+    def __init__(self, serializer_class, pagination_class, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs) 
+        
+        self.serializer_class = serializer_class
+        self.pagination_class = pagination_class
 
-    def success(self, data: T, code=StatusCodes().SUCCESS) -> Response:
-        return Response(
-            {
-                "success": True,
-                "code": code,
-                "data": data,
-            },
-            status=code,
-        )
 
     def success_paginated(self, page=1, perPage=10) -> Response:
         queryset = self.get_queryset()
@@ -62,12 +54,6 @@ class PaginatedBaseApiView(generics.ListAPIView):
             },
         }
         return response
-
-    def error(self, errors, status_code: int) -> Response:
-        return Response(
-            {"success": False, "code": status_code, "errors": errors},
-            status=status_code,
-        )
 
     def success_not_paginated(self) -> Response:
         queryset = self.get_queryset()

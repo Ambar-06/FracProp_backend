@@ -21,7 +21,7 @@ class PropertyServices(BaseService):
         properties = self.model.objects.filter()
         if not user.is_admin:
             properties = properties.filter(is_active=True)
-        return self.ok(PropertySerializer(properties, many=True, context={"request": request}).data)
+        return self.ok(properties)
 
     def post_service(self, request, data):
         property = self.model.objects.filter(
