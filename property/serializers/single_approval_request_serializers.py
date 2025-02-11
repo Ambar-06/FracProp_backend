@@ -12,7 +12,7 @@ class SingleApprovalRequestFilterSerializer(serializers.Serializer):
         if request and request.method in ["PATCH"] and "action" not in attrs:
             raise serializers.ValidationError({"action": "This field is required for PATCH requests."})
 
-        if attrs.get("action") == ApprovalStatus().REJECTED and not attrs.get("remarks"):
+        if attrs.get("action") == ApprovalStatus().REJECT and not attrs.get("remarks"):
             raise serializers.ValidationError({"remarks": "Remarks are required for rejection."})
 
         return attrs
