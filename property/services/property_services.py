@@ -17,8 +17,7 @@ class PropertyServices(BaseService):
     def get_service(self, request, data):
         user_id = request.user.get("uuid")
         user = self.user_model.objects.filter(uuid=user_id).first()
-        # properties = self.model.objects.filter(is_approved=True)
-        properties = self.model.objects.filter()
+        properties = self.model.objects.filter(is_approved=True)
         if not user.is_admin:
             properties = properties.filter(is_active=True)
         return self.ok(properties)
