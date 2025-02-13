@@ -2,3 +2,4 @@ from .auth_services import GenerateAuthTokenService
 from .dashboard_services import DashboardService
 from .user_profile_services import UserProfileService
 from .wishlist_services import WishlistServices
+from .single_wishlist_services import SingleWishlistServices
