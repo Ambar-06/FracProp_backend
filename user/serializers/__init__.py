@@ -1,3 +1,4 @@
 from .auth_serializers import GenerateAuthTokenSerializer
 from .email_serializers import ChangePasswordSerializer, EmailSerializer
 from .user_profile_serializers import UserProfileSerializer
+from .wishlist_serializers import WishlistSerializer
