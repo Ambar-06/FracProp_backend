@@ -18,6 +18,7 @@ class PropertySerializer(serializers.ModelSerializer):
     property_images = serializers.SerializerMethodField("get_property_images")
     user_investments = serializers.SerializerMethodField("get_user_investments")
     user_percentage_ownership = serializers.SerializerMethodField("get_user_percentage_ownership_details")
+    buyable = serializers.SerializerMethodField("get_buyable")
 
     class Meta:
         model = Property
@@ -52,6 +53,7 @@ class PropertySerializer(serializers.ModelSerializer):
             "property_images",
             "user_investments",
             "user_percentage_ownership",
+            "buyable",
         )
 
     def get_user_percentage_ownership_details(self, obj):
@@ -92,6 +94,13 @@ class PropertySerializer(serializers.ModelSerializer):
                     "total_loss": user_property_amount.total_loss,
                 }
         return {}
+    
+    def get_buyable(self, obj):
+        buyable_percentage = 100 - obj.sold_percentage if obj.sold_percentage else 100
+        return {
+            "percentage": buyable_percentage,
+            "amount": obj.valuation * (buyable_percentage / 100),
+        }
 
 
 class OtherDetailsSerializer(serializers.Serializer):
