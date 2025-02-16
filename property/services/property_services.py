@@ -40,6 +40,7 @@ class PropertyServices(BaseService):
             image_urls.append(request.build_absolute_uri(f"/media/{path}"))
         print("Got Images")
         print(image_urls)
+        data.pop("property_images", None)
         property = self.model.objects.create(**data)
         property_valuation = self.valuation_model.objects.create(
             property=property, valuation=property.valuation
