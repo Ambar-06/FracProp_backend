@@ -19,6 +19,7 @@ class SingleApprovalRequestServices(BaseService):
 
     def patch_service(self, request, data):
         request_id = data.get("request_id")
+        action = "approved" if data.get("action") == ApprovalStatus().APPROVE else "rejected"
         request_data = PropertyApprovalRequest.objects.filter(uuid=request_id).first()
         if not request_data:
             return self.not_found("Approval request not found")
@@ -31,3 +32,4 @@ class SingleApprovalRequestServices(BaseService):
             request_data.is_rejected = True
         request_data.remarks = data.get("remarks")
         request_data.save()
+        return self.ok(f"Request {action}")
