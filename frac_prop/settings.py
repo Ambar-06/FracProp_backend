@@ -17,6 +17,7 @@ import dotenv
 
 dotenv.load_dotenv()
 
+
 # ENV Imports
 JWT_SECRET = os.getenv("JWT_SECRET")
 JWT_TOKEN_EXPIRY_IN_DAYS = os.getenv("JWT_TOKEN_EXPIRY_IN_DAYS")
@@ -167,3 +168,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ALLOW_ALL_ORIGINS = True  # Allow all frontend requests
 CORS_ALLOW_CREDENTIALS = True  # Allow cookies, sessions
+
+
+# MEDIA
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")

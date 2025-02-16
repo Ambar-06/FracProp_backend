@@ -67,3 +67,7 @@ def update_property_valuation(property, valuation):
 
 def calculate_percentage_amount_for_current_valuation(valuation, stake_in_percent):
     return (valuation * stake_in_percent) / 100
+
+
+def add_or_update_property_images():
+    pass

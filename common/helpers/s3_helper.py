@@ -1,6 +1,6 @@
 import boto3
 from botocore.exceptions import ClientError, NoCredentialsError
-
+from common.helpers.constants import DocumentType
 from frac_prop import settings
 
 
@@ -72,11 +72,11 @@ class S3BucketHelper:
             return f"https://{bucket_name}.s3.{self.region_name}.amazonaws.com/{key}"
 
     def upload_file_to_s3(
-        self, file, key, bucket_name=settings.AWS_STORAGE_BUCKET_NAME
+        self, file, key, bucket_name=settings.AWS_STORAGE_BUCKET_NAME, file_type=DocumentType().PROPERTY_IMAGE
     ):
         try:
             client = self.get_s3_connection()
-            key = f"{settings.APP_ENV}/postpaid_invoices/" + key
+            key = f"prod/{file_type.lower()}s/" + key
 
             if isinstance(file, bytes):
                 response = client.put_object(Body=file, Bucket=bucket_name, Key=key)
@@ -91,7 +91,7 @@ class S3BucketHelper:
         except TypeError as e:
             raise RuntimeError(f"Invalid type for file_name: {e}")
 
-    def delete_file_from_s3(self, key, bucket_name=settings.AWS_STORAGE_BUCKET_NAME):
+    def delete_file_from_s3(self, key, bucket_name=settings.AWS_STORAGE_BUCKET_NAME, file_type=DocumentType().PROPERTY_IMAGE):
         """
         Delete a file from the S3 bucket.
 
@@ -103,7 +103,7 @@ class S3BucketHelper:
             dict: A response indicating success or failure.
         """
         try:
-            key = f"{settings.APP_ENV}/postpaid_invoices/" + key
+            key = f"prod/{file_type.lower()}s/" + key
             client = self.get_s3_connection()
             response = client.delete_object(Bucket=bucket_name, Key=key)
             return {

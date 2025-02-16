@@ -1,3 +1,4 @@
+import json
 from rest_framework import serializers
 
 from common.helpers.constants import (BuildingHealthDictionary, DocumentType,
@@ -14,6 +15,7 @@ from user.models.user import User
 
 
 class PropertySerializer(serializers.ModelSerializer):
+
     valuation_history = serializers.SerializerMethodField("get_valuation_history")
     property_images = serializers.SerializerMethodField("get_property_images")
     user_investments = serializers.SerializerMethodField("get_user_investments")
@@ -102,7 +104,6 @@ class PropertySerializer(serializers.ModelSerializer):
             "amount": obj.valuation * (buyable_percentage / 100),
         }
 
-
 class OtherDetailsSerializer(serializers.Serializer):
 
     construction_age_in_years = serializers.IntegerField(
@@ -113,15 +114,16 @@ class OtherDetailsSerializer(serializers.Serializer):
     )
 
 class AmenitiesFieldSerializer(serializers.Serializer):
+
     available = serializers.BooleanField(required=True)
     distance_in_km = serializers.FloatField(required=False, default=0.0)
 
 class AmenitiesSerializer(serializers.Serializer):
+
     school = AmenitiesFieldSerializer(required=True)
     hospital = AmenitiesFieldSerializer(required=True)
     park = AmenitiesFieldSerializer(required=True)
     shopping_mall = AmenitiesFieldSerializer(required=True)
-
 
 class PropertyFilterSerializer(serializers.Serializer):
 
@@ -149,3 +151,25 @@ class PropertyFilterSerializer(serializers.Serializer):
     is_active = serializers.BooleanField(required=False, default=True)
     other_details = OtherDetailsSerializer(required=True)
     amenities = AmenitiesSerializer(required=True)
+    property_images = serializers.ListField(child=serializers.ImageField(), required=True, allow_empty=False)
+
+    def to_internal_value(self, data):
+        """Convert JSON string fields into Python dictionaries before validation."""
+        json_fields = [field.name for field in Property._meta.fields if field.get_internal_type() == "JSONField"]
+
+        for field in json_fields:
+            if field in data and isinstance(data[field], str):
+                try:
+                    data[field] = json.loads(data[field])
+                except json.JSONDecodeError:
+                    raise serializers.ValidationError({field: "Invalid JSON format"})
+        if "property_images" in data:
+            value = data["property_images"]
+            if not isinstance(value, list):
+                raise serializers.ValidationError("Invalid format. Expected a list of images.")
+
+            for file in value:
+                if not hasattr(file, 'file'):
+                    raise serializers.ValidationError(f"Invalid file: {file}.")
+
+        return super().to_internal_value(data)

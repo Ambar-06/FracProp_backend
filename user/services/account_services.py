@@ -1,6 +1,7 @@
 import random as _r
 
 from common.boilerplate.services.base_service import BaseService
+from common.helpers.constants import StatusCodes
 from common.helpers.encryption_decryption import encrypt
 from user.models.bank_account_detail import BankAccountDetail
 from user.models.user import User
@@ -30,4 +31,4 @@ class AccountServices(BaseService):
         data["encrypted_ifsc"] = encrypt(ifsc, serial=key_serial)
         data["user"] = user
         account_detail = self.model.objects.create(**data)
-        return self.ok(BankAccountDetailViewSerializer(account_detail).data)
+        return self.ok(BankAccountDetailViewSerializer(account_detail).data, StatusCodes().SUCCESS)
