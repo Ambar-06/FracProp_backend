@@ -4,6 +4,8 @@ from property.helpers.property import update_property
 from property.models.property import Property
 from property.serializers.property_serializers import PropertySerializer
 from user.models.user import User
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 
 
 class SinglePropertyServices(BaseService):
@@ -22,13 +24,18 @@ class SinglePropertyServices(BaseService):
 
     def patch_service(self, request, data):
         data = self.validator.validate(data)
+        image_urls = []
         user_id = request.user.get("uuid")
         user = self.user_model.objects.filter(uuid=user_id).first()
         uuid = data.get("property_id")
         property = self.model.objects.filter(uuid=uuid).first()
         if not property:
             return self.not_found("Property not found")
-        property = update_property(property.uuid, data)
+        images = request.FILES.getlist("property_images")
+        for image in images:
+            path = default_storage.save(f"property_images/{image.name}", ContentFile(image.read()))
+            image_urls.append(request.build_absolute_uri(f"/media/{path}"))
+        property = update_property(property.uuid, data, image_files=image_urls)
         return self.ok(PropertySerializer(property).data)
 
     def delete_service(self, request, data):

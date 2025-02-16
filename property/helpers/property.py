@@ -1,10 +1,13 @@
+from common.helpers.constants import DocumentType
 from property.models.property import Property
+from property.models.property_data_and_document import PropertyRelatedDataAndDocument
 from property.models.property_valuation_history import PropertyValuationHistory
 from property.models.user_property_amount import UserPropertyAmount
 from property.models.user_property_stake import UserPropertyStake
 
 
-def update_property(uuid, data):
+
+def update_property(uuid, data, image_files=[]):
     property = Property.objects.filter(uuid=uuid).first()
     property.name = data.get("name") or property.name
     property.address = data.get("address") or property.address
@@ -32,6 +35,7 @@ def update_property(uuid, data):
     property.save()
     if data.get("valuation") is not None:
         update_property_valuation(property, data.get("valuation"))
+    add_or_update_property_images(data, image_files, property)
     return property
 
 
@@ -69,5 +73,13 @@ def calculate_percentage_amount_for_current_valuation(valuation, stake_in_percen
     return (valuation * stake_in_percent) / 100
 
 
-def add_or_update_property_images():
-    pass
+def add_or_update_property_images(data, image_files, property):
+    for image in data.get("delete_images", []):
+        PropertyRelatedDataAndDocument.objects.filter(
+            property=property, document=image
+        ).update(is_deleted=True)
+    for image in image_files:
+        PropertyRelatedDataAndDocument.objects.create(
+            property=property, document=image, document_type=DocumentType().PROPERTY_IMAGE
+        )
+    return True

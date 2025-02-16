@@ -36,8 +36,6 @@ def validate_request(serializer: _.Type[serializers.Serializer]) -> _.Callable:
             # Ignoring extra query params with the same key name
             for key in req.query_params:
                 query_params[key] = req.query_params[key]
-            print("FILES RECEIVED:", req.FILES)
-            print("FILES LIST:", req.FILES.getlist("property_images"))
 
             request_data = {}
             for k, v in req.data.items():
