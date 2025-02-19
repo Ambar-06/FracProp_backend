@@ -37,6 +37,12 @@ class SinglePropertyFilterSerializer(serializers.Serializer):
 
     def to_internal_value(self, data):
         """Convert JSON string fields into Python dictionaries before validation."""
+        if "delete_images" in data:
+            if isinstance(data["delete_images"], str):
+                try:
+                    data["delete_images"] = json.loads(data["delete_images"])
+                except json.JSONDecodeError:
+                    raise serializers.ValidationError("Invalid JSON format for delete_images")
         json_fields = [field.name for field in Property._meta.fields if field.get_internal_type() == "JSONField"]
 
         for field in json_fields:

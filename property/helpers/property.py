@@ -16,6 +16,7 @@ def update_property(uuid, data, image_files=[]):
     property.state = data.get("state") or property.state
     property.country = data.get("country") or property.country
     property.amenities = data.get("amenities") or property.amenities
+    property.return_type = data.get("return_type") or property.return_type
     property.type = data.get("type") or property.type
     property.number_of_floors = (
         data.get("number_of_floors") or property.number_of_floors
@@ -27,7 +28,7 @@ def update_property(uuid, data, image_files=[]):
     property.area_in_sqft = data.get("area_in_sqft") or property.area_in_sqft
     property.latitude = data.get("latitude") or property.latitude
     property.longitude = data.get("longitude") or property.longitude
-    property.has_loan = data.get("has_loan") or property.has_loan
+    property.has_loan = data.get("has_loan") if data.get("has_loan") is not None else property.has_loan
     property.is_verified = data.get("is_verified") or property.is_verified
     property.is_approved = data.get("is_approved") or property.is_approved
     property.is_active = data.get("is_active") or property.is_active

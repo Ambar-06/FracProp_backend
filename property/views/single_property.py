@@ -33,7 +33,7 @@ class SinglePropertyView(BaseAPIView):
 
     @auth_guard(staff=True)
     @validate_request(SinglePropertyFilterSerializer)
-    def patch(self, request, data, *args):
+    def patch(self, request, data, *args, **kwargs):
         service_data = self.service.patch_service(request, data)
         response, status_code = self.get_response_or_error(service_data)
         return self.success(response, status_code)

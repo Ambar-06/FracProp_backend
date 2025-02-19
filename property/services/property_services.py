@@ -36,7 +36,8 @@ class PropertyServices(BaseService):
         user = self.user_model.objects.filter(uuid=request.user.get("uuid")).first()
         images = request.FILES.getlist("property_images")
         for image in images:
-            path = default_storage.save(f"property_images/{image.name}", ContentFile(image.read()))
+            img_name = image.name.replace(" ", "_")
+            path = default_storage.save(f"property_images/{img_name}", ContentFile(image.read()))
             image_urls.append(request.build_absolute_uri(f"/media/{path}"))
         print("Got Images")
         print(image_urls)

@@ -33,7 +33,8 @@ class SinglePropertyServices(BaseService):
             return self.not_found("Property not found")
         images = request.FILES.getlist("property_images")
         for image in images:
-            path = default_storage.save(f"property_images/{image.name}", ContentFile(image.read()))
+            img_name = image.name.replace(" ", "_")
+            path = default_storage.save(f"property_images/{img_name}", ContentFile(image.read()))
             image_urls.append(request.build_absolute_uri(f"/media/{path}"))
         property = update_property(property.uuid, data, image_files=image_urls)
         return self.ok(PropertySerializer(property).data)
