@@ -1,2 +1,3 @@
 from .login_request_helper import LoginRequestValidator
 from .verification_helper import EmailHelper
+from .user_access_rights_helper import get_user_access_rights

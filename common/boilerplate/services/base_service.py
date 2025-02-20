@@ -17,6 +17,9 @@ class BaseService:
     
     def unauthorized(self, message: str):
         return self.exception(message, StatusCodes().UNAUTHORIZED)
+    
+    def forbidden(self, message: str):
+        return self.exception(message, StatusCodes().FORBIDDEN)
 
     def not_found(self, message: str):
         return self.exception(message, StatusCodes().NOT_FOUND)

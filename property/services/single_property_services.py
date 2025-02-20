@@ -3,6 +3,7 @@ from common.helpers.request_validators import PatchRequestValidator
 from property.helpers.property import update_property
 from property.models.property import Property
 from property.serializers.property_serializers import PropertySerializer
+from user.helpers.user_access_rights_helper import get_user_access_rights
 from user.models.user import User
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
@@ -36,6 +37,9 @@ class SinglePropertyServices(BaseService):
             img_name = image.name.replace(" ", "_")
             path = default_storage.save(f"property_images/{img_name}", ContentFile(image.read()))
             image_urls.append(request.build_absolute_uri(f"/media/{path}"))
+        rights, data = get_user_access_rights(user, data)
+        if not rights:
+            return self.forbidden("You don't have access rights")
         property = update_property(property.uuid, data, image_files=image_urls)
         return self.ok(PropertySerializer(property).data)
 
