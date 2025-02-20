@@ -23,5 +23,5 @@ def get_user_access_rights(user, data):
     role = "ADMIN" if user.is_admin else "STAFF"
     rights = RIGHTS_SWITCH[role]
     if rights != "__all__":
-        data = {key: value for key, value in data.items() if key in rights}
+        data = {key: value for key, value in data.items() if key not in rights}
     return rights, data
