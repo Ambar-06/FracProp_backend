@@ -1,5 +1,4 @@
 from django.db.models import Sum
-
 from investment.models.investment import Investment
 from investment.models.investment_return import InvestmentReturn
 from investment.models.transaction import Transaction
@@ -19,22 +18,22 @@ class InvestmentHelper:
             "-created_at"
         )
         invested_in_rental_assests = (
-            user_property_investment_qs.filter(property__return_type="RENTAL")
+            user_property_investment_qs.filter(property__return_type="RENT")
             .aggregate(Sum("amount"))
             .get("amount__sum", 0)
         )
         invested_in_non_rental_assests = (
-            user_property_investment_qs.filter(property__return_type="VALUATION")
+            user_property_investment_qs.filter(property__return_type="APPRECIATION")
             .aggregate(Sum("amount"))
             .get("amount__sum", 0)
         )
         total_earned_through_rental = (
-            InvestmentReturn.objects.filter(user=user, return_type="RENTAL")
+            InvestmentReturn.objects.filter(user=user, return_type="RENT")
             .aggregate(Sum("return_in_amount"))
             .get("return_in_amount__sum", 0)
         )
         total_earned_through_valuation = (
-            InvestmentReturn.objects.filter(user=user, return_type="VALUATION")
+            InvestmentReturn.objects.filter(user=user, return_type="APPRECIATION")
             .aggregate(Sum("return_in_amount"))
             .get("return_in_amount__sum", 0)
         )
@@ -49,13 +48,14 @@ class InvestmentHelper:
             "total_properties_invested": len(user_properties),
         }
         for user_property in user_properties:
-            user_property_investment_qs = user_property_investment_qs.filter(
+            # Filter the queryset first, then slice it
+            user_property_investment_qs_filtered = user_property_investment_qs.filter(
                 property=user_property.property
             ).order_by("-created_at")[:10]
             user_investment_return_qs = InvestmentReturn.objects.filter(
                 user=user, property=user_property.property
             ).order_by("-created_at")[:10]
-            investment_amount = user_property_investment_qs.aggregate(
+            investment_amount = user_property_investment_qs_filtered.aggregate(
                 Sum("amount")
             ).get("amount__sum", 0)
             return_amount = user_investment_return_qs.aggregate(
@@ -85,15 +85,15 @@ class InvestmentHelper:
                     "is_verified": user_property.property.is_verified,
                     "investment_amount": investment_amount,
                     "return_amount": return_amount,
-                    "investments": user_property_investment_qs.values_list(
-                        "id", "amount", "created_at", flat=True
+                    "investments": user_property_investment_qs_filtered.values_list(
+                        "id", "amount", "created_at"
                     ),
                     "withdrawals": [],
                     "returns": user_investment_return_qs.values_list(
-                        "id", "return_in_amount", "created_at", flat=True
+                        "id", "return_in_amount", "created_at"
                     ),
                     "valuation_hsitory_of_last_10_months": property_valuation_data_qs.values_list(
-                        "id", "valuation", "created_at", flat=True
+                        "id", "valuation", "created_at"
                     ),
                 }
             )
@@ -120,9 +120,10 @@ class InvestmentHelper:
             user=user, property=property, defaults={"user": user, "property": property}
         )
         total_stake = (
-            UserPropertyStake.objects.filter(property=property)
-            .aggregate(total_sold_percent=Sum("stake_in_percent"))["total_sold_percent"]
-            or 0.0 
+            UserPropertyStake.objects.filter(property=property).aggregate(
+                total_sold_percent=Sum("stake_in_percent")
+            )["total_sold_percent"]
+            or 0.0
         )
         property.sold_percentage = total_stake
         property.save()
@@ -168,14 +169,15 @@ class InvestmentHelper:
             )
         if is_deposit:
             user_investment_percentage.stake_in_percent = (
-                float(user_investment_percentage.stake_in_percent) + float(percentage_transacted)
+                float(user_investment_percentage.stake_in_percent)
+                + float(percentage_transacted)
                 if user_investment_percentage.stake_in_percent is not None
                 else float(percentage_transacted)
             )
         else:
-            user_investment_percentage.stake_in_percent = (
-                float(user_investment_percentage.stake_in_percent) - float(percentage_transacted)
-            )
+            user_investment_percentage.stake_in_percent = float(
+                user_investment_percentage.stake_in_percent
+            ) - float(percentage_transacted)
         user_investment_percentage.save()
 
         return user_property_amount, user_investment_percentage

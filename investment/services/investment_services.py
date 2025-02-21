@@ -14,10 +14,5 @@ class InvestmentServices(BaseService):
         user = User.objects.filter(uuid=request.user.get("uuid")).first()
         if not user:
             return self.bad_request("User not found")
-        if user.is_admin:
-            if not data.get("user_id"):
-                return self.bad_request("User id is required for admin")
-            user_id = data.get("user_id")
-            user = User.objects.filter(uuid=user_id).first()
         user_investment_data = self.helper.get_investment_data(user)
         return self.ok(user_investment_data)
