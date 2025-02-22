@@ -2,8 +2,9 @@ from common.boilerplate.services.base_service import BaseService
 from investment.helpers.investment_helper import InvestmentHelper
 from investment.models.investment import Investment
 from investment.models.transaction import Transaction
-from property.helpers.property_valuation_breakout_helper import \
-    PropertyValuationBreakoutHelper
+from property.helpers.property_valuation_breakout_helper import (
+    PropertyValuationBreakoutHelper,
+)
 from property.models.property import Property
 from user.models.user import User
 

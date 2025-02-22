@@ -1,7 +1,6 @@
 from .property_investment_serializers import PropertyInvestmentSerializer
 from .property_serializers import PropertyFilterSerializer, PropertySerializer
-from .property_valuation_history_serializers import \
-    PropertyValuationHistorySerializer
+from .property_valuation_history_serializers import PropertyValuationHistorySerializer
 from .single_property_serializers import SinglePropertyFilterSerializer
 from .approval_request_serializers import ApprovalRequestViewSerializer
 from .single_approval_request_serializers import SingleApprovalRequestFilterSerializer

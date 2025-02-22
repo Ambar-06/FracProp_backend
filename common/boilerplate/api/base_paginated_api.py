@@ -22,28 +22,29 @@ Methods:
 
 class PaginatedBaseApiView(generics.ListAPIView, ResponseOrError):
     def __init__(self, serializer_class, pagination_class, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs) 
-        
+        super().__init__(*args, **kwargs)
+
         self.serializer_class = serializer_class
         self.pagination_class = pagination_class
-
 
     def success_paginated(self, page=1, perPage=10) -> Response:
         queryset = self.get_queryset()
         if isinstance(queryset, dict) and len(queryset) == 0:
-            return Response({
-                "success": True,
-                "code": StatusCodes().SUCCESS,
-                "data": [],
-                "meta": {
-                    "pagination": {
-                        "count": 0,
-                        "page": page,
-                        "perPage": perPage,
-                        "totalPages": 0,
-                    }
-                },
-            })
+            return Response(
+                {
+                    "success": True,
+                    "code": StatusCodes().SUCCESS,
+                    "data": [],
+                    "meta": {
+                        "pagination": {
+                            "count": 0,
+                            "page": page,
+                            "perPage": perPage,
+                            "totalPages": 0,
+                        }
+                    },
+                }
+            )
         values = self.paginate_queryset(queryset)
         if "context" in self.__dict__:
             context_data = self.context

@@ -35,7 +35,9 @@ class SinglePropertyServices(BaseService):
         images = request.FILES.getlist("property_images")
         for image in images:
             img_name = image.name.replace(" ", "_")
-            path = default_storage.save(f"property_images/{img_name}", ContentFile(image.read()))
+            path = default_storage.save(
+                f"property_images/{img_name}", ContentFile(image.read())
+            )
             image_urls.append(request.build_absolute_uri(f"/media/{path}"))
         rights, data = get_user_access_rights(user, data)
         if not rights:
@@ -50,7 +52,7 @@ class SinglePropertyServices(BaseService):
         property.is_deleted = True
         property.save()
         return self.ok("Property deleted successfully")
-    
+
     def approve_service(self, request, data):
         property = self.model.objects.filter(uuid=data.get("property_id")).first()
         if not property:

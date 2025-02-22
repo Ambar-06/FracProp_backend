@@ -14,10 +14,10 @@ class BaseService:
 
     def bad_request(self, message: str):
         return self.exception(message, StatusCodes().BAD_REQUEST)
-    
+
     def unauthorized(self, message: str):
         return self.exception(message, StatusCodes().UNAUTHORIZED)
-    
+
     def forbidden(self, message: str):
         return self.exception(message, StatusCodes().FORBIDDEN)
 

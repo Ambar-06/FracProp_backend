@@ -3,7 +3,9 @@ from common.helpers.constants import ApprovalStatus, StatusCodes
 from property.models.property import Property
 from property.models.property_approval_request import PropertyApprovalRequest
 from property.models.property_valuation_history import PropertyValuationHistory
-from property.serializers.approval_request_serializers import ApprovalRequestViewSerializer
+from property.serializers.approval_request_serializers import (
+    ApprovalRequestViewSerializer,
+)
 
 
 class SingleApprovalRequestServices(BaseService):
@@ -15,11 +17,15 @@ class SingleApprovalRequestServices(BaseService):
         request_data = PropertyApprovalRequest.objects.filter(uuid=request_id).first()
         if not request_data:
             return self.not_found("Approval request not found")
-        return self.ok(ApprovalRequestViewSerializer(request_data).data, StatusCodes().SUCCESS)
+        return self.ok(
+            ApprovalRequestViewSerializer(request_data).data, StatusCodes().SUCCESS
+        )
 
     def patch_service(self, request, data):
         request_id = data.get("request_id")
-        action = "approved" if data.get("action") == ApprovalStatus().APPROVE else "rejected"
+        action = (
+            "approved" if data.get("action") == ApprovalStatus().APPROVE else "rejected"
+        )
         request_data = PropertyApprovalRequest.objects.filter(uuid=request_id).first()
         if not request_data:
             return self.not_found("Approval request not found")

@@ -10,6 +10,7 @@ class Investment(BaseModel):
     This model is used to store the investment made by user for a particular property.
     Creates a new entry in the table whenever a user invests money in a property.
     """
+
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
     amount = models.FloatField(null=True)
     property = models.ForeignKey(

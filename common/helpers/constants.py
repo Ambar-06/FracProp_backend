@@ -127,5 +127,6 @@ class ApprovalStatus:
         self.APPROVE = "APPROVE"
         self.REJECT = "REJECT"
 
+
 obj_approval_status = ApprovalStatus()
 ApprovalStatusDictionary = obj_approval_status.__dict__

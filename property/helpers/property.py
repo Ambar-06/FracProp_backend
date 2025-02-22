@@ -6,7 +6,6 @@ from property.models.user_property_amount import UserPropertyAmount
 from property.models.user_property_stake import UserPropertyStake
 
 
-
 def update_property(uuid, data, image_files=[]):
     property = Property.objects.filter(uuid=uuid).first()
     property.name = data.get("name") or property.name
@@ -28,7 +27,9 @@ def update_property(uuid, data, image_files=[]):
     property.area_in_sqft = data.get("area_in_sqft") or property.area_in_sqft
     property.latitude = data.get("latitude") or property.latitude
     property.longitude = data.get("longitude") or property.longitude
-    property.has_loan = data.get("has_loan") if data.get("has_loan") is not None else property.has_loan
+    property.has_loan = (
+        data.get("has_loan") if data.get("has_loan") is not None else property.has_loan
+    )
     property.is_verified = data.get("is_verified") or property.is_verified
     property.is_approved = data.get("is_approved") or property.is_approved
     property.is_active = data.get("is_active") or property.is_active
@@ -58,12 +59,10 @@ def update_property_valuation(property, valuation):
             difference = user_property_amount.total_amount - investment_change
             if difference > 0:
                 total_profit = user_property_amount.total_profit or 0
-                user_property_amount.total_profit = (total_profit + difference)
+                user_property_amount.total_profit = total_profit + difference
             else:
                 total_loss = user_property_amount.total_loss
-                user_property_amount.total_loss = (total_loss
-                     + difference
-                )
+                user_property_amount.total_loss = total_loss + difference
             user_property_amount.total_amount += difference
             user_property_amount.save()
         return True
@@ -81,6 +80,8 @@ def add_or_update_property_images(data, image_files, property):
         ).update(is_deleted=True)
     for image in image_files:
         PropertyRelatedDataAndDocument.objects.create(
-            property=property, document=image, document_type=DocumentType().PROPERTY_IMAGE
+            property=property,
+            document=image,
+            document_type=DocumentType().PROPERTY_IMAGE,
         )
     return True

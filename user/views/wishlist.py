@@ -21,7 +21,8 @@ class WishlistView(BaseAPIView, PaginatedBaseApiView):
         service_data = self.service.get_service(request, data)
         self.queryset, status_code = self.get_response_or_error(service_data)
         return self.success_paginated(
-            page=request.query_params.get("page", 1), perPage=request.query_params.get("perPage", 10)
+            page=request.query_params.get("page", 1),
+            perPage=request.query_params.get("perPage", 10),
         )
 
     @auth_guard()
@@ -30,4 +31,3 @@ class WishlistView(BaseAPIView, PaginatedBaseApiView):
         service_data = self.service.post_service(request, data)
         response, status_code = self.get_response_or_error(service_data)
         return self.success(response, status_code)
-    

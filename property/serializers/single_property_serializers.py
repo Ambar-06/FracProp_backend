@@ -1,10 +1,12 @@
 import json
 from rest_framework import serializers
 
-from common.helpers.constants import (PropertyTypeDictionary,
-                                      ReturnTypeDictionary)
+from common.helpers.constants import PropertyTypeDictionary, ReturnTypeDictionary
 from property.models.property import Property
-from property.serializers.property_serializers import AmenitiesSerializer, OtherDetailsSerializer
+from property.serializers.property_serializers import (
+    AmenitiesSerializer,
+    OtherDetailsSerializer,
+)
 
 
 class SinglePropertyFilterSerializer(serializers.Serializer):
@@ -32,8 +34,12 @@ class SinglePropertyFilterSerializer(serializers.Serializer):
     is_active = serializers.BooleanField(required=False)
     other_details = OtherDetailsSerializer(required=False)
     amenities = AmenitiesSerializer(required=False)
-    property_images = serializers.ListField(child=serializers.ImageField(), required=False, allow_empty=True)
-    delete_images = serializers.ListField(child=serializers.URLField(), required=False, allow_empty=True)
+    property_images = serializers.ListField(
+        child=serializers.ImageField(), required=False, allow_empty=True
+    )
+    delete_images = serializers.ListField(
+        child=serializers.URLField(), required=False, allow_empty=True
+    )
 
     def to_internal_value(self, data):
         """Convert JSON string fields into Python dictionaries before validation."""
@@ -42,8 +48,14 @@ class SinglePropertyFilterSerializer(serializers.Serializer):
                 try:
                     data["delete_images"] = json.loads(data["delete_images"])
                 except json.JSONDecodeError:
-                    raise serializers.ValidationError("Invalid JSON format for delete_images")
-        json_fields = [field.name for field in Property._meta.fields if field.get_internal_type() == "JSONField"]
+                    raise serializers.ValidationError(
+                        "Invalid JSON format for delete_images"
+                    )
+        json_fields = [
+            field.name
+            for field in Property._meta.fields
+            if field.get_internal_type() == "JSONField"
+        ]
 
         for field in json_fields:
             if field in data and isinstance(data[field], str):
@@ -55,10 +67,12 @@ class SinglePropertyFilterSerializer(serializers.Serializer):
             if data["property_images"] and len(data["property_images"]) > 0:
                 value = data["property_images"]
                 if not isinstance(value, list):
-                    raise serializers.ValidationError("Invalid format. Expected a list of images.")
+                    raise serializers.ValidationError(
+                        "Invalid format. Expected a list of images."
+                    )
 
                 for file in value:
-                    if not hasattr(file, 'file'):
+                    if not hasattr(file, "file"):
                         raise serializers.ValidationError(f"Invalid file: {file}.")
 
         return super().to_internal_value(data)

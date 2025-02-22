@@ -10,6 +10,7 @@ class InvestmentReturn(BaseModel):
     This model is used to store the returns of a user for a particular property.
     Creates a new entry in the table whenever a user gets a return from a property.
     """
+
     RETURN_TYPE_CHOICES = (
         ("RENTAL", "rental"),
         ("VALUATION", "valuation"),

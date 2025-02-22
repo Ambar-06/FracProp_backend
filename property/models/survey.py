@@ -2,8 +2,7 @@ from django.db import models
 
 from common.models.base_model import BaseModel
 from property.models.property import Property
-from property.models.property_data_and_document import \
-    PropertyRelatedDataAndDocument
+from property.models.property_data_and_document import PropertyRelatedDataAndDocument
 from property.models.property_valuation_history import PropertyValuationHistory
 
 

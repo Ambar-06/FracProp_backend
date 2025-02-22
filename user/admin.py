@@ -43,6 +43,7 @@ class UserTokenAdmin(admin.ModelAdmin):
 class BankAccountDetailAdmin(admin.ModelAdmin):
     ordering = ["-created_at"]
 
+
 @admin.register(Wishlist)
 class WishlistAdmin(admin.ModelAdmin):
     ordering = ["-created_at"]

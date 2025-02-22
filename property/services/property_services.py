@@ -37,7 +37,9 @@ class PropertyServices(BaseService):
         images = request.FILES.getlist("property_images")
         for image in images:
             img_name = image.name.replace(" ", "_")
-            path = default_storage.save(f"property_images/{img_name}", ContentFile(image.read()))
+            path = default_storage.save(
+                f"property_images/{img_name}", ContentFile(image.read())
+            )
             image_urls.append(request.build_absolute_uri(f"/media/{path}"))
         print("Got Images")
         print(image_urls)
@@ -47,6 +49,10 @@ class PropertyServices(BaseService):
             property=property, valuation=property.valuation
         )
         for url in image_urls:
-            PropertyRelatedDataAndDocument.objects.create(document=url, property=property, document_type=DocumentType().PROPERTY_IMAGE)
+            PropertyRelatedDataAndDocument.objects.create(
+                document=url,
+                property=property,
+                document_type=DocumentType().PROPERTY_IMAGE,
+            )
         PropertyApprovalRequest.objects.create(property=property, requested_by=user)
         return self.ok(PropertySerializer(property, context={"request": request}).data)

@@ -1,7 +1,6 @@
 from common.boilerplate.auth.password_handler import PasswordHandler
 from common.boilerplate.secrets.otp import GenerateOTP
-from common.boilerplate.secrets.random_id_generator import \
-    generate_random_id_number
+from common.boilerplate.secrets.random_id_generator import generate_random_id_number
 from common.boilerplate.services.base_service import BaseService
 from common.helpers.constants import EmailTypes
 from user.helpers.verification_helper import EmailHelper

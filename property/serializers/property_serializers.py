@@ -1,16 +1,19 @@
 import json
 from rest_framework import serializers
 
-from common.helpers.constants import (BuildingHealthDictionary, DocumentType,
-                                      PropertyTypeDictionary,
-                                      ReturnTypeDictionary)
+from common.helpers.constants import (
+    BuildingHealthDictionary,
+    DocumentType,
+    PropertyTypeDictionary,
+    ReturnTypeDictionary,
+)
 from property.models.property import Property
-from property.models.property_data_and_document import \
-    PropertyRelatedDataAndDocument
+from property.models.property_data_and_document import PropertyRelatedDataAndDocument
 from property.models.user_property_amount import UserPropertyAmount
 from property.models.user_property_stake import UserPropertyStake
-from property.serializers.property_valuation_history_serializers import \
-    PropertyValuationHistorySerializer
+from property.serializers.property_valuation_history_serializers import (
+    PropertyValuationHistorySerializer,
+)
 from user.models.user import User
 
 
@@ -19,7 +22,9 @@ class PropertySerializer(serializers.ModelSerializer):
     valuation_history = serializers.SerializerMethodField("get_valuation_history")
     property_images = serializers.SerializerMethodField("get_property_images")
     user_investments = serializers.SerializerMethodField("get_user_investments")
-    user_percentage_ownership = serializers.SerializerMethodField("get_user_percentage_ownership_details")
+    user_percentage_ownership = serializers.SerializerMethodField(
+        "get_user_percentage_ownership_details"
+    )
     buyable = serializers.SerializerMethodField("get_buyable")
 
     class Meta:
@@ -96,13 +101,14 @@ class PropertySerializer(serializers.ModelSerializer):
                     "total_loss": user_property_amount.total_loss,
                 }
         return {}
-    
+
     def get_buyable(self, obj):
         buyable_percentage = 100 - obj.sold_percentage if obj.sold_percentage else 100
         return {
             "percentage": buyable_percentage,
             "amount": obj.valuation * (buyable_percentage / 100),
         }
+
 
 class OtherDetailsSerializer(serializers.Serializer):
 
@@ -113,10 +119,12 @@ class OtherDetailsSerializer(serializers.Serializer):
         required=True, choices=BuildingHealthDictionary
     )
 
+
 class AmenitiesFieldSerializer(serializers.Serializer):
 
     available = serializers.BooleanField(required=True)
     distance_in_km = serializers.FloatField(required=False, default=0.0)
+
 
 class AmenitiesSerializer(serializers.Serializer):
 
@@ -124,6 +132,7 @@ class AmenitiesSerializer(serializers.Serializer):
     hospital = AmenitiesFieldSerializer(required=True)
     park = AmenitiesFieldSerializer(required=True)
     shopping_mall = AmenitiesFieldSerializer(required=True)
+
 
 class PropertyFilterSerializer(serializers.Serializer):
 
@@ -151,11 +160,17 @@ class PropertyFilterSerializer(serializers.Serializer):
     is_active = serializers.BooleanField(required=False, default=True)
     other_details = OtherDetailsSerializer(required=True)
     amenities = AmenitiesSerializer(required=True)
-    property_images = serializers.ListField(child=serializers.ImageField(), required=True, allow_empty=False)
+    property_images = serializers.ListField(
+        child=serializers.ImageField(), required=True, allow_empty=False
+    )
 
     def to_internal_value(self, data):
         """Convert JSON string fields into Python dictionaries before validation."""
-        json_fields = [field.name for field in Property._meta.fields if field.get_internal_type() == "JSONField"]
+        json_fields = [
+            field.name
+            for field in Property._meta.fields
+            if field.get_internal_type() == "JSONField"
+        ]
 
         for field in json_fields:
             if field in data and isinstance(data[field], str):
@@ -166,10 +181,12 @@ class PropertyFilterSerializer(serializers.Serializer):
         if "property_images" in data:
             value = data["property_images"]
             if not isinstance(value, list):
-                raise serializers.ValidationError("Invalid format. Expected a list of images.")
+                raise serializers.ValidationError(
+                    "Invalid format. Expected a list of images."
+                )
 
             for file in value:
-                if not hasattr(file, 'file'):
+                if not hasattr(file, "file"):
                     raise serializers.ValidationError(f"Invalid file: {file}.")
 
         return super().to_internal_value(data)

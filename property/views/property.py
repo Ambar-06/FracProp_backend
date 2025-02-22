@@ -3,7 +3,10 @@ from common.boilerplate.api.base_paginated_api import PaginatedBaseApiView
 from common.boilerplate.api.custom_pagination import CustomPagination
 from common.boilerplate.decorators.auth_guard import auth_guard
 from common.boilerplate.decorators.validate_request import validate_request
-from property.serializers.property_serializers import PropertyFilterSerializer, PropertySerializer
+from property.serializers.property_serializers import (
+    PropertyFilterSerializer,
+    PropertySerializer,
+)
 from property.services.property_services import PropertyServices
 
 
@@ -23,7 +26,8 @@ class PropertyView(BaseAPIView, PaginatedBaseApiView):
             "request": request,
         }
         return self.success_paginated(
-            page=request.query_params.get("page", 1), perPage=request.query_params.get("perPage", 10)
+            page=request.query_params.get("page", 1),
+            perPage=request.query_params.get("perPage", 10),
         )
 
     @auth_guard(staff=True)

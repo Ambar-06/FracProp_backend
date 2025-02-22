@@ -9,6 +9,7 @@ class Transaction(BaseModel):
     This model is used to store the transactions made by a user.
     Creates a new entry in the table whenever a user makes a transaction.
     """
+
     TRANSACTION_TYPE_CHOICES = (
         ("DEPOSIT", "deposit"),
         ("WITHDRAWAL", "withdrawal"),

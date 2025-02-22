@@ -5,8 +5,7 @@ from common.helpers.constants import StatusCodes
 from common.helpers.encryption_decryption import encrypt
 from user.models.bank_account_detail import BankAccountDetail
 from user.models.user import User
-from user.serializers.account_serializers import \
-    BankAccountDetailViewSerializer
+from user.serializers.account_serializers import BankAccountDetailViewSerializer
 
 
 class AccountServices(BaseService):
@@ -31,4 +30,6 @@ class AccountServices(BaseService):
         data["encrypted_ifsc"] = encrypt(ifsc, serial=key_serial)
         data["user"] = user
         account_detail = self.model.objects.create(**data)
-        return self.ok(BankAccountDetailViewSerializer(account_detail).data, StatusCodes().SUCCESS)
+        return self.ok(
+            BankAccountDetailViewSerializer(account_detail).data, StatusCodes().SUCCESS
+        )

@@ -17,6 +17,7 @@ RIGHTS_SWITCH = {
     "ADMIN": "__all__",
 }
 
+
 def get_user_access_rights(user, data):
     if not user.is_admin and not user.is_staff:
         return None, data
