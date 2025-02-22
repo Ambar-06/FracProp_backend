@@ -1,5 +1,7 @@
 from common.boilerplate.services.base_service import BaseService
+from common.helpers.constants import StatusCodes
 from common.helpers.request_validators import PatchRequestValidator
+from investment.models.investment import Investment
 from property.helpers.property import update_property
 from property.models.property import Property
 from property.serializers.property_serializers import PropertySerializer
@@ -17,11 +19,17 @@ class SinglePropertyServices(BaseService):
 
     def get_service(self, request, data):
         uuid = data.get("property_id")
+        user = User.objects.filter(uuid=request.user.get("uuid")).first()
         property = self.model.objects.filter(uuid=uuid).first()
         if not property:
             return self.not_found("Property not found")
         context = {"request": request}
-        return self.ok(PropertySerializer(property, context=context).data)
+        property_data = PropertySerializer(property, context=context).data
+        user_property_investment_qs = Investment.objects.filter(user=user, property=property).order_by(
+            "-created_at"
+        ).values_list("user__uuid", "amount", "created_at")
+        property_data["investments_history"] = list(user_property_investment_qs)
+        return self.ok(property_data, StatusCodes().SUCCESS)
 
     def patch_service(self, request, data):
         data = self.validator.validate(data)
