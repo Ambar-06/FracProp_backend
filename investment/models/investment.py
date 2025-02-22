@@ -21,4 +21,4 @@ class Investment(BaseModel):
     )
 
     def __str__(self):
-        return f"{self.user.name} : {self.amount}"
+        return f"{self.user.first_name} : {self.amount}"

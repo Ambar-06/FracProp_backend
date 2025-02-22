@@ -7,14 +7,14 @@ from .models import *
 
 @admin.register(Investment)
 class InvestmentAdmin(admin.ModelAdmin):
-    pass
+    ordering = ["-created_at"]
 
 
 @admin.register(InvestmentReturn)
 class InvestmentReturnAdmin(admin.ModelAdmin):
-    pass
+    ordering = ["-created_at"]
 
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-    pass
+    ordering = ["-created_at"]
