@@ -75,12 +75,24 @@ class DocumentType:
         self.PROPERTY_IMAGE = "PROPERTY_IMAGE"
         self.PROPERTY_VIDEO = "PROPERTY_VIDEO"
         self.LOAN_DOCUMENT = "LOAN_DOCUMENT"
+        self.PROPERTY_DOCUMENT = "PROPERTY_DOCUMENT"
         self.OTHER_DOCUMENT = "OTHER_DOCUMENT"
 
 
 obj_document_type = DocumentType()
 DocumentTypeDictionary = obj_document_type.__dict__
 
+@dataclass
+class RentalAreaType:
+    def __init__(self):
+        self.ROOM = "ROOM"
+        self.FLAT = "FLAT"
+        self.HOUSE = "HOUSE"
+        self.OTHER = "OTHER"
+        self.COMMERCIAL = "COMMERCIAL"
+
+obj_rental_area_type = RentalAreaType()
+RentalAreaTypeDictionary = obj_rental_area_type.__dict__
 
 @dataclass
 class PropertyType:

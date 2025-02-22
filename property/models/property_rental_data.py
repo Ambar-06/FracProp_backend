@@ -1,17 +1,14 @@
 from django.db import models
 
+from common.helpers.constants import RentalAreaType, RentalAreaTypeDictionary
 from common.models.base_model import BaseModel
 from property.models.property import Property
 from property.models.property_data_and_document import PropertyRelatedDataAndDocument
 
 
 class PropertyRentalData(BaseModel):
-    RENTAL_AREA_TYPE = (
-        ("ROOM", "room"),
-        ("FLAT", "flat"),
-        ("HOUSE", "house"),
-        ("OTHER", "other"),
-        ("COMMERCIAL", "commercial"),
+    RENTAL_AREA_TYPE = tuple(
+        (k, v.lower()) for k, v in RentalAreaTypeDictionary.items()
     )
 
     property = models.ForeignKey(
@@ -22,7 +19,7 @@ class PropertyRentalData(BaseModel):
         related_name="rental_data",
     )
     rental_area_type = models.CharField(
-        max_length=255, null=True, blank=True, choices=RENTAL_AREA_TYPE, default="ROOM"
+        max_length=255, null=True, blank=True, choices=RENTAL_AREA_TYPE, default=RentalAreaType().ROOM
     )
     house_number = models.CharField(max_length=255, null=True, blank=True)
     floor_number = models.IntegerField(null=True, blank=True)
