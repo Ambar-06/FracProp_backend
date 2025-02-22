@@ -59,3 +59,6 @@ class Property(BaseModel):
 
     class Meta:
         unique_together = ("name", "address", "city", "state", "country", "pin_code")
+
+    def __str__(self):
+        return self.name

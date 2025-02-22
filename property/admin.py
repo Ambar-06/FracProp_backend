@@ -53,6 +53,7 @@ class UserPropertyAdmin(admin.ModelAdmin):
 class UserPropertyAmountAdmin(admin.ModelAdmin):
     ordering = ["-created_at"]
     list_display = [field.name for field in UserPropertyAmount._meta.fields]
+    list_filter = ["user", "property"]
 
 
 @admin.register(UserPropertyStake)

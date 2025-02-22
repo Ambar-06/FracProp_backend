@@ -21,7 +21,7 @@ class User(BaseModel):
     last_login = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return str(self.uuid)
+        return f"{self.first_name}-{self.phone_number}"
 
     # class Meta:
     #     constraints = [
