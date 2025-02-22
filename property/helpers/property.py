@@ -40,7 +40,6 @@ def update_property(uuid, data, image_files=[]):
     add_or_update_property_images(data, image_files, property)
     return property
 
-
 def update_property_valuation(property, valuation):
     if property.valuation != valuation:
         property.valuation = valuation
@@ -68,10 +67,8 @@ def update_property_valuation(property, valuation):
         return True
     return False
 
-
 def calculate_percentage_amount_for_current_valuation(valuation, stake_in_percent):
     return (valuation * stake_in_percent) / 100
-
 
 def add_or_update_property_images(data, image_files, property):
     for image in data.get("delete_images", []):
