@@ -20,6 +20,7 @@ class WishlistView(BaseAPIView, PaginatedBaseApiView):
     def get(self, request, data, *args):
         service_data = self.service.get_service(request, data)
         self.queryset, status_code = self.get_response_or_error(service_data)
+        self.context = {"request": request}
         return self.success_paginated(
             page=request.query_params.get("page", 1),
             perPage=request.query_params.get("perPage", 10),
