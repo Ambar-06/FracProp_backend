@@ -12,7 +12,7 @@ class WishlistServices(BaseService):
     def get_service(self, request, data):
         user_id = request.user.get("uuid")
         user = User.objects.filter(uuid=user_id).first()
-        wishlist = user.wishlist.filter(is_active=True).value_list(
+        wishlist = user.wishlist.filter(is_active=True).values_list(
             "property_id", flat=True
         )
         properties = Property.objects.filter(uuid__in=wishlist)
