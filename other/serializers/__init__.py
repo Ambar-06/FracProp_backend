@@ -1,1 +1,2 @@
 from .blog_serializers import BlogViewSerializer, BlogSerializer
+from .single_blog_serializers import SingleBlogSerializer

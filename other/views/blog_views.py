@@ -7,7 +7,7 @@ from other.serializers.blog_serializers import BlogSerializer, BlogViewSerialize
 from other.services.blog_services import BlogServices
 
 
-class BlogViews(BaseAPIView, PaginatedBaseApiView):
+class BlogView(BaseAPIView, PaginatedBaseApiView):
     def __init__(self):
         super().__init__(
             serializer_class=BlogViewSerializer,
