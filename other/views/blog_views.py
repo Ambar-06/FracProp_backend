@@ -21,6 +21,7 @@ class BlogView(BaseAPIView, PaginatedBaseApiView):
         self.queryset, status_code = self.get_response_or_error(service_data)
         self.context = {
             "request": request,
+            "list_view" :True,
         }
         return self.success_paginated(
             page=request.query_params.get("page", 1),
