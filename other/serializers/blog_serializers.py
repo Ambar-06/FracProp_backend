@@ -16,7 +16,6 @@ class BlogViewSerializer(serializers.ModelSerializer):
         return obj.content
     
 
-
 class BlogSerializer(serializers.Serializer):
     title = serializers.CharField(max_length=255, required=True)
     content = serializers.CharField(required=True)
