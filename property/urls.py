@@ -12,6 +12,9 @@ urlpatterns = [
     path(
         "approval-requests/<str:request_id>/", views.SingleApprovalRequestView.as_view()
     ),
+    path(
+        "review/", views.RatingAndReviewView.as_view(), name="rating_and_review"
+    ),
     path("<str:property_id>/", views.SinglePropertyView.as_view()),
     path(
         "<str:property_id>/invest/",

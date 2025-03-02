@@ -8,24 +8,26 @@ from user.models.user import User
 
 class RatingAndReviewServices(BaseService):
     def __init__(self):
-        pass
+        self.model = ReviewAndRating
 
     def get_service(self, request, data):
         user = User.objects.filter(uuid=request.user.get("uuid")).first()
-        review_and_rating = ReviewAndRating.objects.filter(user=user)
+        review_and_rating = self.model.objects.filter(user=user)
+        if data.get("property_id"):
+            review_and_rating = review_and_rating.filter(property__uuid=data.get("property_id"))
         return self.ok(review_and_rating, StatusCodes().SUCCESS)
 
     def post_service(self, request, data):
         user_id = request.user.get("uuid")
         user = User.objects.filter(uuid=user_id).first()
         property = Property.objects.filter(uuid=data.get("property_id")).first()
-        ReviewAndRating.objects.create(
+        self.model.objects.create(
             user=user,
             property=property,
             rating=data.get("rating"),
             review=data.get("review")
         )
-        ratings = ReviewAndRating.objects.filter(property=property)
+        ratings = self.model.objects.filter(property=property)
         total = 0
         for rating in ratings:
             total += rating.rating
