@@ -3,3 +3,4 @@ from .single_property_services import SinglePropertyServices
 from .approval_request_services import ApprovalRequestServices
 from .single_approval_request_services import SingleApprovalRequestServices
 from .rating_and_review_services import RatingAndReviewServices
+from .single_rating_and_review_services import SingleRatingAndReviewServices
