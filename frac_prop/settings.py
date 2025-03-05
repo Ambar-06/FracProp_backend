@@ -77,6 +77,7 @@ FRAC_PROP_APPS = [
     "investment",
     "payment",
     "notification",
+    "other",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + FRAC_PROP_APPS + OTHER_APPS

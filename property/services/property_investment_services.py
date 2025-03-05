@@ -19,6 +19,8 @@ class PropertyInvestmentServices(BaseService):
         property = Property.objects.filter(uuid=data.get("property_id")).first()
         if not property:
             return self.not_found("Property not found")
+        if property.sold_percentage == 100:
+            return self.bad_request("Property is already sold out")
         amount = data.get("amount")
         stake_amount, stake_percentage = (
             self.valuation_helper.calculate_amount_proportion_with_valuation(

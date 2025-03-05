@@ -7,3 +7,5 @@ from .user_property import UserProperty
 from .user_property_amount import UserPropertyAmount
 from .user_property_stake import UserPropertyStake
 from .property_approval_request import PropertyApprovalRequest
+from .property_average_rating import PropertyAverageRating
+from .review_and_rating import ReviewAndRating

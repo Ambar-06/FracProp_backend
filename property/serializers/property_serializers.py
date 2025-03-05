@@ -26,6 +26,7 @@ class PropertySerializer(serializers.ModelSerializer):
         "get_user_percentage_ownership_details"
     )
     buyable = serializers.SerializerMethodField("get_buyable")
+    favorite = serializers.SerializerMethodField("get_favorites")
 
     class Meta:
         model = Property
@@ -61,7 +62,15 @@ class PropertySerializer(serializers.ModelSerializer):
             "user_investments",
             "user_percentage_ownership",
             "buyable",
+            "favorite",
         )
+    def get_favorites(self, obj):
+        request = self.context.get("request")
+        if request:
+            user = User.objects.filter(uuid=request.user.get("uuid")).first()
+            if user:
+                return user.wishlist.filter(property=obj, is_active=True).exists()
+        return False
 
     def get_user_percentage_ownership_details(self, obj):
         request = self.context.get("request")
