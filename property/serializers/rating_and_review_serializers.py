@@ -4,9 +4,19 @@ from property.models.review_and_rating import ReviewAndRating
 
 
 class RatingAndReviewViewSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField("get_user")
+
     class Meta:
         model = ReviewAndRating
         exclude = ("id", "meta")
+
+    def get_user(self, obj):
+        return {
+            "uuid": obj.user.uuid,
+            "name": obj.user.full_name,
+            "email": obj.user.email,
+            "phone_number": obj.user.mobile_number,
+        }
 
 
 class RatingAndReviewFilterSerializer(serializers.Serializer):
