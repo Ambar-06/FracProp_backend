@@ -22,6 +22,14 @@ class User(BaseModel):
 
     def __str__(self):
         return f"{self.first_name}-{self.phone_number}"
+    
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
+    
+    @property
+    def mobile_number(self):
+        return f"{self.country_code}{self.phone_number}"
 
     # class Meta:
     #     constraints = [
