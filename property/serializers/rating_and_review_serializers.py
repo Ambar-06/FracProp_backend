@@ -20,3 +20,4 @@ class RatingAndReviewFilterSerializer(serializers.Serializer):
                 raise serializers.ValidationError("Property id is required")
             if not attrs.get("rating") or not attrs.get("review"):
                 raise serializers.ValidationError("Rating or review is required")
+        return attrs
