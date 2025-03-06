@@ -32,8 +32,15 @@ class RatingAndReviewServices(BaseService):
         for rating in ratings:
             total += rating.rating
         average_rating = total / ratings.count()
-        PropertyAverageRating.objects.create(
-            property=property,
-            average_rating=average_rating
-        )
+        prop_avg_rating = PropertyAverageRating.objects.filter(
+            property=property
+        ).first()
+        if prop_avg_rating:
+            prop_avg_rating.average_rating = average_rating
+            prop_avg_rating.save()
+        else:
+            PropertyAverageRating.objects.create(
+                property=property,
+                average_rating=average_rating
+            )
         return self.ok("Review and rating added successfully", StatusCodes().SUCCESS)
