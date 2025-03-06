@@ -28,6 +28,7 @@ class PropertySerializer(serializers.ModelSerializer):
     buyable = serializers.SerializerMethodField("get_buyable")
     favorite = serializers.SerializerMethodField("get_favorites")
     avg_rating = serializers.SerializerMethodField("get_avg_rating")
+    your_review = serializers.SerializerMethodField("get_your_review")
 
     class Meta:
         model = Property
@@ -65,6 +66,7 @@ class PropertySerializer(serializers.ModelSerializer):
             "buyable",
             "favorite",
             "avg_rating",
+            "your_review",
         )
 
     def get_avg_rating(self, obj):
@@ -72,6 +74,20 @@ class PropertySerializer(serializers.ModelSerializer):
             return obj.property_average_rating.first().average_rating
         return 0.0
 
+    def get_your_review(self, obj):
+        request = self.context.get("request")
+        if request:
+            user = User.objects.filter(uuid=request.user.get("uuid")).first()
+            if user:
+                user_review = user.user_review.filter(property=obj).first()
+                if user_review:
+                    return {
+                        "rating": user_review.rating,
+                        "review": user_review.review,
+                        "date": user_review.updated_at,
+                    }
+                return {}
+        return {}
 
     def get_favorites(self, obj):
         request = self.context.get("request")
