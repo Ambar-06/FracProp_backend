@@ -44,5 +44,6 @@ class UserViewSerializer(serializers.ModelSerializer):
             "is_admin",
             "is_phone_verified",
             "email",
+            "is_2fa_enabled",
             "is_email_verified",
         ]

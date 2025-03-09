@@ -3,3 +3,4 @@ from .email_serializers import ChangePasswordSerializer, EmailSerializer
 from .user_profile_serializers import UserProfileSerializer
 from .wishlist_serializers import WishlistSerializer
 from .single_wishlist_serializers import SingleWishlistSerializer
+from .two_factor_serializers import TwoFactorFilterSerializer

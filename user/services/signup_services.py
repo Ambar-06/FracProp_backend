@@ -28,9 +28,11 @@ class SignUpServices(BaseService):
                 return self.bad_request(
                     "User already exists or Phone number already registered"
                 )
+        user_name = None
         if data.get("username"):
+            user_name = data.get("username").replace(" ", "")
             if self.user_model.objects.filter(
-                username=data.get("username"), is_deleted=False
+                username=user_name, is_deleted=False
             ).first():
                 return self.bad_request("Username already exists")
         if data.get("email"):
@@ -39,7 +41,7 @@ class SignUpServices(BaseService):
             ).exists():
                 return self.bad_request("Email already exists")
         user_ins = self.user_model.objects.create(
-            username=data.get("username"),
+            username=user_name,
             password=pwd,
             phone_number=data.get("phone_number", None),
             country_code=data.get("country_code", None),

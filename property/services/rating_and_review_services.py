@@ -12,7 +12,7 @@ class RatingAndReviewServices(BaseService):
 
     def get_service(self, request, data):
         user = User.objects.filter(uuid=request.user.get("uuid")).first()
-        review_and_rating = self.model.objects.filter(user=user)
+        review_and_rating = self.model.objects.all()
         if data.get("property_id"):
             review_and_rating = review_and_rating.filter(property__uuid=data.get("property_id"))
         return self.ok(review_and_rating, StatusCodes().SUCCESS)
@@ -32,8 +32,15 @@ class RatingAndReviewServices(BaseService):
         for rating in ratings:
             total += rating.rating
         average_rating = total / ratings.count()
-        PropertyAverageRating.objects.create(
-            property=property,
-            average_rating=average_rating
-        )
+        prop_avg_rating = PropertyAverageRating.objects.filter(
+            property=property
+        ).first()
+        if prop_avg_rating:
+            prop_avg_rating.average_rating = average_rating
+            prop_avg_rating.save()
+        else:
+            PropertyAverageRating.objects.create(
+                property=property,
+                average_rating=average_rating
+            )
         return self.ok("Review and rating added successfully", StatusCodes().SUCCESS)
