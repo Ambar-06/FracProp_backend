@@ -12,7 +12,8 @@ class TwoFactorServices(BaseService):
         user_id = request.user.get("uuid")
         user = User.objects.filter(uuid=user_id).first()
         _, key, path = self.authenticator.generate_qr_code(user.username)
-        qr_url = request.build_absolute_uri(path)
+        base_url = f"{request.scheme}://{request.get_host()}"
+        qr_url = f"{base_url}/{path.lstrip('/')}"
         user.secret_key = key
         user.save()
         return self.ok({"qr_url": qr_url}, StatusCodes().SUCCESS)
