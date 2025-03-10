@@ -24,6 +24,6 @@ class TwoFactorServices(BaseService):
         user = User.objects.filter(uuid=user_id).first()
         if not self.authenticator.verify_totp(user.secret_key, data.get("otp")):
             return self.bad_request("Invalid OTP")
-        user.is_two_factor_enabled = True
+        user.is_2fa_enabled = True
         user.save()
         return self.ok("Two factor authentication enabled successfully", StatusCodes().SUCCESS)
