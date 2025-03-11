@@ -2,9 +2,11 @@ from common.boilerplate.api.base_api import BaseAPIView
 from common.boilerplate.decorators.auth_guard import auth_guard
 from common.boilerplate.decorators.validate_request import validate_request
 from user.serializers.auth_serializers import GenerateAuthTokenSerializer
-from user.serializers.email_serializers import ChangePasswordSerializer, EmailSerializer
+from user.serializers.change_password_serializers import ChangePasswordSerializer
+from user.serializers.email_serializers import ResetPasswordUsingEmailSerializer, EmailSerializer
 from user.services.auth_services import GenerateAuthTokenService
 from user.services.email_services import EmailService, ResetPasswordService
+from user.services.utility_services import ChangePasswordService
 
 
 class GenerateAuthTokenViews(BaseAPIView):
@@ -53,12 +55,24 @@ class ResetPassword(BaseAPIView):
         return self.success(response, code)
 
 
-class ChangePassword(BaseAPIView):
+class ForgetPasswordUsingOTP(BaseAPIView):
     def __init__(self):
         self.service = ResetPasswordService()
 
-    @validate_request(ChangePasswordSerializer)
+    @validate_request(ResetPasswordUsingEmailSerializer)
     def post(self, request, data, *args):
         service_data = self.service.reset_password(request, data)
+        response, code = self.get_response_or_error(service_data)
+        return self.success(response, code)
+
+
+class ChangePassword(BaseAPIView):
+    def __init__(self):
+        self.service = ChangePasswordService()
+
+    @auth_guard()
+    @validate_request(ChangePasswordSerializer)
+    def post(self, request, data, *args):
+        service_data = self.service.post_service(request, data)
         response, code = self.get_response_or_error(service_data)
         return self.success(response, code)

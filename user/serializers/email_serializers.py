@@ -7,7 +7,7 @@ class EmailSerializer(serializers.Serializer):
     reset_password_url = serializers.URLField(required=False)
 
 
-class ChangePasswordSerializer(serializers.Serializer):
+class ResetPasswordUsingEmailSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
     code = serializers.CharField(required=True)
     password = serializers.CharField(required=True)

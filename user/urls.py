@@ -12,6 +12,7 @@ urlpatterns = [
     path("send-email-otp", views.SendEmailOTP.as_view(), name="send-email-otp"),
     path("verify-email", views.VerifyEmail.as_view(), name="verify-email"),
     path("reset-password", views.ResetPassword.as_view(), name="reset-password"),
+    path("forget-password", views.ForgetPasswordUsingOTP.as_view(), name="forget-password"),
     path("change-password", views.ChangePassword.as_view(), name="change-password"),
     path("dashboard", views.DashboardView.as_view(), name="dashboard"),
 ]
