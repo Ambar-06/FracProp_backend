@@ -27,6 +27,19 @@ class InvestmentHelper:
             .aggregate(Sum("amount"))
             .get("amount__sum", 0)
         )
+        # Calculate Percentage of investment in rental assets and Non rental assets
+        percentage_invested_in_rental_assests = (
+            (invested_in_rental_assests
+            / (invested_in_rental_assests + invested_in_non_rental_assests)) * 100
+            if invested_in_rental_assests + invested_in_non_rental_assests != 0
+            else 0
+        )
+        percentage_invested_in_non_rental_assests = (
+            (invested_in_non_rental_assests
+            / (invested_in_rental_assests + invested_in_non_rental_assests)) * 100
+            if invested_in_rental_assests + invested_in_non_rental_assests != 0
+            else 0
+        )
         total_earned_through_rental = (
             InvestmentReturn.objects.filter(user=user, return_type="RENT")
             .aggregate(Sum("return_in_amount"))
@@ -42,7 +55,9 @@ class InvestmentHelper:
                 Sum("amount")
             ).get("amount__sum", 0),
             "total_invested_in_rental_assests": invested_in_rental_assests,
+            "percentage_invested_in_rental_assests": percentage_invested_in_rental_assests,
             "total_invested_in_non_rental_assests": invested_in_non_rental_assests,
+            "percentage_invested_in_non_rental_assests": percentage_invested_in_non_rental_assests,
             "total_earned_through_rental": total_earned_through_rental,
             "total_earned_through_valuation": total_earned_through_valuation,
             "total_properties_invested": len(user_properties),
