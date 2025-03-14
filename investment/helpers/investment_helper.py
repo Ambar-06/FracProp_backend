@@ -25,14 +25,14 @@ class InvestmentHelper:
         #     .aggregate(Sum("amount"))
         #     .get("amount__sum", 0)
         # )
-        invested_in_rental_assests = user_property_investment_qs.filter(return_type=ReturnType().RENT).first()
+        invested_in_rental_assests = user_property_investment_qs.filter(property_return_type=ReturnType().RENT).first()
         invested_in_rental_assests = invested_in_rental_assests.amount if invested_in_rental_assests else 0
         # invested_in_non_rental_assests = (
         #     user_property_investment_qs.filter(property__return_type=ReturnType().APPRECIATION)
         #     .aggregate(Sum("amount"))
         #     .get("amount__sum", 0)
         # )
-        invested_in_non_rental_assests = user_property_investment_qs.filter(return_type=ReturnType().APPRECIATION).first()
+        invested_in_non_rental_assests = user_property_investment_qs.filter(property_return_type=ReturnType().APPRECIATION).first()
         invested_in_non_rental_assests = invested_in_non_rental_assests.amount if invested_in_non_rental_assests else 0
         # Calculate Percentage of investment in rental assets and Non rental assets
         percentage_invested_in_rental_assests = (
@@ -135,7 +135,7 @@ class InvestmentHelper:
             amount=amount,
             type="DEPOSIT",
         )
-        user_property_return_type_investment = UserPropertyReturnTypeInvestment.objects.filter(user=user, return_type=property.return_type).first()
+        user_property_return_type_investment = UserPropertyReturnTypeInvestment.objects.filter(user=user, property_return_type=property.return_type).first()
         if user_property_return_type_investment:
             user_property_return_type_investment.amount = (
                 user_property_return_type_investment.amount + amount
@@ -144,7 +144,7 @@ class InvestmentHelper:
         else:
             UserPropertyReturnTypeInvestment.objects.create(
                 user=user,
-                return_type=property.return_type,
+                property_return_type=property.return_type,
                 amount=amount
             )
         self.create_or_update_user_investments(
