@@ -2,7 +2,7 @@ from django.db.models import Sum
 from common.helpers.constants import ReturnType
 from investment.models.investment import Investment
 from investment.models.investment_return import InvestmentReturn
-from investment.models.transaction import Transaction
+from payment.models.transaction import Transaction
 from investment.models.user_property_return_type_investment import UserPropertyReturnTypeInvestment
 from property.models.user_property import UserProperty
 from property.models.user_property_amount import UserPropertyAmount

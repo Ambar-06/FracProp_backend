@@ -14,7 +14,3 @@ class InvestmentAdmin(admin.ModelAdmin):
 class InvestmentReturnAdmin(admin.ModelAdmin):
     ordering = ["-created_at"]
 
-
-@admin.register(Transaction)
-class TransactionAdmin(admin.ModelAdmin):
-    ordering = ["-created_at"]
