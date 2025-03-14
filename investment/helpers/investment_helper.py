@@ -1,7 +1,9 @@
 from django.db.models import Sum
+from common.helpers.constants import ReturnType
 from investment.models.investment import Investment
 from investment.models.investment_return import InvestmentReturn
 from investment.models.transaction import Transaction
+from investment.models.user_property_return_type_investment import UserPropertyReturnTypeInvestment
 from property.models.user_property import UserProperty
 from property.models.user_property_amount import UserPropertyAmount
 from property.models.user_property_stake import UserPropertyStake
@@ -14,19 +16,24 @@ class InvestmentHelper:
     def get_investment_data(self, user):
         user_properties = user.user_properties.filter(is_deleted=False)
         property_data = []
-        user_property_investment_qs = Investment.objects.filter(user=user).order_by(
-            "-created_at"
-        )
-        invested_in_rental_assests = (
-            user_property_investment_qs.filter(property__return_type="RENT")
-            .aggregate(Sum("amount"))
-            .get("amount__sum", 0)
-        )
-        invested_in_non_rental_assests = (
-            user_property_investment_qs.filter(property__return_type="APPRECIATION")
-            .aggregate(Sum("amount"))
-            .get("amount__sum", 0)
-        )
+        # user_property_investment_qs = Investment.objects.filter(user=user).order_by(
+        #     "-created_at"
+        # )
+        user_property_investment_qs = UserPropertyReturnTypeInvestment.objects.filter(user=user)
+        # invested_in_rental_assests = (
+        #     user_property_investment_qs.filter(property__return_type=ReturnType().RENT)
+        #     .aggregate(Sum("amount"))
+        #     .get("amount__sum", 0)
+        # )
+        invested_in_rental_assests = user_property_investment_qs.filter(return_type=ReturnType().RENT).first()
+        invested_in_rental_assests = invested_in_rental_assests.amount if invested_in_rental_assests else 0
+        # invested_in_non_rental_assests = (
+        #     user_property_investment_qs.filter(property__return_type=ReturnType().APPRECIATION)
+        #     .aggregate(Sum("amount"))
+        #     .get("amount__sum", 0)
+        # )
+        invested_in_non_rental_assests = user_property_investment_qs.filter(return_type=ReturnType().APPRECIATION).first()
+        invested_in_non_rental_assests = invested_in_non_rental_assests.amount if invested_in_non_rental_assests else 0
         # Calculate Percentage of investment in rental assets and Non rental assets
         percentage_invested_in_rental_assests = (
             (invested_in_rental_assests
@@ -115,7 +122,7 @@ class InvestmentHelper:
         user_general_data["properties"] = property_data
         return user_general_data
 
-    def perform_post_investment_operation(
+    def perform_post_investment_operations(
         self, user, property, amount, percentage_transacted
     ):
         Investment.objects.create(
@@ -128,6 +135,18 @@ class InvestmentHelper:
             amount=amount,
             type="DEPOSIT",
         )
+        user_property_return_type_investment = UserPropertyReturnTypeInvestment.objects.filter(user=user, return_type=property.return_type).first()
+        if user_property_return_type_investment:
+            user_property_return_type_investment.amount = (
+                user_property_return_type_investment.amount + amount
+            )
+            user_property_return_type_investment.save()
+        else:
+            UserPropertyReturnTypeInvestment.objects.create(
+                user=user,
+                return_type=property.return_type,
+                amount=amount
+            )
         self.create_or_update_user_investments(
             user, property, amount, percentage_transacted, is_deposit=True
         )

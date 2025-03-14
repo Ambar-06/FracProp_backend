@@ -1,3 +1,4 @@
 from .investment import Investment
 from .investment_return import InvestmentReturn
 from .transaction import Transaction
+from .user_property_return_type_investment import UserPropertyReturnTypeInvestment
