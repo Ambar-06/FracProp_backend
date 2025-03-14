@@ -87,7 +87,15 @@ class ResponseOrError:
                 code = value
 
         # If no valid response or status code found, return an empty tuple
-        return resp or {}, code or StatusCodes().ERROR
+        return resp or {}, code or StatusCodes().BAD_REQUEST
+    
+    def response(self, response: dict, code: int) -> Response:
+        """Returns a response with the specified response data and status code, based on code condition"""
+        if code in [StatusCodes().SUCCESS, StatusCodes().CREATED]:
+            return self.success(response, code=code)
+        if code == StatusCodes().NO_CONTENT:
+            return self.no_content()
+        return self.error(response, code=code)
 
 
 class BaseAPIView(APIView, ResponseOrError):

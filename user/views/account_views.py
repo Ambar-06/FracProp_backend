@@ -19,4 +19,4 @@ class AccountViews(BaseAPIView):
     def post(self, request, data, *args):
         service_data = self.service.post_service(request, data)
         resp, code = self.get_response_or_error(service_data)
-        return self.success(resp, code)
+        return self.response(resp, code)

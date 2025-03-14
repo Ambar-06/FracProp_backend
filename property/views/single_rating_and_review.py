@@ -14,18 +14,18 @@ class SingleRatingAndReviewView(BaseAPIView):
     def get(self, request, data, *args):
         service_data = self.service.get_service(request, data)
         response, code = self.get_response_or_error(service_data)
-        return self.success(response, code)
+        return self.response(response, code)
 
     @auth_guard()
     @validate_request(SingleRatingAndReviewSerializer)
     def patch(self, request, data, *args):
         service_data = self.service.patch_service(request, data)
         response, code = self.get_response_or_error(service_data)
-        return self.success(response, code)
+        return self.response(response, code)
     
     @auth_guard()
     @validate_request(SingleRatingAndReviewSerializer)
     def delete(self, request, data, *args):
         service_data = self.service.delete_service(request, data)
         response, code = self.get_response_or_error(service_data)
-        return self.success(response, code)
+        return self.response(response, code)

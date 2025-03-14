@@ -19,11 +19,11 @@ class SingleApprovalRequestView(BaseAPIView):
     def get(self, request, data, *args):
         service_data = self.service.get_service(request, data)
         response, code = self.get_response_or_error(service_data)
-        return self.success(response, code)
+        return self.response(response, code)
 
     @auth_guard(admin=True)
     @validate_request(SingleApprovalRequestFilterSerializer)
     def patch(self, request, data, *args):
         service_data = self.service.patch_service(request, data)
         response, code = self.get_response_or_error(service_data)
-        return self.success(response, code)
+        return self.response(response, code)

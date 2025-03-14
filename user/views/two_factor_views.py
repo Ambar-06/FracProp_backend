@@ -14,11 +14,11 @@ class TwoFactorView(BaseAPIView):
     def get(self, request, data, *args):
         service_data = self.service.get_service(request, data)
         response, code = self.get_response_or_error(service_data)
-        return self.success(response, code)
+        return self.response(response, code)
 
     @auth_guard()
     @validate_request(TwoFactorFilterSerializer)
     def post(self, request, data, *args):
         service_data = self.service.post_service(request, data)
         response, code = self.get_response_or_error(service_data)
-        return self.success(response, code)
+        return self.response(response, code)

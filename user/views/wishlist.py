@@ -31,4 +31,4 @@ class WishlistView(BaseAPIView, PaginatedBaseApiView):
     def post(self, request, data, *args):
         service_data = self.service.post_service(request, data)
         response, status_code = self.get_response_or_error(service_data)
-        return self.success(response, status_code)
+        return self.response(response, status_code)

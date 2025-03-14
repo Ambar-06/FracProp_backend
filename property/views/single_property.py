@@ -31,32 +31,32 @@ class SinglePropertyView(BaseAPIView):
     def get(self, request, data, *args):
         service_data = self.service.get_service(request, data)
         response, status_code = self.get_response_or_error(service_data)
-        return self.success(response, status_code)
+        return self.response(response, status_code)
 
     @auth_guard(staff=True)
     @validate_request(SinglePropertyFilterSerializer)
     def patch(self, request, data, *args, **kwargs):
         service_data = self.service.patch_service(request, data)
         response, status_code = self.get_response_or_error(service_data)
-        return self.success(response, status_code)
+        return self.response(response, status_code)
 
     @auth_guard(admin=True)
     @validate_request(SinglePropertyFilterSerializer)
     def delete(self, request, data, *args):
         service_data = self.service.delete_service(request, data)
         response, status_code = self.get_response_or_error(service_data)
-        return self.success(response, status_code)
+        return self.response(response, status_code)
 
     @auth_guard()
     @validate_request(PropertyInvestmentSerializer)
     def invest(self, request, data, *args):
         service_data = self.investment_service.post_service(request, data)
         response, status_code = self.get_response_or_error(service_data)
-        return self.success(response, status_code)
+        return self.response(response, status_code)
 
     @auth_guard()
     @validate_request(PropertyInvestmentSerializer)
     def approve(self, request, data, *args):
         service_data = self.investment_service.post_service(request, data)
         response, status_code = self.get_response_or_error(service_data)
-        return self.success(response, status_code)
+        return self.response(response, status_code)
