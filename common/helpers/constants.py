@@ -20,18 +20,18 @@ StatusCodesDictionary = obj_status_codes.__dict__
 
 
 @dataclass
-class Target:
+class Targets:
     def __init__(self):
         self.WHATSAPP = "whatsapp"
         self.SMS = "sms"
 
 
-obj_target = Target()
-TargetDictionary = obj_target.__dict__
+obj_target = Targets()
+TargetsDictionary = obj_target.__dict__
 
 
 @dataclass
-class MediaType:
+class MediaTypes:
     def __init__(self):
         self.IMAGE = "image"
         self.AUDIO = "audio"
@@ -40,20 +40,20 @@ class MediaType:
         self.CONTACT = "contact"
 
 
-obj_media_type = MediaType()
-MediaTypeDictionary = obj_media_type.__dict__
+obj_media_type = MediaTypes()
+MediaTypesDictionary = obj_media_type.__dict__
 
 
 @dataclass
-class Platform:
+class Platforms:
     def __init__(self):
         self.WHATSAPP = "WHATSAPP"
         self.FACEBOOK = "FACEBOOK"
         self.TWILIO = "TWILIO"
 
 
-obj_platform = Platform()
-PlatformDictionary = obj_platform.__dict__
+obj_platform = Platforms()
+PlatformsDictionary = obj_platform.__dict__
 
 
 @dataclass
@@ -65,11 +65,11 @@ class EmailTypes:
 
 
 obj_email_type = EmailTypes()
-EmailTypeDictionary = obj_email_type.__dict__
+EmailTypesDictionary = obj_email_type.__dict__
 
 
 @dataclass
-class DocumentType:
+class DocumentTypes:
     def __init__(self):
         self.PROPERTY_PAPER = "PROPERTY_PAPER"
         self.PROPERTY_IMAGE = "PROPERTY_IMAGE"
@@ -79,11 +79,11 @@ class DocumentType:
         self.OTHER_DOCUMENT = "OTHER_DOCUMENT"
 
 
-obj_document_type = DocumentType()
-DocumentTypeDictionary = obj_document_type.__dict__
+obj_document_type = DocumentTypes()
+DocumentTypesDictionary = obj_document_type.__dict__
 
 @dataclass
-class RentalAreaType:
+class RentalAreaTypes:
     def __init__(self):
         self.ROOM = "ROOM"
         self.FLAT = "FLAT"
@@ -91,11 +91,11 @@ class RentalAreaType:
         self.OTHER = "OTHER"
         self.COMMERCIAL = "COMMERCIAL"
 
-obj_rental_area_type = RentalAreaType()
-RentalAreaTypeDictionary = obj_rental_area_type.__dict__
+obj_rental_area_type = RentalAreaTypes()
+RentalAreaTypesDictionary = obj_rental_area_type.__dict__
 
 @dataclass
-class PropertyType:
+class PropertyTypes:
     def __init__(self):
         self.RESIDENTIAL = "RESIDENTIAL"
         self.COMMERCIAL = "COMMERCIAL"
@@ -104,20 +104,20 @@ class PropertyType:
         self.OTHER = "OTHER"
 
 
-obj_property_type = PropertyType()
-PropertyTypeDictionary = obj_property_type.__dict__
+obj_property_type = PropertyTypes()
+PropertyTypesDictionary = obj_property_type.__dict__
 
 
 @dataclass
-class ReturnType:
+class ReturnTypes:
     def __init__(self):
         self.RENT = "RENT"
         self.APPRECIATION = "APPRICIATION"
         self.OTHER = "OTHER"
 
 
-obj_return_type = ReturnType()
-ReturnTypeDictionary = obj_return_type.__dict__
+obj_return_type = ReturnTypes()
+ReturnTypesDictionary = obj_return_type.__dict__
 
 
 @dataclass
@@ -142,3 +142,13 @@ class ApprovalStatus:
 
 obj_approval_status = ApprovalStatus()
 ApprovalStatusDictionary = obj_approval_status.__dict__
+
+
+@dataclass
+class TransactionTypes:
+    def __init__(self):
+        self.DEPOSIT = "DEPOSIT"
+        self.WITHDRAWAL = "WITHDRAWAL"
+
+obj_transaction_type = TransactionTypes()
+TransactionTypesDictionary = obj_transaction_type.__dict__

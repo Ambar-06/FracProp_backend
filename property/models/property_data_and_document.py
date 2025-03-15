@@ -1,13 +1,13 @@
 from django.db import models
 
-from common.helpers.constants import DocumentTypeDictionary
+from common.helpers.constants import DocumentTypesDictionary
 from common.models.base_model import BaseModel
 from property.models.property import Property
 
 
 class PropertyRelatedDataAndDocument(BaseModel):
     DOCUMENT_TYPE_CHOICES = tuple(
-        (k, v.lower()) for k, v in DocumentTypeDictionary.items()
+        (k, v.lower()) for k, v in DocumentTypesDictionary.items()
     )
 
     property = models.ForeignKey(

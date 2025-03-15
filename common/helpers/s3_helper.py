@@ -1,6 +1,6 @@
 import boto3
 from botocore.exceptions import ClientError, NoCredentialsError
-from common.helpers.constants import DocumentType
+from common.helpers.constants import DocumentTypes
 from frac_prop import settings
 
 
@@ -76,7 +76,7 @@ class S3BucketHelper:
         file,
         key,
         bucket_name=settings.AWS_STORAGE_BUCKET_NAME,
-        file_type=DocumentType().PROPERTY_IMAGE,
+        file_type=DocumentTypes().PROPERTY_IMAGE,
     ):
         try:
             client = self.get_s3_connection()
@@ -99,7 +99,7 @@ class S3BucketHelper:
         self,
         key,
         bucket_name=settings.AWS_STORAGE_BUCKET_NAME,
-        file_type=DocumentType().PROPERTY_IMAGE,
+        file_type=DocumentTypes().PROPERTY_IMAGE,
     ):
         """
         Delete a file from the S3 bucket.

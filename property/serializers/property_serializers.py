@@ -3,9 +3,9 @@ from rest_framework import serializers
 
 from common.helpers.constants import (
     BuildingHealthDictionary,
-    DocumentType,
-    PropertyTypeDictionary,
-    ReturnTypeDictionary,
+    DocumentTypes,
+    PropertyTypesDictionary,
+    ReturnTypesDictionary,
 )
 from property.models.property import Property
 from property.models.property_data_and_document import PropertyRelatedDataAndDocument
@@ -112,7 +112,7 @@ class PropertySerializer(serializers.ModelSerializer):
 
     def get_property_images(self, obj):
         return PropertyRelatedDataAndDocument.objects.filter(
-            property=obj, document_type=DocumentType().PROPERTY_IMAGE
+            property=obj, document_type=DocumentTypes().PROPERTY_IMAGE
         ).values_list("document", flat=True)
 
     def get_valuation_history(self, obj):
@@ -177,11 +177,11 @@ class PropertyFilterSerializer(serializers.Serializer):
     country = serializers.CharField(required=True)
     pin_code = serializers.CharField(required=False)
     description = serializers.CharField(required=False)
-    type = serializers.ChoiceField(choices=PropertyTypeDictionary, required=True)
+    type = serializers.ChoiceField(choices=PropertyTypesDictionary, required=True)
     govt_allotted_property_id = serializers.CharField(required=True)
     number_of_floors = serializers.IntegerField(required=True, min_value=0)
     number_of_rooms = serializers.IntegerField(required=True, min_value=0)
-    return_type = serializers.ChoiceField(choices=ReturnTypeDictionary, required=True)
+    return_type = serializers.ChoiceField(choices=ReturnTypesDictionary, required=True)
     built_area_in_sqft = serializers.FloatField(required=True)
     area_in_sqft = serializers.FloatField(required=True)
     latitude = serializers.FloatField(required=True)

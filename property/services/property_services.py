@@ -1,5 +1,5 @@
 from common.boilerplate.services.base_service import BaseService
-from common.helpers.constants import DocumentType
+from common.helpers.constants import DocumentTypes
 from common.helpers.s3_helper import S3BucketHelper
 from property.models.property import Property
 from property.models.property_approval_request import PropertyApprovalRequest
@@ -52,7 +52,7 @@ class PropertyServices(BaseService):
             PropertyRelatedDataAndDocument.objects.create(
                 document=url,
                 property=property,
-                document_type=DocumentType().PROPERTY_IMAGE,
+                document_type=DocumentTypes().PROPERTY_IMAGE,
             )
         PropertyApprovalRequest.objects.create(property=property, requested_by=user)
         return self.ok(PropertySerializer(property, context={"request": request}).data)

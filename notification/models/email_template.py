@@ -1,14 +1,14 @@
 from django.db import models
 
+from common.helpers.constants import EmailTypesDictionary
 from common.models.base_model import BaseModel
 
 
 class EmailTemplate(BaseModel):
-    TEMPLATE_TYPE_CHOICES = (
-        ("OTP", "otp"),
-        ("RESET_PASSWORD", "reset_password"),
-        ("VERIFY_EMAIL", "verify_email"),
+    TEMPLATE_TYPE_CHOICES = tuple(
+        (k, v.lower()) for k, v in EmailTypesDictionary.items()
     )
+
     template_type = models.CharField(max_length=255, choices=TEMPLATE_TYPE_CHOICES)
     is_hidden = models.BooleanField(default=False)
     template = models.TextField(null=True, blank=True)

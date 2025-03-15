@@ -1,16 +1,16 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
-from common.helpers.constants import PropertyType, PropertyTypeDictionary, ReturnType, ReturnTypeDictionary
+from common.helpers.constants import PropertyTypes, PropertyTypesDictionary, ReturnTypes, ReturnTypesDictionary
 from common.models.base_model import BaseModel
 
 
 class Property(BaseModel):
     PROPERTY_TYPE_CHOICES = tuple(
-        (k, v.lower()) for k, v in PropertyTypeDictionary.items()
+        (k, v.lower()) for k, v in PropertyTypesDictionary.items()
     )
     RETURN_TYPE_CHOICES = tuple(
-        (k, v.lower()) for k, v in ReturnTypeDictionary.items()
+        (k, v.lower()) for k, v in ReturnTypesDictionary.items()
     )
 
     name = models.CharField(max_length=255, null=True, blank=True)
@@ -23,7 +23,7 @@ class Property(BaseModel):
     pin_code = models.CharField(max_length=255, null=True, blank=True)
     govt_allotted_property_id = models.CharField(max_length=255, null=True, unique=True)
     type = models.CharField(
-        max_length=255, null=True, choices=PROPERTY_TYPE_CHOICES, default=PropertyType().RESIDENTIAL
+        max_length=255, null=True, choices=PROPERTY_TYPE_CHOICES, default=PropertyTypes().RESIDENTIAL
     )
     number_of_floors = models.IntegerField(null=True, blank=True)
     built_area_in_sqft = models.FloatField(null=True, blank=True)
@@ -35,7 +35,7 @@ class Property(BaseModel):
         null=True,
         blank=True,
         choices=RETURN_TYPE_CHOICES,
-        default=ReturnType().RENT,
+        default=ReturnTypes().RENT,
     )
     number_of_rooms = models.IntegerField(null=True, blank=True)
     sold_percentage = models.FloatField(

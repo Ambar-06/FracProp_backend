@@ -1,5 +1,5 @@
 from django.db.models import Sum
-from common.helpers.constants import ReturnType
+from common.helpers.constants import ReturnTypes
 from investment.models.investment import Investment
 from investment.models.investment_return import InvestmentReturn
 from payment.models.transaction import Transaction
@@ -21,18 +21,18 @@ class InvestmentHelper:
         # )
         user_property_investment_qs = UserPropertyReturnTypeInvestment.objects.filter(user=user)
         # invested_in_rental_assests = (
-        #     user_property_investment_qs.filter(property__return_type=ReturnType().RENT)
+        #     user_property_investment_qs.filter(property__return_type=ReturnTypes().RENT)
         #     .aggregate(Sum("amount"))
         #     .get("amount__sum", 0)
         # )
-        invested_in_rental_assests = user_property_investment_qs.filter(property_return_type=ReturnType().RENT).first()
+        invested_in_rental_assests = user_property_investment_qs.filter(property_return_type=ReturnTypes().RENT).first()
         invested_in_rental_assests = invested_in_rental_assests.amount if invested_in_rental_assests else 0
         # invested_in_non_rental_assests = (
-        #     user_property_investment_qs.filter(property__return_type=ReturnType().APPRECIATION)
+        #     user_property_investment_qs.filter(property__return_type=ReturnTypes().APPRECIATION)
         #     .aggregate(Sum("amount"))
         #     .get("amount__sum", 0)
         # )
-        invested_in_non_rental_assests = user_property_investment_qs.filter(property_return_type=ReturnType().APPRECIATION).first()
+        invested_in_non_rental_assests = user_property_investment_qs.filter(property_return_type=ReturnTypes().APPRECIATION).first()
         invested_in_non_rental_assests = invested_in_non_rental_assests.amount if invested_in_non_rental_assests else 0
         # Calculate Percentage of investment in rental assets and Non rental assets
         percentage_invested_in_rental_assests = (
@@ -48,12 +48,12 @@ class InvestmentHelper:
             else 0
         )
         total_earned_through_rental = (
-            InvestmentReturn.objects.filter(user=user, return_type="RENT")
+            InvestmentReturn.objects.filter(user=user, return_type=ReturnTypes().RENT)
             .aggregate(Sum("return_in_amount"))
             .get("return_in_amount__sum", 0)
         )
         total_earned_through_valuation = (
-            InvestmentReturn.objects.filter(user=user, return_type="APPRECIATION")
+            InvestmentReturn.objects.filter(user=user, return_type=ReturnTypes().APPRECIATION)
             .aggregate(Sum("return_in_amount"))
             .get("return_in_amount__sum", 0)
         )

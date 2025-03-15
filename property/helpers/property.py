@@ -1,4 +1,4 @@
-from common.helpers.constants import DocumentType
+from common.helpers.constants import DocumentTypes
 from property.models.property import Property
 from property.models.property_data_and_document import PropertyRelatedDataAndDocument
 from property.models.property_valuation_history import PropertyValuationHistory
@@ -79,6 +79,6 @@ def add_or_update_property_images(data, image_files, property):
         PropertyRelatedDataAndDocument.objects.create(
             property=property,
             document=image,
-            document_type=DocumentType().PROPERTY_IMAGE,
+            document_type=DocumentTypes().PROPERTY_IMAGE,
         )
     return True

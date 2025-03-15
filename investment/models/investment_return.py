@@ -1,5 +1,6 @@
 from django.db import models
 
+from common.helpers.constants import ReturnTypesDictionary
 from common.models.base_model import BaseModel
 from property.models.property import Property
 from user.models.user import User
@@ -11,9 +12,8 @@ class InvestmentReturn(BaseModel):
     Creates a new entry in the table whenever a user gets a return from a property.
     """
 
-    RETURN_TYPE_CHOICES = (
-        ("RENTAL", "rental"),
-        ("VALUATION", "valuation"),
+    RETURN_TYPE_CHOICES = tuple(
+        (k, v.lower()) for k, v in ReturnTypesDictionary.items()
     )
 
     user = models.ForeignKey(

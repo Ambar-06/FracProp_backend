@@ -1,7 +1,7 @@
 import json
 from rest_framework import serializers
 
-from common.helpers.constants import PropertyTypeDictionary, ReturnTypeDictionary
+from common.helpers.constants import PropertyTypesDictionary, ReturnTypesDictionary
 from property.models.property import Property
 from property.serializers.property_serializers import (
     AmenitiesSerializer,
@@ -14,7 +14,7 @@ class SinglePropertyFilterSerializer(serializers.Serializer):
     name = serializers.CharField(required=False)
     address = serializers.CharField(required=False)
     description = serializers.CharField(required=False)
-    type = serializers.ChoiceField(choices=PropertyTypeDictionary, required=False)
+    type = serializers.ChoiceField(choices=PropertyTypesDictionary, required=False)
     city = serializers.CharField(required=False)
     state = serializers.CharField(required=False)
     country = serializers.CharField(required=False)
@@ -22,7 +22,7 @@ class SinglePropertyFilterSerializer(serializers.Serializer):
     govt_allotted_property_id = serializers.CharField(required=False)
     number_of_floors = serializers.IntegerField(required=False, min_value=0)
     number_of_rooms = serializers.IntegerField(required=False, min_value=0)
-    return_type = serializers.ChoiceField(choices=ReturnTypeDictionary, required=False)
+    return_type = serializers.ChoiceField(choices=ReturnTypesDictionary, required=False)
     built_area_in_sqft = serializers.FloatField(required=False)
     valuation = serializers.FloatField(required=False)
     area_in_sqft = serializers.FloatField(required=False)
