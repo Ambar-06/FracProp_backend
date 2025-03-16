@@ -29,7 +29,7 @@ class VerifyEmail(BaseAPIView):
     def post(self, request, data, *args):
         service_data = self.service.verify_otp_email(request, data)
         response, code = self.get_response_or_error(service_data)
-        return self.success(response, code)
+        return self.response(response, code)
 
 
 class SendEmailOTP(BaseAPIView):
@@ -41,7 +41,7 @@ class SendEmailOTP(BaseAPIView):
     def post(self, request, data, *args):
         service_date = self.service.send_otp_email(request, data)
         response, code = self.get_response_or_error(service_date)
-        return self.success(response, code)
+        return self.response(response, code)
 
 
 class ResetPassword(BaseAPIView):
