@@ -13,6 +13,8 @@ class TemplateServices(BaseService):
         return self.ok(templates, StatusCodes().SUCCESS)
 
     def post_service(self, request, data):
+        if EmailTemplate.objects.filter(template_type=data.get("template_type")).exists():
+            return self.exception(f"Template with type {data.get("template_type")} already exists", StatusCodes().UNPROCESSABLE_ENTITY)
         template = EmailTemplate.objects.create(
             template=data.get("template"), template_type=data.get("template_type"), is_hidden=data.get("is_hidden")
         )
