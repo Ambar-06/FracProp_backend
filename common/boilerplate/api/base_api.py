@@ -40,11 +40,11 @@ class ResponseOrError:
             status=code,
         )
 
-    def error(self, errors: T, status_code: int) -> Response:
+    def error(self, errors: T, code: int) -> Response:
         """Returns an error response with specified errors."""
         return Response(
-            {"success": False, "code": status_code, "errors": errors},
-            status=status_code,
+            {"success": False, "code": code, "errors": errors},
+            status=code,
         )
 
     def error_message(
