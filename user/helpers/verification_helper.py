@@ -23,5 +23,6 @@ class EmailHelper:
             link = kwargs.get("link")
             content = template.template.replace("{{ reset_link }}", link)
             subject = "Reset Password Link"
-        send_email(subject=subject, body=content, to_email=email)
+        if not send_email(subject=subject, body=content, to_email=email):
+            return False
         return True
