@@ -22,6 +22,8 @@ def send_email(subject, body, to_email):
     msg.attach(MIMEText(body, "html"))
 
     try:
+        print(f"Sending email to {to_email}...")
+        print(username, password)
         # Connect to the SMTP server
         server = smtplib.SMTP(smtp_server)
         server.starttls()  # Use TLS for security

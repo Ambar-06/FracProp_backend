@@ -19,6 +19,7 @@ class EmailHelper:
             otp = kwargs.get("otp")
             content = template.template.replace("{{ otp_code }}", str(otp))
             subject = "Email Verification OTP"
+            print(subject)
         elif template.template_type == EmailTypes().RESET_PASSWORD:
             link = kwargs.get("link")
             content = template.template.replace("{{ reset_link }}", link)
