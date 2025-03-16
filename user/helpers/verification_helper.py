@@ -15,6 +15,7 @@ class EmailHelper:
             return None
         user = kwargs.get("user")
         email = user.email
+        print(template.template_type, "template.template_typetemplate.template_type")
         if template.template_type == EmailTypes().OTP:
             otp = kwargs.get("otp")
             content = template.template.replace("{{ otp_code }}", str(otp))
