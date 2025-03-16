@@ -23,7 +23,7 @@ def send_email(subject, body, to_email):
 
     try:
         # Connect to the SMTP server
-        server = smtplib.SMTP(smtp_server, smtp_port)
+        server = smtplib.SMTP(smtp_server)
         server.starttls()  # Use TLS for security
         server.login(username, password)  # Login to your email account
         server.send_message(msg)  # Send the email
@@ -33,3 +33,22 @@ def send_email(subject, body, to_email):
     except Exception as e:
         print(f"Failed to send email: {e}")
         return False
+
+
+# import smtplib
+# from frac_prop import settings
+
+
+# class EmailUtil:
+#     def __init__(self):
+#         pass
+
+#     def send_email(self, email, otp):
+#         server = smtplib.SMTP(
+#             "64.233.184.108"
+#         )  # server = smtplib.SMTP('64.233.184.108') IP address of smtp.gmail.com, to bypass DNS resolution
+#         server.ehlo()
+#         server.starttls()
+#         server.login(settings.EMAIL, settings.PASSWORD)
+#         server.sendmail(settings.EMAIL, email, otp)
+#         server.close()
