@@ -30,6 +30,7 @@ class EmailService(BaseService):
         user.email = data.get("email")
         user.save()
         otp = self.otp_helper.generate_otp(user.uuid)
+        print(otp, "THIS IS OTP")
         resp = self.email_helper.send_template_email(
             template_type=EmailTypes().OTP, otp=otp, user=user
         )
