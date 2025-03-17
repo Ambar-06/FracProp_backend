@@ -62,6 +62,8 @@ class ResetPasswordService(BaseService):
         user = self.user_model.objects.filter(email=email).first()
         if not user:
             return self.not_found("User not found with the given email")
+        if not user.is_email_verified:
+            return self.bad_request("Email is not verified")
         random_str = generate_random_id_number(use_small_letters=True)
         user_id_str = str(user.uuid)
         random_str = random_str + "-" + user_id_str[:5]
@@ -77,7 +79,7 @@ class ResetPasswordService(BaseService):
             return self.ok("Reset password link sent successfully")
         return self.bad_request("Failed to send reset password link")
 
-    def reset_password(self, request, data):
+    def change_password_service(self, request, data):
         code = data.get("code")
         password = data.get("password")
         confirm_password = data.get("confirm_password")

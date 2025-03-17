@@ -61,7 +61,7 @@ class ForgetPasswordUsingOTP(BaseAPIView):
 
     @validate_request(ResetPasswordUsingEmailSerializer)
     def post(self, request, data, *args):
-        service_data = self.service.reset_password(request, data)
+        service_data = self.service.change_password_service(request, data)
         response, code = self.get_response_or_error(service_data)
         return self.success(response, code)
 
