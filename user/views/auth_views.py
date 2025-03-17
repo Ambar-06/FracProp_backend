@@ -63,7 +63,7 @@ class ForgetPasswordUsingOTP(BaseAPIView):
     def post(self, request, data, *args):
         service_data = self.service.change_password_service(request, data)
         response, code = self.get_response_or_error(service_data)
-        return self.success(response, code)
+        return self.response(response, code)
 
 
 class ChangePassword(BaseAPIView):
