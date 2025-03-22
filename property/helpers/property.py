@@ -55,14 +55,18 @@ def update_property_valuation(property, valuation):
             investment_change = calculate_percentage_amount_for_current_valuation(
                 valuation, user_property_stake.stake_in_percent
             )
-            difference = user_property_amount.total_amount - investment_change
-            if difference > 0:
+            if investment_change > user_property_amount.total_amount:
+                difference =  investment_change - user_property_amount.total_amount
                 total_profit = user_property_amount.total_profit or 0
                 user_property_amount.total_profit = total_profit + difference
+                user_property_amount.total_amount += difference
             else:
-                total_loss = user_property_amount.total_loss
+                difference = user_property_amount.total_amount - investment_change
+                total_loss = user_property_amount.total_loss or 0
                 user_property_amount.total_loss = total_loss + difference
-            user_property_amount.total_amount += difference
+                user_property_amount.total_amount -= difference
+            print(difference, "difference")
+            print(user_property_amount.total_amount, "total_amount")
             user_property_amount.save()
         return True
     return False

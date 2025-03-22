@@ -114,7 +114,7 @@ class InvestmentHelper:
                     "returns": user_investment_return_qs.values_list(
                         "id", "return_in_amount", "created_at"
                     ),
-                    "valuation_hsitory_of_last_10_months": property_valuation_data_qs.values_list(
+                    "last_10_valuation_history": property_valuation_data_qs.values_list(
                         "id", "valuation", "created_at"
                     ),
                 }
