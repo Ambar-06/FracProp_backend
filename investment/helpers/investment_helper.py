@@ -16,9 +16,9 @@ class InvestmentHelper:
     def get_investment_data(self, user):
         user_properties = user.user_properties.filter(is_deleted=False)
         property_data = []
-        # user_property_investment_qs = Investment.objects.filter(user=user).order_by(
-        #     "-created_at"
-        # )
+        user_property_particular_investment_qs = Investment.objects.filter(user=user).order_by(
+            "-created_at"
+        )
         user_property_investment_qs = UserPropertyReturnTypeInvestment.objects.filter(user=user)
         # invested_in_rental_assests = (
         #     user_property_investment_qs.filter(property__return_type=ReturnTypes().RENT)
@@ -71,7 +71,7 @@ class InvestmentHelper:
         }
         for user_property in user_properties:
             # Filter the queryset first, then slice it
-            user_property_investment_qs_filtered = user_property_investment_qs.filter(
+            user_property_investment_qs_filtered = user_property_particular_investment_qs.filter(
                 property=user_property.property
             ).order_by("-created_at")[:10]
             user_investment_return_qs = InvestmentReturn.objects.filter(
