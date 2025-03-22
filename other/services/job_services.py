@@ -12,7 +12,7 @@ class JobServices(BaseService):
         jobs = Job.objects.all().order_by("-created_at")
         if data.get("keyword"):
             jobs = jobs.filter(title__icontains=data.get("keyword"))
-        return self.ok(jobs, StatusCodes().SUCCESS)
+        return self.ok(JobViewSerializer(jobs, many=True).data, StatusCodes().SUCCESS)
 
     def post_service(self, request, data):
         job = Job.objects.create(

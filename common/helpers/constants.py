@@ -167,3 +167,20 @@ class JobTypes:
 
 obj_job_type = JobTypes()
 JobTypesDictionary = obj_job_type.__dict__
+
+@dataclass
+class JobDepartments:
+    def __init__(self):
+        self.TECHNOLOGY = "TECHNOLOGY"
+        self.MARKETING = "MARKETING"
+        self.SALES = "SALES"
+        self.CUSTOMER_SERVICE = "CUSTOMER_SERVICE"
+        self.OPERATIONS = "OPERATIONS"
+        self.HUMAN_RESOURCES = "HUMAN_RESOURCES"
+        self.FINANCE = "FINANCE"
+        self.LEGAL = "LEGAL"
+        self.REAL_ESTATE = "REAL_ESTATE"
+        self.OTHER = "OTHER"
+
+obj_job_department = JobDepartments()
+JobDepartmentsDictionary = obj_job_department.__dict__

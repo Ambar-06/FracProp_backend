@@ -1,13 +1,14 @@
 from rest_framework import serializers
 
+from common.helpers.constants import JobDepartmentsDictionary, JobTypesDictionary
 from other.models.job import Job
 
 class JobFilterSerializer(serializers.Serializer):
     keyword = serializers.CharField(required=False, allow_blank=True, allow_null=True)
     title = serializers.CharField(required=False, allow_blank=True, allow_null=True)
-    department = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    department = serializers.ChoiceField(choices=JobDepartmentsDictionary, required=False, allow_null=True)
     location = serializers.CharField(required=False, allow_blank=True, allow_null=True)
-    type = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    type = serializers.ChoiceField(choices=JobTypesDictionary, required=False, allow_null=True)
     description = serializers.CharField(required=False, allow_blank=True, allow_null=True)
 
     def validate(self, data):
