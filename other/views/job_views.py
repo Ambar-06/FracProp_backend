@@ -3,20 +3,19 @@ from common.boilerplate.api.base_paginated_api import PaginatedBaseApiView
 from common.boilerplate.api.custom_pagination import CustomPagination
 from common.boilerplate.decorators.auth_guard import auth_guard
 from common.boilerplate.decorators.validate_request import validate_request
-from property.serializers.rating_and_review_serializers import RatingAndReviewFilterSerializer, RatingAndReviewViewSerializer
-from property.services.rating_and_review_services import RatingAndReviewServices
+from other.serializers.job_serializers import JobFilterSerializer, JobViewSerializer
+from other.services.job_services import JobServices
 
 
-class RatingAndReviewView(BaseAPIView, PaginatedBaseApiView):
+class JobView(BaseAPIView, PaginatedBaseApiView):
     def __init__(self):
         super().__init__(
-            serializer_class=RatingAndReviewViewSerializer,
+            serializer_class=JobViewSerializer,
             pagination_class=CustomPagination,
         )
-        self.service = RatingAndReviewServices()
+        self.service = JobServices()
 
-    @auth_guard()
-    @validate_request(RatingAndReviewFilterSerializer)
+    @validate_request(JobFilterSerializer)
     def get(self, request, data, *args):
         service_data = self.service.get_service(request, data)
         self.queryset, _ = self.get_response_or_error(service_data)
@@ -28,9 +27,9 @@ class RatingAndReviewView(BaseAPIView, PaginatedBaseApiView):
             perPage=request.query_params.get("perPage", 10),
         )
     
-    @auth_guard()
-    @validate_request(RatingAndReviewFilterSerializer)
+    @auth_guard(admin=True)
+    @validate_request(JobFilterSerializer)
     def post(self, request, data, *args):
         service_data = self.service.post_service(request, data)
         response, code = self.get_response_or_error(service_data)
-        return self.success(response, code)
+        return self.response(response, code)

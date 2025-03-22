@@ -152,3 +152,18 @@ class TransactionTypes:
 
 obj_transaction_type = TransactionTypes()
 TransactionTypesDictionary = obj_transaction_type.__dict__
+
+
+@dataclass
+class JobTypes:
+    def __init__(self):
+        self.FULL_TIME = "FULL_TIME"
+        self.PART_TIME = "PART_TIME"
+        self.CONTRACT = "CONTRACT"
+        self.INTERN = "INTERN"
+        self.TEMPORARY = "TEMPORARY"
+        self.VOLUNTEER = "VOLUNTEER"
+        self.FREELANCE = "FREELANCE"
+
+obj_job_type = JobTypes()
+JobTypesDictionary = obj_job_type.__dict__
