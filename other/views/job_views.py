@@ -1,8 +1,7 @@
 from common.boilerplate.api.base_api import BaseAPIView
-from common.boilerplate.api.custom_pagination import CustomPagination
 from common.boilerplate.decorators.auth_guard import auth_guard
 from common.boilerplate.decorators.validate_request import validate_request
-from other.serializers.job_serializers import JobFilterSerializer, JobViewSerializer
+from other.serializers.job_serializers import JobFilterSerializer
 from other.services.job_services import JobServices
 
 

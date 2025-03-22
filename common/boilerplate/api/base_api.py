@@ -30,6 +30,8 @@ class ResponseOrError:
         self, data: T, code: int = StatusCodes().SUCCESS, msg: _.Optional[str] = None
     ) -> Response:
         """Returns a successful response."""
+        if data == {} and len(self.kwargs.items()) == 0:
+            data = []
         return Response(
             {
                 "success": True,
@@ -89,7 +91,7 @@ class ResponseOrError:
         # If no valid response or status code found, return an empty tuple
         return resp or {}, code or StatusCodes().BAD_REQUEST
     
-    def response(self, response: dict, code: int) -> Response:
+    def response(self, response, code: int) -> Response:
         """Returns a response with the specified response data and status code, based on code condition"""
         if code in [StatusCodes().SUCCESS, StatusCodes().CREATED]:
             return self.success(response, code=code)
