@@ -69,7 +69,6 @@ class SignUpServices(BaseService):
                 "is_admin": user_ins.is_admin,
                 "is_staff": user_ins.is_staff,
                 "is_phone_verified": user_ins.is_phone_verified,
-                "is_email_verified": user_ins.is_email_verified,
                 "last_login": user_ins.last_login,
             }
         )
